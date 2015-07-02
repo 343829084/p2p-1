@@ -1,0 +1,62 @@
+/* CSS Document */
+*{ margin:0; padding:0; -webkit-text-size-adjust:none;}
+*|*:Link{color: rgb(39, 84, 149);}
+*|*:visited { color: rgb(39, 84, 149);}
+:-moz-any-link {
+    cursor: pointer;
+}
+body {
+	font-family: "Microsoft YaHei","Lucida Sans Unicode","Myriad Pro","Hiragino Sans GB","Heiti SC","Verdana","simsun";
+	font-size: 12px;
+	padding: 0;
+	border: 0;
+	margin: 0;
+	background: #fff;
+	
+	
+}
+ a:hover{color:#333;}
+
+img,h1,h2,h3,h4,h5,ul,li,dl,dt,dd,p,a {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none; 
+	text-decoration: none;}
+	
+.map-all{width:1000px;height:100%;margin:0 auto;}
+.map-title{height: 25px;font-size: 20px;color: #275495;font-weight: bold;border-bottom: 2px solid #275495;margin-bottom: 20px;}
+.map-content{height: 70px;border-width: 1px 1px medium;border:1px solid #D7E2EA;border-color: #D7E2EA -moz-use-text-color;
+-moz-border-top-colors: none;-moz-border-right-colors: none;-moz-border-bottom-colors: none;-moz-border-left-colors: none;border-image: none;}
+.map-content-sy{background-image: url("http://www.eduego.com/statics/images/dian.jpg");
+background-repeat: no-repeat;background-position: 15px 7px;height: 26px;color: #275495;line-height: 24px;border-bottom: 1px solid #D7E2EA;background-color: #ECF5FA;margin-bottom: 10px;font-weight: bold;}
+.map-content-sy span{padding-left: 35px;font-size:16px;}
+.map-content-sy-01{font-size: 14px;}
+.map-content-sy-01 ul{padding-left: 10px;}
+.map-content-sy-01 ul li{width: 100px;
+float: left;
+font-size: 14px;
+text-align: center;
+border-right: 1px solid #D7E2EA;}
+.map-content-sy-01 ul li a {
+    font-size: 14px;
+    color: #275495;}
+.map-content-sy-01 ul li a:hover{color:#333;}
+.map-content-1{height:35px;border-width: 1px 1px medium;border:1px solid #D7E2EA;border-color: #D7E2EA -moz-use-text-color;
+-moz-border-top-colors: none;-moz-border-right-colors: none;-moz-border-bottom-colors: none;-moz-border-left-colors: none;border-image: none;}
+.map-content-1-sy{background-image: url("http://www.eduego.com/statics/images/dian.jpg");
+background-repeat: no-repeat;background-position: 15px 7px;height: 26px;color: #275495;line-height: 24px;border-bottom: 1px solid #D7E2EA;background-color: #ECF5FA;margin-bottom: 10px;font-weight: bold;}
+.map-content-1-sy span{padding-left: 35px;font-size:16px;}
+.map-content-1-sy-01{font-size: 14px;}
+.map-content-1sy-01 ul{padding-left: 10px;}
+.map-content-1-sy-01 ul li{width: 100px;
+float: left;
+font-size: 14px;
+text-align: center;
+border-right: 1px solid #D7E2EA;}
+.map-content-1-sy-01 ul li a {
+    font-size: 14px;
+    color: #275495;}
+.map-content-1-sy-01 ul li a:hover{color:#333;}
+.footer{margin-top: 50px;}
+

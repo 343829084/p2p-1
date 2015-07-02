@@ -1,0 +1,102 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="page.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:param name="typeId" value="1"></ui:param>
+	<ui:define name="content">
+	<link type="text/css" rel="stylesheet"
+			href="#{tplVars.themeStylePath}/index.css"/>
+	<script>
+			//<![CDATA[
+			//如果用户没有登陆，则提示，并跳转到登录页面。           
+			 function login() {
+				$.dialog.confirm(
+								'你还没有登录，请登录！',
+								function() {
+									window.location.href = "#{path}/memberLoginPage";
+/* 									$.dialog.tips('正在为您跳转到页面');
+ */								});
+				return false;
+			}          
+			//如果登录用户没有投资权限，则提示，并跳转页面。
+			function getInvestorPer() {
+				$.dialog.confirm(
+								'你还没有实名认证，请实名认证！',
+								function() {
+									window.location.href = "#{path}/user/get_investor_permission";
+/* 									$.dialog.tips('正在为您跳转到页面');
+ */								});
+				return false;
+			}
+			//]]>
+		</script>
+		<f:event type="preRenderComponent"
+			listener="#{userHome.setId(loginUserInfo.loginUserId)}"></f:event>
+		<f:event type="preRenderView" listener="#{borrowerInfoHome.setId(loginUserInfo.loginUserId)}"></f:event>
+	
+		<div class="box">
+			<div class="left">
+				<div class="box01">
+					<span>个人借款</span><br />针对工薪阶层
+				</div>
+				<div class="box02">
+					<span>申请条件</span><br />22-55岁中国公民<br />在现单位工作满3个月<br />月收入2000元以上<br />身份证<br />个人信用报告<br />劳动合同或在职证明<br />近3个月工资卡银行流水
+				</div>
+				<div class="btn">
+					<ui:fragment rendered="#{empty loginUserInfo.loginUserId}">
+						<a href="javascript:void(0)" onclick="return login()">立即申请</a>
+					</ui:fragment>
+					<ui:fragment rendered="#{not empty loginUserInfo.loginUserId}">
+						<ui:fragment rendered="#{empty userHome.instance.realname}">
+							<a href="javascript:void(0)" onclick="return getInvestorPer()">立即申请</a>
+						</ui:fragment>
+						<ui:fragment rendered="#{not empty userHome.instance.realname}">
+							<a href="#{path}/user/applyLoan/personal">立即申请</a>
+						</ui:fragment>
+					</ui:fragment>
+				</div>
+			</div>
+			<div class="center">
+				<div class="center_box">
+					<div class="center_box_01 center_box02">
+						<span class="font30">借款额度</span><br /> <span class="font30">￥3000-500000元</span>
+					</div>
+					<div class="center_box_01">
+						<span class="font40">10-24</span>%<br />年化收益率
+					</div>
+					<div class="center_box_01">
+						<span class="font24">3、6、9、12、18、24</span>个月<br />借款期限
+					</div>
+					<div class="center_box_01">
+						<span class="font40">1-3</span>天<br />审核时间
+					</div>
+					<div class="center_box_01 last">
+						<span class="font24">等额本息按月还款</span><br />还款方式
+					</div>
+				</div>
+			</div>
+			<div class="right">
+				<div class="box01">
+					<span>企业经营</span><br />适用私营企业主
+				</div>
+				<div class="box02">
+					<span>申请条件</span><br />22-55岁中国公民<br />企业经营满一年<br />申请人限于法人代表<br />身份证<br />个人信用报告<br />经营证明<br />近6个月常用银行卡流水
+				</div>
+				<div class="btn">
+					<ui:fragment rendered="#{empty loginUserInfo.loginUserId}">
+						<a href="javascript:void(0)" onclick="return login()">立即申请</a>
+					</ui:fragment>
+					<ui:fragment rendered="#{not empty loginUserInfo.loginUserId}">
+							<a href="#{path}/user/applyLoan/enterprise">立即申请</a>
+					</ui:fragment>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

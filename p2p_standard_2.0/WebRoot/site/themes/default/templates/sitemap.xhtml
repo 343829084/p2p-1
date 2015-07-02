@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link type="text/css" rel="stylesheet" href="#{tplVars.themeStylePath}/map.css"/>
+<link type="text/css" rel="stylesheet"	href="#{tplVars.themeStylePath}/style.css" />
+<link type="text/css" rel="stylesheet"  href="#{tplVars.themeStylePath}/common.css" />
+
+<title>好友来投 </title>
+</head>
+
+<body>
+
+<ui:include src="header.xhtml"></ui:include>
+<div class="map-all">
+   <div class="map-title">
+   	<a href="#{path}">首页</a>&gt; <span><a href="#{request.contextPath}/sitemap">网站地图</a></span>
+
+   </div>
+   <div class="map-content-all">
+   <div class="map-content">
+     <div class="map-content-sy">
+        <span><a href="#{path}">网站首页</a></span>
+     </div>
+     <div class="map-content-sy-01">
+        <ul style="padding-left:10px;">
+           <li><a href="#{request.contextPath}/memberLoginPage">登陆</a></li>
+           <li><a href="#{request.contextPath}/register">注册</a></li>
+           <li><a href="#{request.contextPath}/term/ptjs">新手指引</a></li>
+           <li><a href="#{request.contextPath}/term/hybzjh">安全保障</a></li>
+           <li><a href="#{request.contextPath}/term/gsjj">关于我们</a></li>
+           <li><a href="#{request.contextPath}/node/falvshengming/wangzhanshengming">网站声明</a></li>
+           <li><a href="#{request.contextPath}/node/falvshengming/mianzeshengming">免责声明</a></li>
+           <li><a href="#{request.contextPath}/node/falvshengming/yinsitiaokuan">隐私条款</a></li> 
+        </ul>
+      </div>
+    </div>
+     <div class="map-content">
+     <div class="map-content-sy">
+        <span><a href="#{request.contextPath}/p2p_loan-list">我要投资</a></span>
+     </div>
+     <div class="map-content-sy-01">
+        <ul style="padding-left:10px;">
+           <li><a href="#{request.contextPath}/p2p_loan-list">个人投资</a></li>
+           <li><a href="#{request.contextPath}/loan-list">企业投资</a></li>
+        </ul>
+      </div>
+     </div>
+     <div class="map-content">
+     <div class="map-content-sy">
+        <span><a href="#{request.contextPath}/loanTransfer">我要融资</a></span>
+     </div>
+     <div class="map-content-sy-01">
+        <ul style="padding-left:10px;">
+           <li><a href="#{request.contextPath}/user/applyLoan/personal">个人融资</a></li>
+           <li><a href="#{request.contextPath}/user/applyLoan/enterprise">企业融资</a></li>
+        </ul>
+      </div>
+     </div>
+     <div class="map-content-1">
+     <div class="map-content-1-sy">
+        <span><a href="#{request.contextPath}/user/center">账户中心</a></span>
+     </div>
+     <div class="map-content-1-sy-01">
+        <ul style="padding-left:10px;">
+           <li><a href="#"></a></li>
+           <li><a href="#"></a></li>
+        </ul>
+      </div>
+     </div>
+     <div class="map-content">
+     <div class="map-content-sy">
+        <span><a href="#{request.contextPath}/term/dongtai">好友公告</a></span>
+     </div>
+     <div class="map-content-sy-01">
+        <ul style="padding-left:10px;">
+           <li><a href="#{request.contextPath}/term/dongtai">公司动态</a></li>
+           <li><a href="#{request.contextPath}/term/meitibaogao">媒体报道</a></li>
+           <li><a href="#{request.contextPath}/term/fabiaoyugao">发标预告</a></li>
+           <li><a href="#{request.contextPath}/term/wangzhangonggao">平台活动</a></li>
+        </ul>
+      </div>
+     </div>
+     <div class="map-content">
+     <div class="map-content-sy">
+        <span ><a href="#{request.contextPath}/nav_term/tzlc">投资理财</a></span>
+     </div>
+     <div class="map-content-sy-01">
+        <ul style="padding-left:10px;">
+           <li><a href="#{request.contextPath}/tzlc/list/lcgs">理财故事</a></li>
+           <li><a href="#{request.contextPath}/tzlc/list/lcgl">理财攻略</a></li>
+        </ul>
+      </div>
+     </div>
+      <div class="map-content">
+     <div class="map-content-sy">
+        <span ><a href="#{request.contextPath}/nav_wdbk/wdbk">网贷百科</a></span>
+     </div>
+     <div class="map-content-sy-01">
+        <ul style="padding-left:10px;">
+           <li><a href="#{request.contextPath}/wdbk/list/rmct">热门词条</a></li>
+           <li><a href="#{request.contextPath}/wdbk/list/wlsy">网贷名词</a></li>
+           <li><a href="#{request.contextPath}/wdbk/list/ptgc">名人介绍</a></li>
+           <li><a href="#{request.contextPath}/wdbk/list/2015n">网贷事件</a></li>
+        </ul>
+      </div>
+     </div>
+     <div class="map-content">
+     <div class="map-content-sy">
+        <span>其他</span>
+     </div>
+     <div class="map-content-sy-01">
+        <ul style="padding-left:10px;">
+           <li><a href="#{request.contextPath}/term/xwzc">新闻政策</a></li>
+           <li><a href="#{request.contextPath}/term/hydt">行业动态</a></li>
+           <li><a href="#{request.contextPath}/term/hlwjr">互联网金融</a></li>
+           <li><a href="#{request.contextPath}/nav/jrjc">金融基础</a></li>
+        </ul>
+      </div>
+     </div>
+  
+   </div>  
+  </div>
+  <div class="footer">
+  
+  <ui:include src="footer.xhtml"></ui:include>
+  </div>
+</body>
+</html>

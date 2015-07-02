@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	<head>
+<link rel="stylesheet" href="#{tplVars.themeCssPath}/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="#{tplVars.themeCssPath}/bootstrap-theme.min.css" />
+<script src="#{tplVars.themeJSPath}/jquery.min.js"></script>
+<script src="#{tplVars.themeJSPath}/bootstrap.min.js"></script>
+<f:metadata>
+	<f:viewParam name="id" value="#{loanHome.id}"></f:viewParam>
+</f:metadata>
+<ui:param name="loan" value="#{loanHome.instance}"></ui:param>
+
+<ui:insert name="header">
+	<ui:include src="template/header.xhtml"></ui:include>
+</ui:insert>
+<f:metadata>
+	<f:viewParam name="loanStatus" value="#{loanList.example.status}"></f:viewParam>
+</f:metadata>
+	</head>
+
+	<body>
+		<div data-role="page" id="pagetwo">
+			<div data-role="header" data-position="fixed" data-theme="b">
+				<a href="#pageone" data-icon="arrow-l" data-rel="back" data-iconpos="notext"
+					data-direction="reverse"></a>
+				<h1>贷款详情</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<f:event type="preRenderView"
+					listener="#{borrowerInfoHome.setId(loan.user.id)}"></f:event>
+				<div data-role="content">
+					<ul data-role="listview" data-inset="true">
+						<li data-role="list-divider"></li>
+						<li>
+							<h1>
+								#{loan.name}
+								<ui:fragment rendered="#{empty loan.riskLevel}">
+									<img  
+									src="#{tplVars.themeImagePath}/index/HR.png" />
+								</ui:fragment>
+
+								<ui:fragment rendered="#{not empty loan.riskLevel}">
+									<img style="padding-left:60%;"
+										src="#{tplVars.themeImagePath}/index/#{loan.riskLevel}.png"
+										 />
+								</ui:fragment>
+							</h1>
+							<p>
+								借款金额:<span>#{loan.loanMoney}元</span>
+							</p>
+							<p>
+								年化利率:<span>#{loan.ratePercent}%</span>
+							</p>
+							<p>
+								借款期限:<span>#{loan.deadline*loan.type.repayTimePeriod}(#{dictUtil.getValue('repay_unit',loan.type.repayTimeUnit)})</span>
+							</p>
+							<p>
+								已投金额:<span>#{loan.loanMoney-loanCalculator.calculateMoneyNeedRaised(loan.id)}元</span>
+							</p>
+
+							<p>
+
+								<ui:fragment rendered="#{loan.status != 'raising'}">
+											项目进度:	<h:outputText rendered="#{loan.status !='raising'}"
+										value="#{dictUtil.getValue('loan',loan.status)}">
+									</h:outputText>
+									<div class="progress">
+										<div
+											class="progress-bar progress-bar-success progress-bar-striped"
+											role="progressbar" aria-valuenow="#{cr}" aria-valuemin="0"
+											aria-valuemax="100" style="width:100%;">100%</div>
+									</div>
+								</ui:fragment>
+
+								<ui:fragment rendered="#{loan.status eq 'raising'}">
+									<ui:param name="cr"
+										value="#{loanCalculator.calculateRaiseCompletedRate(loan.id)}"></ui:param>	项目进度:	#{cr}
+									
+									<div class="progress">
+										<div
+											class="progress-bar progress-bar-success progress-bar-striped"
+											role="progressbar" aria-valuenow="#{cr}" aria-valuemin="0"
+											aria-valuemax="100" style="width:#{cr};">#{cr}</div>
+									</div>
+								</ui:fragment>
+
+							</p></li>
+						<li data-role="list-divider"><a
+							href="#{path}tender/#{loan.id}" data-transition="slide">投资列表</a>
+						</li>
+					</ul>
+					<div data-role="collapsible">
+						<h4>借款说明</h4>
+						<ul data-role="listview">
+							<li>
+								<p style="white-space:normal;">#{loan.description}</p>
+							</li>
+						</ul>
+					</div>
+					<div data-role="collapsible">
+						<h4>借款者详情</h4>
+						<div class="xq-left">
+							<ul data-role="listview">
+								<li>
+									<p>
+										用户名:<span>#{stringHome.ellipsis(loan.user.username,5)}
+											#{stringHome.ellipsis(loan.user.area.name ,10)}</span>
+									</p>
+
+
+									<p>
+										公司规模:<span>#{borrowerInfoHome.instance.borrowerAdditionalInfo.companySize}人</span>
+									</p>
+									<p>
+										工作收入:<span>#{borrowerInfoHome.instance.borrowerAdditionalInfo.monthlyIncome}/月</span>
+									</p>
+									<p>
+										是否购房:<span>#{borrowerInfoHome.instance.borrowerPersonalInfo.hasHouse}</span>
+									</p>
+									<p>
+										是否购车:<span>#{borrowerInfoHome.instance.borrowerPersonalInfo.hasCar}</span>
+									</p>
+								</li>
+							</ul>
+						</div>
+						<div class="xq-right">
+							<ul data-role="listview">
+								<li>
+									<p>
+										性别:<span>#{dictUtil.getValue('user_sex',borrowerInfoHome.instance.user.sex)}</span>
+									</p>
+									<p>
+										婚姻状况:<span>#{borrowerInfoHome.instance.borrowerPersonalInfo.marriageInfo}</span>
+									</p>
+									<p>
+										职位:<span>#{borrowerInfoHome.instance.borrowerAdditionalInfo.job}</span>
+									</p>
+									<p>
+										有无房贷:<span>#{borrowerInfoHome.instance.borrowerPersonalInfo.hasHousingLoan}</span>
+									</p>
+									<p>
+										有无车贷:<span>#{borrowerInfoHome.instance.borrowerPersonalInfo.hasCarLoan}</span>
+									</p></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+				<ui:insert name="footcontent">
+					<ui:include src="template/footer.xhtml"></ui:include>
+				</ui:insert>
+			</div>
+
+		</div>
+
+	</body>
+</ui:composition>

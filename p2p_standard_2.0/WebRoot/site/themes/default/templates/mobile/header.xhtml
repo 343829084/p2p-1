@@ -1,0 +1,55 @@
+<ui:component xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	<script type="text/javascript">
+					$(function(){
+						$(".btn-fl").click(function(){
+							$(".nav").toggle();
+						});
+					});
+	</script>
+	<div class="nbox">
+		<div class="login-box">
+			<ui:fragment rendered="#{empty loginUserInfo.loginUserId}">
+				<p class="loginer">
+					<a href="#{path}/memberLoginMobile">登录</a>
+				</p>
+				<p class="regsiter">
+					<a href="#{path}/mobile/register">免费注册</a>
+				</p>
+			</ui:fragment>
+			<ui:fragment rendered="#{not empty loginUserInfo.loginUserId}">
+				<p class="loginer">
+					<a href="#{path}/mobile/user/center">#{loginUserInfo.loginUserId}</a>
+				</p>
+				<p class="regsiter">
+					<a href="#{path}/user/logout">退出</a>
+				</p>
+			</ui:fragment>
+		</div>
+		<div class="logo">
+			<a href="#{path}/mobile"><img width="191" height="53" class="logo-img" src="#{tplVars.themeImagePath}/mobile/logo.png"/></a>
+			<div id="nav">
+				<ul class="topnav">
+					<li>
+						<a class="btn-fl" href="javascript:void(0)">
+							<img width="78" height="80" alt="" src="#{tplVars.themeImagePath}/mobile/btn.png"/>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="nav">
+	    <ul>
+	         <li style="width:auto;float:left;"><a href="#{path}/mobile/loanList">我要投资</a></li>
+	         <li style="width:auto;float:left;"><a href="#{path}/mobile/user/center">我的账户</a></li>
+<!-- 	         <li><a href="javascript:void(0)">安全保障</a></li> -->
+	     </ul>
+	     <div style="clear:both;"></div>
+	</div>
+</ui:component>

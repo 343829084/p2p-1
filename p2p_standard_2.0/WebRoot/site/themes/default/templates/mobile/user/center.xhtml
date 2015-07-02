@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="template.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="userContent">
+		<div class="date">
+			<div class="date02">
+				<div class="date_p">
+					<div class="l">用户名：</div>
+					<div class="r">
+						<span class="blue">#{loginUserInfo.loginUserId}</span>
+					</div>
+				</div>
+				<div class="date_p">
+					<div class="l">可用余额：</div>
+					<div class="r">
+						<span>
+							<h:outputLabel value="#{userBillHome.getBalanceByUserId(loginUserInfo.loginUserId)}">
+								<f:convertNumber type="number" pattern="#,###.##" />
+							</h:outputLabel>
+						</span>元
+					</div>
+				</div>
+				<div class="date_p">
+					<div class="l">冻结金额：</div>
+					<div class="r">
+						<span>
+							<h:outputLabel value="#{userBillHome.getFrozenMoneyByUserId(loginUserInfo.loginUserId)}">
+								<f:convertNumber type="number" pattern="#,###.##" />
+							</h:outputLabel>
+						</span>元
+					</div>
+				</div>
+				<div class="date_p">
+					<div class="l">投资总额：</div>
+					<div class="r">
+						<span>
+							<h:outputText value="#{investStatistics.getReceivedCorpus(loginUserInfo.loginUserId)+investStatistics.getReceivableCorpus(loginUserInfo.loginUserId)}">
+								<f:convertNumber type="number" pattern="#,###.##" />
+							</h:outputText>
+						</span>元
+					</div>
+				</div>
+				<div class="date_p">
+					<div class="l">已获收益：</div>
+					<div class="r">
+						<span>
+							<h:outputLabel value="#{investStatistics.getReceivedInterest(loginUserInfo.loginUserId)}">
+								<f:convertNumber type="number" pattern="#,###.##" />
+							</h:outputLabel>
+						</span>元
+					</div>
+				</div>
+				<div class="date_p">
+					<div class="l">待收本息：</div>
+					<div class="r">
+						<span>
+							<h:outputLabel value="#{investStatistics.getReceivableCorpus(loginUserInfo.loginUserId)+investStatistics.getReceivableInterest(loginUserInfo.loginUserId)}">
+								<f:convertNumber type="number" pattern="#,###.##" />
+							</h:outputLabel>
+						</span>元
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="more">
+			<div class="more_title">
+				<p>最近投资</p>
+				<a href="#{path}/mobile/user/invests">更多</a>
+			</div>
+			<div class="more_p">
+				<f:event type="preRenderComponent" listener="#{investList.addOrder('invest.time','desc')}"></f:event>
+				<f:event type="preRenderComponent" listener="#{investList.setPageSize(1)}"></f:event>
+				<f:event type="preRenderComponent" listener="#{investList.example.user.setId(loginUserInfo.loginUserId)}"></f:event>
+				<ui:param name="restriction" value="#{'(invest.status!=\''}#{InvestStatus.CANCEL}#{'\')'}"></ui:param>
+				<ui:repeat var="invest" value="#{investList.lazyModelData}">
+					<ui:param name="loan" value="#{invest.loan}"></ui:param>
+					<a href="#{path}/mobile/loanDetail/#{loan.id}">#{loan.name}</a><br/>投资时间：
+					<h:outputText value="#{invest.time}">
+						<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8" />
+					</h:outputText>
+					<br/>投资金额： 
+					<span>
+						<h:outputText value="#{invest.investMoney}">
+							<f:convertNumber type="number" pattern="#,###" />
+						</h:outputText>
+					</span>元<br/>
+					<span>#{loan.ratePercent}</span>%&#160;&#160;&#160;<span>#{loan.deadline*loan.type.repayTimePeriod}</span>(#{dictUtil.getValue('repay_unit',loan.type.repayTimeUnit)})&#160;&#160;&#160;<span>#{dictUtil.getValue('invest_status', invest.status)}</span>
+				</ui:repeat>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

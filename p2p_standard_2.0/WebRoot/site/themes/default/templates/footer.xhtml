@@ -1,0 +1,103 @@
+<ui:component xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	<script>
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script',
+				'//www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', 'UA-51323496-1', 'haoyoulaitou.com');
+		ga('send', 'pageview');
+	</script>
+	<link type="text/css" rel="stylesheet"
+			href="#{tplVars.themeStylePath}/style.css" />
+	<link type="text/css" rel="stylesheet"
+			href="#{tplVars.themeStylePath}/pates.css" />
+	<div id="Footer">
+		<div class="foot">
+			<dl class="lx">
+				<dt>联系我们</dt>
+				<dd>#{configHome.getConfigValue('zdhtAddress')}</dd>
+				<dd>#{configHome.getConfigValue('zdhtEmail')}</dd>
+				<dd>#{configHome.getConfigValue('zdhtNum')}</dd>
+				<dd>#{configHome.getConfigValue('site_phone')}</dd>
+			</dl>
+			<dl>
+				<dt>新手指引</dt>
+					<dd>	<a  href="#{request.contextPath}/node/pingtaiyuanli/pingtaiyuanli00001" title="平台原理" target="_blank">平台原理</a></dd>
+					<dd>	<a  href="#{request.contextPath}/node/xszy/faqijiekuan" title="我要融资" target="_blank">我要融资</a></dd>
+					<dd>	<a  href="#{request.contextPath}/node/feilvshuoming/zifei00001" title="费率说明" target="_blank">费率说明</a></dd>
+					<dd>	<a  href="#{request.contextPath}/sitemap" title="站点地图" target="_blank">网站地图</a></dd>
+								
+			</dl>
+			<dl style="margin-right:0">
+				<dt>法律声明</dt>
+				<ui:repeat var="t"
+					value="#{menuList.getMenusByParentId('falvshengming')}">
+					<ui:fragment rendered="#{t.enable=='1'}">
+						<dd class="#{servletPath == t.url ? 'hover':''}">
+							<a href="#{path}#{t.url}" title="#{t.label}" target="#{t.target}" rel="nofollow">#{t.label}</a>
+						</dd>
+					</ui:fragment>
+				</ui:repeat>
+			</dl>
+			<div class="clear"></div>
+			<div class="foot_bq">
+				<p>
+					<a href="http://weibo.com/5190783969/manage" target="_blank" rel="nofollow"><img
+						src="#{tplVars.themeImagePath}/index/weibo.jpg" /></a>
+				</p>
+				<p>
+					<a href="#" rel="nofollow">
+						<img src="#{tplVars.themeImagePath}/index/weixin.jpg"  onmouseover="$('.erweima').show()" onmouseout="$('.erweima').hide()"/>
+					</a>
+				</p>
+				<p style="display: none;" class="erweima">
+					<img src="#{tplVars.themeImagePath}/index/a61.jpg" />
+				</p>
+				<span>好友来投信息科技（北京）有限公司</span>
+				
+				<p style="width:100px;margin-left: -300px;padding-top: 12px;">
+				<script type="text/javascript">
+				var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254192497'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1254192497%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+					
+				</p>
+			<p style="margin-left: 12px; margin-top: 16px;">
+				
+	            <script type="text/javascript">(function(){document.getElementById("___szfw_logo___").oncontextmenu = function(){return false;}})();</script>
+			</p>
+			</div>
+			<div class="clear"></div>
+			<div class="renzheng">
+			    <a href="http://www.itrust.org.cn/yz/pjwx.asp?wm=1397744664"  target='_blank'><img src="#{tplVars.themeImagePath}/ren 0.png" onmouseover="this.src='#{tplVars.themeImagePath}/renhover 0.png'" onmouseout="this.src='#{tplVars.themeImagePath}/ren 0.png'"/></a>
+				<a href="https://search.szfw.org/cert/l/CX20150117006825006525"  target='_blank'><img src="#{tplVars.themeImagePath}/ren 1.png" onmouseover="this.src='#{tplVars.themeImagePath}/renhover 1.png'" onmouseout="this.src='#{tplVars.themeImagePath}/ren 1.png'"/></a>
+				<a href="http://www.anquan.org"  target='_blank'><img src="#{tplVars.themeImagePath}/ren 2.png" onmouseover="this.src='#{tplVars.themeImagePath}/renhover 2.png'" onmouseout="this.src='#{tplVars.themeImagePath}/ren 2.png'"/></a>
+				<a href="http://www.12377.cn/"  target='_blank'><img src="#{tplVars.themeImagePath}/ren 3.png" onmouseover="this.src='#{tplVars.themeImagePath}/renhover 3.png'" onmouseout="this.src='#{tplVars.themeImagePath}/ren 3.png'"/></a>
+				<a href="http://www.bj.cyberpolice.cn/index.jsp"  target='_blank'><img src="#{tplVars.themeImagePath}/ren 4.png" onmouseover="this.src='#{tplVars.themeImagePath}/renhover 4.png'" onmouseout="this.src='#{tplVars.themeImagePath}/ren 4.png'"/></a>
+				<a href="http://www.bjwhzf.gov.cn/accuse.do"  target='_blank'><img src="#{tplVars.themeImagePath}/ren 5.png" onmouseover="this.src='#{tplVars.themeImagePath}/renhover 5.png'" onmouseout="this.src='#{tplVars.themeImagePath}/ren 5.png'"/></a>
+				<a href="http://www.bjjubao.org/"  target='_blank'><img src="#{tplVars.themeImagePath}/ren 6.png" onmouseover="this.src='#{tplVars.themeImagePath}/renhover 6.png'" onmouseout="this.src='#{tplVars.themeImagePath}/ren 6.png'"/></a>
+				<a href="http://www.bnia.cn/"  target='_blank'><img src="#{tplVars.themeImagePath}/ren 7.png" onmouseover="this.src='#{tplVars.themeImagePath}/renhover 7.png'" onmouseout="this.src='#{tplVars.themeImagePath}/ren 7.png'"/></a>
+			</div>
+		</div>
+	</div> 
+
+	<div class="nav_01">
+			<img src="#{tplVars.themeImagePath}/index/htzj-btn1.png" onmouseout="this.src='#{tplVars.themeImagePath}/index/htzj-btn1.png'" onmouseover="this.src='#{tplVars.themeImagePath}/index/htzj-btn.png'" onclick="javascript:window.open('http://b.qq.com/webc.htm?new=0&amp;sid=800058591&amp;eid=2188z8p8p8p8R8z8R808q&amp;o=www.haoyoulaitou.com&amp;q=7&amp;ref=http://www.haoyoulaitou.com/','_blank', 'height=544, width=644,toolbar=no,scrollbars=no,menubar=no,status=no')" style="width: 54px;height: 157px;cursor: pointer; margin-right:-1px;"/> 
+    </div>
+    <div class="share">
+		<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"220"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"24"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+	</div>
+    
+</ui:component>

@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>好友来投</title>
+<link rel="stylesheet" href="#{tplVars.themeCssPath}/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="#{tplVars.themeCssPath}/bootstrap-theme.min.css" />
+<script src="#{tplVars.themeJSPath}/jquery.min.js"></script>
+<script src="#{tplVars.themeJSPath}/bootstrap.min.js"></script>
+
+<ui:insert name="footcontent">
+	<ui:include src="template/header.xhtml"></ui:include>
+</ui:insert>
+	</head>
+	<body>
+		<div data-role="page" id="index1">
+			<div data-role="header" data-position="fixed" data-theme="b" data-add-back-btn="true">
+			 <a href="#" data-role="button" data-rel="back" data-mini="true" class="fhbtn">返回</a>
+				<h1>我的投资</h1>
+			</div>
+
+			<table class="table table-hover">
+
+				<thead>
+					<tr>
+						<th>项目名称</th>
+						<th>投资金额/待收本息</th>
+						<th>年利率</th>
+						<th>进度</th>
+					</tr>
+				</thead>
+				<tbody>
+					<f:event type="preRenderComponent"
+						listener="#{investList.example.user.setUsername(loginUserInfo.loginUserId)}"></f:event>
+					<ui:repeat var="invest" value="#{investList.lazyModelData}"
+						varStatus="status">
+						<tr>
+							<td>#{stringHome.ellipsis(invest.loan.name,5)}</td>
+							<td><h:outputText value="#{invest.money}">
+									<f:convertNumber />
+								</h:outputText> / <h:outputText value="#{invest.repayRoadmap.unPaidMoney}">
+									<f:convertNumber maxFractionDigits="2" />
+								</h:outputText> 元</td>
+							<td><h:outputText value="#{invest.rate}">
+									<f:convertNumber type="percent" minFractionDigits="2" />
+								</h:outputText>
+							</td>
+							<td><f:event type="preRenderComponent"
+									listener="#{loanList.addOrder('field(loan.status,\'筹款中\')','desc')}"></f:event>
+								<ui:param name="cr"
+									value="#{loanCalculator.calculateRaiseCompletedRate(invest.loan.id)}"></ui:param>
+								<div
+									class="progress-bar progress-bar-success progress-bar-striped"
+									role="progressbar" aria-valuenow="#{cr}" aria-valuemin="0"
+									aria-valuemax="100" style="width:#{cr}%;">#{cr}%</div>
+							</td>
+						</tr>
+
+					</ui:repeat>
+				</tbody>
+			</table>
+			<ui:insert name="footcontent">
+				<ui:include src="template/footer.xhtml"></ui:include>
+			</ui:insert>
+		</div>
+	</body>
+</ui:composition>

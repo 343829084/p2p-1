@@ -1,0 +1,49 @@
+<ui:component xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+<head>
+<meta name="viewport"
+	content="width=device-width,user-scalable=no" />
+</head>
+ <!--
+	<div class="down-nav footer">
+	  
+		<ul>
+			<li><a href="#{request.contextPath}/weixin/projectlist">项目</a>
+			</li>
+			<li><a href="#{request.contextPath}/weixin/article">好友计划</a>
+			</li>
+			<li><a href="#{request.contextPath}/weixin/user/index">账户</a>
+			</li>
+			<li style="border-right:2px solid #496278;"><a style="border-right:2px solid #496278;" href="#{request.contextPath}/weixin/weixinjisuanqi">理财小工具</a>
+			</li>
+		</ul>
+		
+		
+		
+	</div>
+ -->
+
+	<div data-role="footer" data-position="fixed" data-theme="b">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#{request.contextPath}/weixin/projectlist"
+					data-role="button" data-icon="grid">项目</a>
+				</li>
+				<li><a href="#{request.contextPath}/weixin/article"
+					data-role="button" data-icon="home">好友计划</a>
+				</li>
+				<li><a href="#{request.contextPath}/weixin/user/index"
+					data-role="button" data-icon="star">账户</a>
+				</li>
+				<li style="border-right:2px solid #496278;"><a
+					href="#{request.contextPath}/weixin/weixinjisuanqi"
+					data-role="button" data-icon="gear">理财小工具</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</ui:component>

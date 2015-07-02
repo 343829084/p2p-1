@@ -1,0 +1,91 @@
+/*----
+	Author: W3layouts
+	Author URL: http://w3layouts.com
+	License: Creative Commons Attribution 3.0 Unported
+	License URL: http://creativecommons.org/licenses/by/3.0/
+---*/
+/* reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
+ol,ul{list-style:none;margin:0px;padding:0px;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+table{border-collapse:collapse;border-spacing:0;}
+/* start editing from here */
+a{text-decoration:none;}
+a:active{color:#fff;}
+img{max-width:100%;}
+/* reset */
+body{width:100%;padding:0;margin:0;font-family:font-family:"Microsoft YaHei","Lucida Sans Unicode","Myriad Pro","Hiragino Sans GB","Heiti SC","Verdana","simsun";;font-size: 100%;background:#fff;
+}
+/*-------top-nav--------*/
+.top-nav{ 
+font-size:1.2em; color:#fff; height:2.4em; line-height:2.4em; text-align:center; background:#063f5c; position:relative;}
+/*-------services--------*/
+.all{width:96%;border:1px solid #ccc; box-shadow:1px 1px 2px #666;text-align:center;
+padding:0.5em 0;margin-left:2%;height: 100%;margin-top: 2%;
+font-family:"Microsoft YaHei","Lucida Sans Unicode","Myriad Pro","Hiragino Sans GB","Heiti SC","Verdana","simsun";}
+/*涓婇潰*/
+.zong-up{border-bottom:1px solid #ccc;width:0;height:115px; display:block;margin-left:6%;}
+.zong-up dl{font-size:12px;color: #8b8a8a;display:block;line-height:24px;}
+.zong-up dl dd{width:250px;;height: 105px;margin-left: 15%;}
+.chongzhi{width:40%; line-height:30px; display:block;color:#fff;margin-left: 55%;font-size: 16px;font-weight: bold;height: 36px;}
+.chongzhi p{width:43%;background-color: #fb8426;border:2px solid #F60;box-shadow:2px 2px 2px #ccc;border-radius: 5px;float:left;}
+.chongzhi span{width:44%;margin-left:2%;background-color: #5dc8ff;border:2px solid #4eaee0;box-shadow:2px 2px 2px #ccc;border-radius: 5px;float:left;}
+/* 涓棿*/
+.zong-middle{;width:90%;height:190px; display:block;margin-left:5%;border-top: 1px solid #ccc;}
+.up-line{width: 100%;border-bottom: 1px solid #ccc;height: 60px;}
+.middle-line{width: 100%;border-bottom: 1px solid #ccc;height: 60px;}
+.down-line{width: 100%;border-bottom: 1px solid #ccc;height: 60px;}
+
+.middle-up{height:60px;display: block; float: left;border-bottom: 1px solid #ccc;}
+.up-left{width:49%;float: left;margin-top: 10px;border-right: 2px solid #5DC8FF;line-height: 22px;}
+.up-left p{margin-right:45%;font-size: 16px;color:#353535;}
+.up-right{float: left;width: 30%;margin-top: 10px;padding-left: 10px;line-height: 22px;}
+.up-right p{font-size:16px;color:#353535;}
+
+.middle-middle{ height:60px; display:block;float: left;border-bottom: 1px solid #ccc;}
+.middle-left{width:49%;float: left;margin-top: 10px;border-right: 2px solid #5DC8FF;line-height: 22px;}
+.middle-left p{margin-right:45%;font-size: 16px;color:#353535;}
+.middle-right{float: left;width: 30%;margin-top: 10px;padding-left: 10px;line-height: 22px;}
+.middle-right p{font-size: 16px;color:#353535;}
+
+.middle-down{ height:60px; display:block;float: left;border-bottom: 1px solid #ccc;}
+.down-left{width:49%;float: left;margin-top: 10px;border-right: 2px solid #5DC8FF;line-height: 22px;}
+.down-left p{margin-right:45%;font-size: 16px;color:#353535;}
+.down-right{float: left;width: 30%;margin-top: 10px;padding-left: 10px;line-height: 22px;}
+.down-right p{font-size: 16px;color:#353535;}
+/*涓嬮潰*/
+.zong-down{width:90%;margin-left:5%;height:130px; display:block;}
+.shang{width:100%;height: 40px;font-size: 16px;}
+.down-up-left{width:49%;float: left;margin-top: 10px;line-height: 30px;background:#42BBFA;border-radius: 5px; 
+color: #fff;}
+.down-up-right{float: left;width:49%;margin-top: 10px;line-height: 30px;margin-left:3px;
+background:#42BBFA;border-radius: 5px;color: #fff;}
+
+.xia{width:100%;height: 50px;font-size: 16px;}
+.down-down-left{width:49%;float: left;margin-top: 10px;line-height: 30px;background: #42BBFA;border-radius: 5px; text-align:center;
+color: #fff;}
+.down-down-right{float: left;width:49%;margin-top: 10px;line-height: 30px;margin-left:3px;
+background:#42BBFA;border-radius: 5px; text-align:center;color: #fff;}
+
+
+.down-nav{width:100%;height:45px; font-size:14px;font-weight:bold;list-style:none;background:#496278;line-height:45px;text-align:center;
+border-top:1px solid #000;position: fixed;bottom: 0;}
+.down-nav li{float:left;margin-right:1px;width:24%;display:block;background:#496278;color:#fff;}
+.down-nav li a{ text-decoration:none; display:block;color:#fff;border-right:1px solid #000;}
+.top-nav li a:hover { display:block;background-color:#F60}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

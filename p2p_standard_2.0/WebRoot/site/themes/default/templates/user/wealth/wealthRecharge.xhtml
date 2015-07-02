@@ -1,0 +1,141 @@
+<ui:composition template="../center.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:param name="activeCenterMenuUrl" value="/user/bankCardList"></ui:param>
+	<ui:param name="pnr_enable"
+		value="#{configHome.getConfigValue('pnrpay_enable') eq '1'}"></ui:param>
+	<ui:define name="center_right">
+	<link rel="stylesheet" type="text/css"
+			href="#{tplVars.themeStylePath}/tixian.css" />
+	
+		<!-- 	未实名认证 -->
+	<sec:ifNotGranted roles="user_wealth_attestation">
+			<script>
+				$.dialog
+						.alert(
+								'为了您的账户资金安全，请先进行实名认证!',
+								function() {
+									window.location.href = "#{path}/user/bankCardList";
+								});
+			</script>
+	</sec:ifNotGranted>
+<!-- 	已实名认证 -->
+	<sec:ifAllGranted roles="user_wealth_attestation">
+		<script>
+			//<![CDATA[
+				$(function() {
+						    var radioWrap1 = document.getElementById("radio_wrap1"),
+				        li = radioWrap1.getElementsByTagName("li");
+				  
+				    for(var i = 0; i < li.length; i++){
+				        li[i].onclick = function() {
+				            for(var i = 0; i < li.length; i++){
+				                li[i].className = "";
+				            }
+				            this.className = "checked";
+				        }
+				    }
+					
+				});
+				
+				
+				
+				var pageChecking=true;
+				function toPage(){
+					if (pageChecking) {
+						window.location.href="#{path}/user/wealthRecharge";
+					} else {
+						window.location.href="#{path}/user/recharge";
+					}
+				}
+				function checkingNumber(e){
+					var keynum
+					var keychar
+					var numcheck
+					
+					if(window.event) // IE
+					  {
+					  keynum = e.keyCode
+					  }
+					else if(e.which) // Netscape/Firefox/Opera
+					  {
+					  keynum = e.which
+					  }
+					if(keynum==8){
+						return true;
+					}
+					keychar = String.fromCharCode(keynum)
+					numcheck = /^[0-9]\d*$/
+					return numcheck.test(keychar)
+				}
+				
+				//]]>
+			</script>
+			<h:form id="recharge">
+		<f:event type="preRenderComponent"
+			listener="#{userHome.setId(loginUserInfo.loginUserId)}"></f:event>
+		<div class="center_right">
+          <div class="zhczhyqzf">
+          <p>选择支付方式</p>
+          <span></span>
+          </div>
+          <div class="hyqmain-bank"> 
+          <div id="radio_wrap1">
+            <ul class="PT30">
+               <li class="c checked">
+                 <input type="radio" id="radio_a_01" name="radio_a" />
+			     <label for="radio_a_01"><img src="#{tplVars.themeImagePath}/zhifubao.png" alt=""/></label>
+               </li>
+               <li class="c">
+			    <input type="radio" id="radio_a_02" name="radio_a" />
+			     <label for="radio_a_02"><img src="#{tplVars.themeImagePath}/weixinzhifu.png" alt=""/></label>
+			    <i></i>
+		      </li>
+               <li class="c">
+			    <input type="radio" id="radio_a_03" name="radio_a" />
+			     <label for="radio_a_03"><img src="#{tplVars.themeImagePath}/yinlianzhifu.png" alt=""/></label>
+			    <i></i>
+		      </li>
+            </ul>
+            <ul class="zhifu">
+            <li>支付宝支付</li>
+            <li>微信支付</li>
+            <li>网银支付</li>
+            </ul>
+            <dl class="zffs">
+            <img src="#{tplVars.themeImagePath}/zfxz.png"/>
+            <p>您选择了支付宝支付</p>
+            <a href="#"><p style="text-decoration: underline;">查看银行充值限额</p></a>
+            </dl>
+           </div>
+           <div class="fsdown">
+           <p>账户余额：<span><h:outputLabel value="#{wealthStatistics.getBalanceByUserId(loginUserInfo.loginUserId)+wealthStatistics.getFrozenMoneyByUserId(loginUserInfo.loginUserId)+investStatistics.getReceivableCorpus(loginUserInfo.loginUserId)+investStatistics.getReceivableInterest(loginUserInfo.loginUserId)}">
+				<f:convertNumber type="currency" currencySymbol="￥" />
+			</h:outputLabel>元</span></p>
+         <!--   <input type="text" id="czmoney" name="money" onkeydown="return checkingNumber(event);" placeholder="请输入充值金额"/> -->
+           <h:inputText label="充值金额" styleClass="txt02 money"
+					class="czmoney" id="actualMoney" value="#{wealthRechargeHome.instance.actualMoney}" onkeydown="return checkingNumber(event);"
+							required="true"></h:inputText>
+          
+          
+           <h:commandLink style="display: block;float: left;width: 140px;height:32px;line-height: 32px;text-align: center;background: none repeat scroll 0% 0% #0A8FC7;
+           font-size: 16px;color: #FFF;font-weight: bold;float: left;margin-left: 10px;border-radius: 5px;-webkit-border-radius: 5px;-moz-border-radius: 5px;" 
+            styleClass="txczje02_btn" action="#{wealthRechargeHome.recharge}"  value="充值" >
+							</h:commandLink>
+           </div>
+          </div>
+       </div>
+		<div class="clear"></div>
+		</h:form>
+		</sec:ifAllGranted>
+	</ui:define>
+</ui:composition>

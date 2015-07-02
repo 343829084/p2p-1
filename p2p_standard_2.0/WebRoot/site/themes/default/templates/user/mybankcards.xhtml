@@ -1,0 +1,579 @@
+<ui:composition template="center.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<ui:param name="activeCenterMenuUrl" value="/user/bankCardList"></ui:param>
+	<ui:param name="pnr_enable" value="#{configHome.getConfigValue('pnrpay_enable') eq '1'}"></ui:param>
+	<ui:define name="center_right">
+	<!-- 	未实名认证 -->
+<!-- 			<script>
+				$.dialog
+						.alert(
+								'为了您的账户资金安全，请先进行实名认证!',
+								function() {
+									window.location.href = "#{path}/user/get_investor_permission";
+								});
+			</script>
+ --><!-- 	已实名认证 -->
+	<script>
+			//<![CDATA[
+				$(function() {
+					$(".datepicker").datepicker({
+						changeMonth : true,
+						changeYear : true,
+						yearRange : "1920:2020",
+						defaultDate:'2011-03-10'
+					});
+					
+					$(".datepicker").val(currentTime);
+				});
+				function currentTime(){
+				var d = new Date(),str = '';
+				 str += d.getFullYear()+'-';
+				 str  += d.getMonth() + 1+'-';
+				 str  += d.getDate();
+				return str;
+}
+				//]]>
+			</script>
+		<f:event type="preRenderComponent"
+			listener="#{userHome.setId(loginUserInfo.loginUserId)}"></f:event>
+		<div class="center_right">
+			<h:form id="form">
+				<div class="zhcz_h3">已添加银行卡</div>
+				<f:event type="preRenderView"
+						listener="#{bankCardList.example.user.setId(loginUserInfo.loginUserId)}"></f:event>
+					<f:event type="preRenderView"
+						listener="#{bankCardList.example.setStatus(BankCardStatus.BINDING)}"></f:event>
+					<f:event type="preRenderView"
+						listener="#{bankCardList.setPageSize(1000)}"></f:event>
+				<ui:param name="bankcard1" value="#{bankCardList.lazyModelData[0]}"></ui:param>
+				#{bankCardHome.setInstance(bankcard1)}
+				<!-- <ul class="yhkxx">
+					<f:event type="preRenderView"
+						listener="#{bankCardList.example.user.setId(loginUserInfo.loginUserId)}"></f:event>
+					<f:event type="preRenderView"
+						listener="#{bankCardList.example.setStatus(BankCardStatus.BINDING)}"></f:event>
+					<f:event type="preRenderView"
+						listener="#{bankCardList.setPageSize(1000)}"></f:event>
+					<ui:param name="bankcard1" value="#{bankCardList.lazyModelData[0]}"></ui:param>
+					#{bankCardHome.setInstance(bankcard1)}
+					<ui:repeat var="bankcard" value="#{bankCardList.lazyModelData}">
+						<li><div class="yhk"><img src="#{tplVars.themeImagePath}/banklogo/#{bankcard.bankNo}.png" />
+						<br/>
+						<ui:param name="bcnL" value="#{bankcard.cardNo.length()}"></ui:param>
+						<p>#{fn:substring(bankcard.cardNo,0,4)} **** **** #{fn:substring(bankcard.cardNo,bcnL-4,bcnL)}</p>
+						</div>
+						 <p:commandLink
+								actionListener="#{bankCardHome.setInstance(bankcard)}"
+								process="@this" update="@form" value="修改" styleClass="yhkxx_l" rendered="#{not pnr_enable}"></p:commandLink>
+							<p:commandLink onstart="return confirm('您确定要删除吗？');"
+								update="@form"
+								actionListener="#{bankCardHome.delete(bankcard.id)}"
+								process="@this" styleClass="yhkxx_r" value="删除"></p:commandLink>
+							<div class="clear"></div></li>
+					</ui:repeat>
+
+					<li><div class="yhk">
+							<p:commandLink actionListener="#{bankCardHome.setInstance(null)}"
+								onclick="$('form\\:recardNo').val('')" process="@this"
+								update="@form">
+								<img class="jia" src="#{tplVars.themeImagePath}/img46.png" />
+							</p:commandLink>
+						</div> <p:commandLink actionListener="#{bankCardHome.setInstance(null)}" rendered="#{not pnr_enable}"
+							onclick="$('form\\:recardNo').val('')" process="@this"
+							update="@form" styleClass="yhkxx_c" value="新增银行卡"></p:commandLink>
+						<p:commandLink actionListener="#{bankCardHome.save}" rendered="#{pnr_enable}" target="_blank" process="@this" ajax="false" styleClass="yhkxx_c" value="新增银行卡"></p:commandLink>
+						<div class="clear"></div></li>
+					<div class="clear"></div>
+				</ul> -->
+				
+				
+				
+				<sec:ifNotGranted roles="user_wealth_attestation">
+				<!-- <div class="zhcz_h3 zhcz_h302">新增银行卡</div> -->
+				<div class="txczje">
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>真实姓名
+						</div>
+						<div class="txczje_r">
+						<sec:ifNotGranted roles="INVESTOR">
+						<ui:fragment
+								rendered="#{empty userHome.instance.realname}">
+								<h:inputText
+								value="#{userHome.instance.realname}" label="真实姓名" required="true" 
+								styleClass="txt02 txt03" maxlength="200">
+								<f:ajax event="blur"></f:ajax>
+								</h:inputText>
+							</ui:fragment>
+						</sec:ifNotGranted>
+						<sec:ifAllGranted roles="INVESTOR">
+								#{fn:substring(userHome.instance.realname,0,1)}**
+						</sec:ifAllGranted>
+							
+							<!-- 						<span class="xzyhk">请添加相同开户行的银行卡</span> -->
+						</div>
+						<div class="clear"></div>
+					</div>
+					
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>性别
+						</div>
+						<div class="txczje_r">
+						<sec:ifNotGranted roles="INVESTOR">
+						<ui:fragment
+								rendered="#{empty userHome.instance.sex}">
+								
+								<h:selectOneMenu value="#{userHome.instance.sex}"
+								styleClass="date_select date_select03">
+								<f:selectItem
+									itemLabel="男" itemValue="M" />
+								<f:selectItem
+									itemLabel="女" itemValue="F" />
+								</h:selectOneMenu>
+								
+							</ui:fragment>
+							</sec:ifNotGranted>
+							<sec:ifAllGranted roles="INVESTOR">
+								#{dictUtil.getValue('user_sex',userHome.instance.sex)}
+							</sec:ifAllGranted>
+							
+						</div>
+						<div class="clear"></div>
+					</div>
+					
+					<!--Birthdate  -->
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>出生日期
+						</div>
+						<div class="txczje_r">
+						<sec:ifNotGranted roles="INVESTOR">
+						<ui:fragment
+								rendered="#{empty userHome.instance.birthday}">
+								<h:inputText value="#{userHome.instance.birthday}"
+										required="true" label="出生日期" styleClass="bdsj_txt datepicker">
+										<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8"
+											locale="zh_CN" />
+										<f:ajax event="blur" render="@this"></f:ajax>	
+									</h:inputText>
+								
+						</ui:fragment>
+						</sec:ifNotGranted>
+						<sec:ifAllGranted roles="INVESTOR">
+								<h:outputText value="#{userHome.instance.birthday}">
+									<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8" />
+								</h:outputText>
+						</sec:ifAllGranted>
+						</div>
+						<div class="clear"></div>
+					</div>					
+					<!--Birthdate  -->
+					
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>身份证号
+						</div>
+						<div class="txczje_r">
+							<sec:ifNotGranted roles="INVESTOR">
+						<ui:fragment
+								rendered="#{empty userHome.instance.idCard}">
+								<h:inputText
+								value="#{userHome.instance.idCard}" label="身份证号码" required="true"
+								styleClass="txt02 txt03" maxlength="200">
+								<archer:validateInputRule ruleId="input.idCard"></archer:validateInputRule>
+								<archer:validateAlreadyExist></archer:validateAlreadyExist>
+								<f:ajax event="blur" render="@this"></f:ajax>
+								</h:inputText>
+							</ui:fragment>
+							</sec:ifNotGranted>
+							<sec:ifAllGranted roles="INVESTOR">
+								#{fn:substring(userHome.instance.idCard,0,6)} **** **** ****
+								****
+						</sec:ifAllGranted>
+						
+							
+							
+							<!-- 						<span class="xzyhk">请添加相同开户行的银行卡</span> -->
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>选择银行
+						</div>
+						<div class="txczje_r">
+							<h:selectOneMenu value="#{bankCardHome.instance.bankNo}"
+								styleClass="date_select date_select03">
+								<f:selectItems value="#{rechargeList.rechargeBankCards}" var="bc" 
+									itemLabel="#{bc.bankName}" itemValue="#{bc.no}" />
+							</h:selectOneMenu>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="txczje02">
+						<div class="txczje_l">
+							开户行
+						</div>
+						<div class="txczje_r">
+							<h:inputText
+								value="#{bankCardHome.instance.name}" label="开户行"
+								styleClass="txt02 txt03" maxlength="200">
+								<f:ajax event="blur"></f:ajax>
+							</h:inputText>
+							<!-- 							<a href="#" class="txczje02_btn ss">搜索</a> -->
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>卡类型
+						</div>
+						<div class="txczje_r">
+							<h:selectOneMenu required="true"
+								value="#{bankCardHome.instance.bankCardType}" label="卡类型"
+								styleClass="txt02 txt03" >
+								<f:selectItem itemLabel="借记卡" itemValue="DEBIT" />	
+								<f:selectItem itemLabel="贷记(信用)卡" itemValue="CREDIT" />	
+							</h:selectOneMenu>
+							<!-- 							<a href="#" class="txczje02_btn ss">搜索</a> -->
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>服务类型
+						</div>
+						<div class="txczje_r">
+							<h:selectOneMenu required="true"
+								value="#{bankCardHome.instance.bankServiceType}" label="卡类型"
+								styleClass="txt02 txt03">
+								<f:selectItem itemLabel="对私" itemValue="C" />	
+								<f:selectItem itemLabel="对公" itemValue="B" />	
+							</h:selectOneMenu>
+							<!-- 							<a href="#" class="txczje02_btn ss">搜索</a> -->
+						</div>
+						<div class="clear"></div>
+					</div>
+						<div class="txczje02">
+							<div class="txczje_l">
+								<span>*</span>银行卡卡号
+							</div>
+							<div class="txczje_r">
+								<h:inputText id="cardNo" label="卡号" value="#{bankCardHome.instance.cardNo}"
+									onkeyup="this.value=this.value.replace(/\D/g,'')" maxlength="40"
+									styleClass="txt02 txt03">
+									<f:validateLength minimum="14" maximum="40"></f:validateLength>
+									<f:ajax event="blur" execute="@this recardNo reCardNoValidator "></f:ajax>
+								</h:inputText>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<o:validateEqual id="reCardNoValidator"
+							components="cardNo recardNo" showMessageFor="recardNo" 
+							message="两次输入卡号不一致"></o:validateEqual>
+						<div class="txczje02">
+							<div class="txczje_l">
+								<span>*</span>确认卡号
+							</div>
+							<div class="txczje_r">
+								<h:inputText id="recardNo" label="确认银行卡号"
+									styleClass="txt02 txt03" maxlength="40"
+									onkeyup="this.value=this.value.replace(/\D/g,'')"
+									required="true">
+									<f:validateLength minimum="14" maximum="40"></f:validateLength>
+									<f:ajax event="blur" execute="@this cardNo reCardNoValidator "></f:ajax>
+								</h:inputText>
+							</div>
+							<div class="clear"></div>
+						</div>
+						</div>
+				</sec:ifNotGranted>
+				
+				
+				
+				
+				
+				<sec:ifAllGranted roles="user_wealth_attestation">
+				<!-- <div class="zhcz_h3 zhcz_h302">新增银行卡</div> -->
+				<div class="txczje">
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>真实姓名
+						</div>
+						<div class="txczje_r">
+						<ui:fragment
+								rendered="#{empty userHome.instance.realname}">
+								<h:inputText
+								value="#{userHome.instance.realname}" label="真实姓名" required="true" 
+								styleClass="txt02 txt03" maxlength="200">
+								<f:ajax event="blur"></f:ajax>
+								</h:inputText>
+							</ui:fragment>
+							<ui:fragment
+								rendered="#{not empty userHome.instance.realname}">
+								#{fn:substring(userHome.instance.realname,0,1)}**
+							</ui:fragment>
+						
+							
+							<!-- 						<span class="xzyhk">请添加相同开户行的银行卡</span> -->
+						</div>
+						<div class="clear"></div>
+					</div>
+					
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>性别
+						</div>
+						<div class="txczje_r">
+						<ui:fragment
+								rendered="#{empty userHome.instance.sex}">
+								
+								<h:selectOneMenu value="#{userHome.instance.sex}"
+								styleClass="date_select date_select03">
+								<f:selectItem
+									itemLabel="男" itemValue="M" />
+								<f:selectItem
+									itemLabel="女" itemValue="F" />
+								</h:selectOneMenu>
+								
+							</ui:fragment>
+							<ui:fragment
+								rendered="#{not empty userHome.instance.sex}">
+								#{dictUtil.getValue('user_sex',userHome.instance.sex)}
+							</ui:fragment>
+						
+							
+						</div>
+						<div class="clear"></div>
+					</div>
+					
+					<!--Birthdate  -->
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>出生日期
+						</div>
+						<div class="txczje_r">
+						<ui:fragment
+								rendered="#{empty userHome.instance.birthday}">
+								<h:inputText value="#{userHome.instance.birthday}"
+										required="true" label="出生日期" styleClass="bdsj_txt datepicker">
+										<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8"
+											locale="zh_CN" />
+											
+										<f:ajax event="blur" render="@this"></f:ajax>	
+									</h:inputText>
+								
+						</ui:fragment>
+						<ui:fragment
+								rendered="#{not empty userHome.instance.birthday}">
+								<h:outputText value="#{userHome.instance.birthday}">
+									<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8" />
+								</h:outputText>
+								
+						</ui:fragment>
+						
+						</div>
+						<div class="clear"></div>
+					</div>					
+					<!--Birthdate  -->
+					
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>身份证号
+						</div>
+						<div class="txczje_r">
+						
+						<ui:fragment
+								rendered="#{empty userHome.instance.idCard}">
+								<h:inputText
+								value="#{userHome.instance.idCard}" label="身份证号" required="true"
+								styleClass="txt02 txt03" maxlength="200">
+								<archer:validateInputRule ruleId="input.idCard"></archer:validateInputRule>
+								<archer:validateAlreadyExist></archer:validateAlreadyExist>
+								
+								<f:ajax event="blur" render="@this"></f:ajax>
+								</h:inputText>
+							</ui:fragment>
+						<ui:fragment
+								rendered="#{not empty userHome.instance.idCard}">
+								#{fn:substring(userHome.instance.idCard,0,6)} **** **** ****
+								****
+							</ui:fragment>
+						
+						
+							
+							
+							<!-- 						<span class="xzyhk">请添加相同开户行的银行卡</span> -->
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>选择银行
+						</div>
+						<div class="txczje_r">
+							<h:selectOneMenu value="#{bankCardHome.instance.bankNo}" disabled="true"
+								styleClass="date_select date_select03">
+								<f:selectItems value="#{rechargeList.rechargeBankCards}" var="bc" 
+									itemLabel="#{bc.bankName}" itemValue="#{bc.no}" />
+							</h:selectOneMenu>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="txczje02">
+						<div class="txczje_l">
+							开户行
+						</div>
+						<div class="txczje_r">
+							<h:inputText
+								value="#{bankCardHome.instance.name}" label="开户行" disabled="true"
+								styleClass="txt02 txt03" maxlength="200">
+								<f:ajax event="blur"></f:ajax>
+							</h:inputText>
+							<!-- 							<a href="#" class="txczje02_btn ss">搜索</a> -->
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>卡类型
+						</div>
+						<div class="txczje_r">
+							<h:selectOneMenu required="true"
+								value="#{bankCardHome.instance.bankCardType}" label="卡类型" disabled="true"
+								styleClass="txt02 txt03">
+								<f:selectItem itemLabel="借记卡" itemValue="DEBIT" />	
+								<f:selectItem itemLabel="贷记(信用)卡" itemValue="CREDIT" />	
+							</h:selectOneMenu>
+							<!-- 							<a href="#" class="txczje02_btn ss">搜索</a> -->
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="txczje02">
+						<div class="txczje_l">
+							<span>*</span>服务类型
+						</div>
+						<div class="txczje_r">
+							<h:selectOneMenu required="true"
+								value="#{bankCardHome.instance.bankServiceType}" label="卡类型" disabled="true"
+								styleClass="txt02 txt03">
+								<f:selectItem itemLabel="对私" itemValue="C" />	
+								<f:selectItem itemLabel="对公" itemValue="B" />	
+							</h:selectOneMenu>
+							<!-- 							<a href="#" class="txczje02_btn ss">搜索</a> -->
+						</div>
+						<div class="clear"></div>
+					</div>
+					<ui:fragment rendered="#{not empty bankCardHome.instance.id}">
+						<div class="txczje02">
+							<div class="txczje_l">
+								<span>*</span>银行卡卡号
+							</div>
+							<div class="txczje_r">
+								<h:inputText value="#{bankCardHome.instance.cardNo}"
+									styleClass="txt02 txt03" disabled="true">
+									<f:validateLength minimum="14" maximum="40"></f:validateLength>
+									<f:ajax event="blur" execute="@this recardNo reCardNoValidator "></f:ajax>
+								</h:inputText>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</ui:fragment>
+					<ui:fragment rendered="#{empty bankCardHome.instance.id}">
+						<div class="txczje02">
+							<div class="txczje_l">
+								<span>*</span>银行卡卡号
+							</div>
+							<div class="txczje_r">
+								<h:inputText id="cardNo" label="卡号" value="#{bankCardHome.instance.cardNo}"
+									onkeyup="this.value=this.value.replace(/\D/g,'')" maxlength="40"
+									styleClass="txt02 txt03">
+									<f:validateLength minimum="14" maximum="40"></f:validateLength>
+									<f:ajax event="blur" execute="@this recardNo reCardNoValidator "></f:ajax>
+								</h:inputText>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<o:validateEqual id="reCardNoValidator"
+							components="cardNo recardNo" showMessageFor="recardNo" 
+							message="两次输入卡号不一致"></o:validateEqual>
+						<div class="txczje02">
+							<div class="txczje_l">
+								<span>*</span>确认卡号
+							</div>
+							<div class="txczje_r">
+								<h:inputText id="recardNo" label="确认银行卡号"
+									styleClass="txt02 txt03" maxlength="40"
+									onkeyup="this.value=this.value.replace(/\D/g,'')"
+									required="true">
+									<f:validateLength minimum="14" maximum="40"></f:validateLength>
+									<f:ajax event="blur" execute="@this cardNo reCardNoValidator "></f:ajax>
+								</h:inputText>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</ui:fragment>
+				</div>
+				</sec:ifAllGranted>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+					<!-- 				<div class="txczje02"> -->
+					<!-- 					<div class="txczje_l"> -->
+					<!-- 						<span>*</span>手机验证码 -->
+					<!-- 					</div> -->
+					<!-- 					<div class="txczje_r"> -->
+					<!-- 						<input type="text" class="txt02 txt03" /><a href="#" -->
+					<!-- 							class="txczje02_btn hqyzm">获取验证码</a> -->
+					<!-- 					</div> -->
+					<!-- 					<div class="clear"></div> -->
+					<!-- 				</div> -->
+					<sec:ifNotGranted roles="user_wealth_attestation">
+					<div class="txczje02">
+						<div class="txczje_l"></div>
+						<div class="txczje_r">
+							<h:commandLink action="#{bankCardHome.saveByWealth()}" value="保存"
+								styleClass="txczje02_btn hqyzm xz"></h:commandLink>
+							<p:commandLink actionListener="#{bankCardHome.setInstance(null)}"
+								styleClass="txczje02_btn hqyzm qx"
+								onclick="$('form\\:recardNo').val('')" value="取消" update="@form"
+								process="@this"></p:commandLink>
+						</div>
+						<div class="clear"></div>
+					</div>
+					</sec:ifNotGranted>
+					</h:form>
+				
+			<p class="zhcz_p02">
+				温馨提示<br /> 1、如果您填写的开户行支行不正确，可能将无法成功提现，由此产生的提现费用将不予返还。<br />
+				2、如果您不确定开户行支行名称，可打电话到所在地银行的营业网点询问或上网查询。<br /> 3、不支持提现至信用卡账户。
+				<br /> 4、请联系客服人员修改银行卡相关信息。
+			</p>
+			</div>
+		<div class="clear"></div>
+</ui:define>
+</ui:composition>

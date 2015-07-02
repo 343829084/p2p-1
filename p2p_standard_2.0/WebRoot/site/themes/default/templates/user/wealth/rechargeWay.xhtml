@@ -1,0 +1,146 @@
+<ui:composition template="../center.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:param name="activeCenterMenuUrl" value="/user/bankCardList"></ui:param>
+	<ui:param name="pnr_enable"
+		value="#{configHome.getConfigValue('pnrpay_enable') eq '1'}"></ui:param>
+	<ui:define name="center_right">
+	<link rel="stylesheet" type="text/css"
+			href="#{tplVars.themeStylePath}/tixian.css" />
+	
+		<!-- 	未实名认证 -->
+		<!-- 			<script>
+				$.dialog
+						.alert(
+								'为了您的账户资金安全，请先进行实名认证!',
+								function() {
+									window.location.href = "#{path}/user/get_investor_permission";
+								});
+			</script>
+ -->
+		<!-- 	已实名认证 -->
+		<script>
+			//<![CDATA[
+				$(function() {
+					$(".datepicker").datepicker({
+						changeMonth : true,
+						changeYear : true,
+						yearRange : "1920:2020",
+						defaultDate:'2011-03-10'
+					});
+					checkProtocol();
+					
+					
+				});
+				
+				
+				function checkProtocol(){
+					var domClassName="cheProtocol";
+					var imgSubmitClassName="img_btn_submit";
+					var checkDom=$("."+domClassName);
+					$("."+imgSubmitClassName).attr("onmouseover","");
+					$("."+imgSubmitClassName).attr("onmouseout","");
+					if(!checkDom.get(0).checked){
+						$("."+imgSubmitClassName).attr("src","#{tplVars.themeImagePath}/hyqbkx.png");
+						return false;
+					}else{
+						$("."+imgSubmitClassName).attr("src","#{tplVars.themeImagePath}/czhyqc.png");
+						$("."+imgSubmitClassName).attr("onmouseover","src='#{tplVars.themeImagePath}/czhyqh.png'");
+						$("."+imgSubmitClassName).attr("onmouseover","src='#{tplVars.themeImagePath}/czhyqn.jpg'");
+						return true;
+					}
+				}
+				var dompicone="#picone";
+				var dompictwo="#pictwo";
+				var pageChecking=true;
+				function wealthImg(){
+					$(dompicone).attr("src","#{tplVars.themeImagePath}/haoyouqian.jpg");
+					$(dompictwo).attr("src","#{tplVars.themeImagePath}/zijinzhanghuh.png");
+					pageChecking=true;
+				}
+				
+				function billImg(){
+					$(dompicone).attr("src","#{tplVars.themeImagePath}/haoyouqianh.png");
+					$(dompictwo).attr("src","#{tplVars.themeImagePath}/zijinzhanghuc.png");
+					pageChecking=false;
+				}
+				function toPage(){
+					if (pageChecking) {
+						window.location.href="#{path}/user/wealthRecharge";
+					} else {
+						window.location.href="#{path}/user/recharge";
+					}
+				}
+				function checkingAndRedirect(){
+					if (checkProtocol()) {
+						 toPage();
+					}
+				}
+				
+				//]]>
+			</script>
+		<f:event type="preRenderComponent"
+			listener="#{userHome.setId(loginUserInfo.loginUserId)}"></f:event>
+		<div class="center_right">
+			<h:form id="form">
+				<div class="center_right">
+					<div class="zhczhyq">
+						<p>账户充值#{userHome.instance.roles[0].name}</p>
+						<span></span>
+					</div>
+					<div class="hyqmain-bank">
+						<div class="hyqbank2">
+							<p>充值到：</p>
+							<a style="cursor:pointer; "><img id="picone" src="#{tplVars.themeImagePath}/haoyouqian.jpg"
+								onclick="wealthImg()"/>
+							</a> <a style="cursor:pointer; "><img id="pictwo" src="#{tplVars.themeImagePath}/zijinzhanghuh.png"
+								onclick="billImg()"/>
+							</a>
+							<!-- <p style="color:gray;">你未完成好友钱实名认证，实名认证请点击：<a style="cursor:pointer; ">好友钱实名认证</a></p> -->
+						</div>
+						<div class="explain">
+							<dl class="jfExplain">
+								<dd>好友钱兑换说明</dd>
+								<dt>
+									<p>1.好友钱兑换比例实1:1，但充值好友钱您将会获得相同比例的积分。</p>
+									<p>2.充值好友钱，可以进行投资，提现等操作。</p>
+									<p>3.充值好友钱您将获得公司内容活动参与名额，进行抽奖，更多惊喜等着你。</p>
+									<p>4.当您充值了好友钱，本公司将提供您更多优惠与更多标的，让您钱生钱。</p>
+								</dt>
+							</dl>
+							<dl class="jfExplain">
+								<dd>积分说明</dd>
+								<dt>
+									<p>1.好友钱兑换比例实1:1，但充值好友钱您将会获得相同比例的积分。</p>
+									<p>2.充值好友钱，可以进行投资，提现等操作。</p>
+									<p>3.充值好友钱您将获得公司内容活动参与名额，进行抽奖，更多惊喜等着你。</p>
+									<p>4.当您充值了好友钱，本公司将提供您更多优惠与更多标的，让您钱生钱。</p>
+								</dt>
+							</dl>
+						</div>
+					</div>
+					<div class="ljtx">
+						<form>
+						<input type="checkbox" class="cheProtocol" style="width: 25px;float:left;" name="vehicle" onclick="checkProtocol()"/>我已阅读 <a
+							href="#">《充值协议》</a>并同意协议内容<br/>
+						</form>
+						<a ><img class="img_btn_submit" 
+							onclick="return checkingAndRedirect();" 	
+							/>
+						</a>
+					</div>
+				</div>
+			</h:form>
+		</div>
+		<div class="clear"></div>
+	</ui:define>
+</ui:composition>

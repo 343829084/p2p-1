@@ -1,0 +1,20 @@
+/*footer*/
+.footer{width:100%; background:#6d3d01; padding-top:22px;}
+.footer_box{width:1000px; margin:0 auto;}
+.partner{line-height:30px; font-size:12px; color:#b48751; padding-bottom:15px; border-bottom:1px solid #a76819;}
+.partner li{float:left; margin-right:15px;}
+.partner li img{border:1px solid #b7ad91;}
+.footer_nav{padding:10px 0; border-bottom:1px solid #a76819;}
+.footer_l li{padding:0 73px; float:left;  background:url(../images/index/line.png) right center no-repeat; line-height:25px;}
+.footer_l li.none{padding-left:0;}
+.footer_l li ul{border:0; background:none;}
+.footer_l li li{padding:0; float:none; background:none;}
+.footer_l li a{color:#b48751;}
+.footer_l li a:hover{color:#cd9b5e;}
+.weixin{float:right; line-height:30px; color:#b48751; font-weight:bold;}
+.weixin01{float:right; margin-left:60px;}
+.link{width:1000px; height:40px;}
+.link li{float:left; line-height:40px; color:#b48751;  margin-right:15px;}
+.link li a{color:#b48751;}
+.link li a:hover{color:#cd9b5e;}
+.copy{line-height:25px; color:#b48751; text-align:center;}

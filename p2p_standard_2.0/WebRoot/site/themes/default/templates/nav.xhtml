@@ -1,0 +1,143 @@
+<ui:composition template="page.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	<f:metadata>
+		<!-- #{categoryTermHome.id} -->
+		
+		<f:viewParam name="termId" value="#{categoryTermHome.id}"></f:viewParam>
+	</f:metadata>
+	 <ui:param name="term" value="#{categoryTermHome.instance}"></ui:param>
+	 <ui:param name="typeId" value="1"></ui:param>
+	 <ui:param name="keywords" value="#{term.name1}"></ui:param>
+	<ui:param name="description" value="#{term.description1}"></ui:param> 
+	<ui:param name="pageSize" value="#{empty pageSize ? 7 : pageSize}"></ui:param>
+	<ui:param name="page" value="#{empty param.page ? 1 : param.page}"></ui:param>
+	<ui:param name="pageModel"
+		value="#{nodeList.getNodes(term.id,(page-1)*pageSize ,pageSize)}"></ui:param> 
+	<ui:define name="content">
+		<div class="guide-div">
+			<a class="color9a9393 fontsize18" href="#{path}/">首页</a>&gt;<a
+				class="color57 fontsize14">#{term.name}</a> <a
+				class="color57 fontsize14">#{menu.label}</a>
+			<!--  #{term.name}-->
+		</div>
+		<div class="content">
+			<div class="content-left fl">
+			
+				<ul class="left-ul">
+					<ui:repeat var="t"
+						value="#{menuList.getMenusByParentId(termId)}">
+				    <li><a href="#{path}#{t.url}" title="#{t.label}"
+							class="#{servletPath eq t.url ? 'currentpage':''}"
+							target="#{t.target}">#{t.label}</a></li>
+					</ui:repeat>	
+				</ul>
+				 
+				
+				
+				<div class="zuotu">
+					<a href="#{request.contextPath}/register"><img src="#{tplVars.themeImagePath}/tzlc-zuo.png" /></a>
+					<a href=" http://www.saikr.com/company/index " target="blank"><img src="#{tplVars.themeImagePath}/tzlc-zuo-xia.jpg"/></a>
+					<a href=" http://home.cq.fang.com/ " target="blank"><img src="#{tplVars.themeImagePath}/tzlc-zuo1.jpg"/></a>
+				</div>
+			</div>
+			<div class="content-rightwl">
+				<div class="content-rightwz">
+				
+					<!-- <h2>#{node1.title}</h2>  -->
+				<h2>对理财的阐述</h2> 
+						 <div class="top">
+				 
+						<ui:fragment rendered="#{ not empty nodeList.getNodes('tzlc',1).data}">
+						<ui:repeat value="#{nodeList.getNodes('tzlc',1).data}"  var="node1"  >
+					
+					<p >
+							<h:outputText value="#{fn:substring(node1.nodeBody.body,0,330)}"
+										escape="false"></h:outputText>
+									<ui:fragment rendered="#{loan.description.length()>20}">
+									
+								   </ui:fragment>				
+						</p>
+						<p>
+							<a style="padding-left:556px;" href="#{request.contextPath}/node/tzlc/#{node1.id}">详细>></a>
+						</p>
+						</ui:repeat>
+						</ui:fragment>
+						 </div> 
+					<!--  <p>关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章
+						关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于
+						理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财
+						的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一
+						篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文章关于理财的一篇文
+						章。</p>   -->
+					<!-- <div class="ckxx">
+						<p>
+							<a href="#">查看详细#{page}>></a>
+						</p>
+					</div> -->
+				</div>
+				
+				
+				<div class="wzx">
+					<!-- test bind data -->
+					<ui:repeat var="termItem"
+						value="#{categoryTermList.getTerms(term.id,0,2).data}"
+						varStatus="termStatus">
+						<ui:fragment rendered="#{not termStatus.odd}">
+							<div class="wzxz">
+								<!-- <h3>#{termItem.name}</h3> -->
+								<h3><a href="#{request.contextPath}/tzlc/list/#{termItem.id}">#{termItem.name}</a></h3>
+								<ul>
+									<ui:repeat var="item"
+										value="#{nodeList.getNodes(termItem.id,5).data}">
+										<li><span><img
+												src="#{tplVars.themeImagePath}/tzlc-yd.png" />
+										</span><a href="#{request.contextPath}/node/#{term.id}/#{item.id}">#{item.title}</a>
+										</li>
+									</ui:repeat>
+								</ul>
+								<div class="ckgd">
+									<p>
+										<a href="#{request.contextPath}/tzlc/list/#{termItem.id}">查看更多>></a>
+									</p>
+								</div>
+							</div>
+						</ui:fragment>
+						 <ui:fragment rendered="#{termStatus.odd}">
+							<div class="wzxy">
+						<!--<h3>#{termItem.name}</h3>  -->
+								<h3><a href="#{request.contextPath}/tzlc/list/#{termItem.id}">#{termItem.name}</a></h3>
+								<ul>
+									<ui:repeat var="item"
+										value="#{nodeList.getNodes(termItem.id,5).data}">
+										<li><span><img
+												src="#{tplVars.themeImagePath}/tzlc-yd.png" />
+										</span><a href="#{request.contextPath}/node/#{term.id}/#{item.id}">#{item.title}</a>
+										</li>
+									</ui:repeat>
+								</ul>
+								<div class="ckgd">
+									<p>
+										<a href="#{request.contextPath}/tzlc/list/#{termItem.id}">查看更多>></a>
+									</p>
+								</div>
+							</div>
+						</ui:fragment> 
+					</ui:repeat>
+					<!--test bind data end   -->
+				</div>
+				<div class="xiatu">
+					<a href="#{request.contextPath}/register"><img src="#{tplVars.themeImagePath}/tzlc-xia.png" /></a>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</ui:define>
+</ui:composition>

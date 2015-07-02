@@ -1,0 +1,323 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="template.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="userContent">
+		<!-- 可转让 -->
+		<f:event type="preRenderComponent" listener="#{investList.example.user.setId(loginUserInfo.loginUserId)}"></f:event>
+		<f:event type="preRenderComponent" listener="#{investList.addOrder('time','desc')}"></f:event>
+		<f:event type="preRenderComponent" listener="#{investList.setPageSize(50)}"></f:event>
+		<ui:param name="restriction1" value="#{'(invest.status=\''}#{InvestStatus.REPAYING}#{'\')'}"></ui:param>
+		<f:event type="preRenderComponent" listener="#{investList.addRestriction(restriction1)}"></f:event>
+		<!-- 转让中 -->
+		<f:event type="preRenderComponent" listener="#{investTransferList.example.invest.user.setId(loginUserInfo.loginUserId)}"></f:event>
+		<f:event type="preRenderComponent" listener="#{investTransferList.addOrder('applyTime','desc')}"></f:event>
+		<f:event type="preRenderComponent" listener="#{investTransferList.setPageSize(1)}"></f:event>
+		<ui:param name="restriction2" value="#{'(status=\''}#{InvestTransferStatus.TRANSFERING}#{'\')'}"></ui:param>
+		<f:event type="preRenderComponent" listener="#{investTransferList.addRestriction(restriction2)}"></f:event>
+		<!-- 已转让 -->
+		<f:event type="preRenderComponent" listener="#{investTransferList2.example.invest.user.setId(loginUserInfo.loginUserId)}"></f:event>
+		<f:event type="preRenderComponent" listener="#{investTransferList2.addOrder('applyTime','desc')}"></f:event>
+		<f:event type="preRenderComponent" listener="#{investTransferList2.setPageSize(1)}"></f:event>
+		<ui:param name="restriction3" value="#{'(status=\''}#{InvestTransferStatus.TRANSFED}#{'\')'}"></ui:param>
+		<f:event type="preRenderComponent" listener="#{investTransferList2.addRestriction(restriction3)}"></f:event>
+		<!-- 已购买 -->
+		<f:event type="preRenderComponent" listener="#{investTransferList3.example.user.setId(loginUserInfo.loginUserId)}"></f:event>
+		<f:event type="preRenderComponent" listener="#{investTransferList3.addOrder('time','desc')}"></f:event>
+		<f:event type="preRenderComponent" listener="#{investTransferList3.setPageSize(1)}"></f:event>
+		<ui:param name="restriction4" value="#{'(status=\''}#{InvestTransferStatus.TRANSFED}#{'\')'}"></ui:param>
+		<f:event type="preRenderComponent" listener="#{investTransferList3.addRestriction(restriction4)}"></f:event>
+		<h:form>
+		<div class="date">
+			<div>
+				<ul class="slidings">
+					<li onclick="zahe_1('three',1,4)" id="three1" class="hover" style="width:25%;"><a href="javascript:void(0)">可转让</a></li>
+					<li onclick="zahe_1('three',2,4)" id="three2" style="width:25%;"><a href="javascript:void(0)">转让中</a></li>
+					<li onclick="zahe_1('three',3,4)" id="three3" style="width:25%;"><a href="javascript:void(0)">已转让</a></li>
+					<li onclick="zahe_1('three',4,4)" id="three4" style="width:25%;"><a href="javascript:void(0)">已购买</a></li>
+				</ul>
+				<!-- 可转让 -->
+				<h:panelGroup id="canTransfer">
+					<div class="slidnr" id="con_three_1">
+						<ui:repeat var="tf" value="#{investList.lazyModelData}">
+						<ui:fragment rendered="#{investTransferHome.canTransfer(tf.id)}">
+							<div class="date02" style="border-bottom: 1px solid #000;margin: 10px auto 0;">
+								<div class="date_p">
+									<div class="l">项目名称：</div>
+									<div class="r">
+										<a href="#{path}/mobile/loanDetail/#{tf.loan.id}">#{fn:substring(tf.loan.name,0,18)}
+										<ui:fragment rendered="#{fn:length(tf.loan.name) > 18}">..</ui:fragment>
+										</a>
+									</div>
+								</div>
+								<div class="date_p">
+									<div class="l">投资金额：</div>
+									<div class="r">
+										<span>
+											<h:outputText value="#{tf.money}">
+												<f:convertNumber type="number" pattern="#,###" />
+											</h:outputText>
+										</span>元
+									</div>
+								</div>
+								<div class="date_p">
+									<div class="l">转让价格：</div>
+									<div class="r">
+										<span>
+											<h:outputText value="#{tf.money-tf.paidMoney}">
+												<f:convertNumber type="currency" currencySymbol="￥" />
+											</h:outputText>
+										</span>
+									</div>
+								</div>
+								<div class="date_p">
+									<div class="l">操作：</div>
+									<div class="r">
+										<div class="p10">
+											<h:commandLink value="转让" onclick="return confirm('确定转让此投资？')">
+												<f:ajax render="@form" listener="#{investTransferHome.applyInvestTransfer(tf.id)}"></f:ajax>
+											</h:commandLink>
+										</div>
+									</div>
+								</div>
+								<div class="wytz_p">&#160;</div>
+							</div>
+						</ui:fragment>
+						</ui:repeat>
+<!-- 						<div class="page"> -->
+<!-- 							<ui:param name="page" value="#{empty investList.currentPage ? 1 : investList.currentPage }"></ui:param> -->
+<!-- 							<ui:param name="totalPage" value="#{math:ceil(investList.lazyModel.rowCount/investList.pageSize)}"></ui:param> -->
+<!-- 							<ui:fragment rendered="#{page > 1}"> -->
+<!-- 								<h:commandLink title="上一页" value="上一页"> -->
+<!-- 									<f:ajax listener="#{investList.setCurrentPage(page-1)}" execute="@this" render="canTransfer"></f:ajax> -->
+<!-- 								</h:commandLink> -->
+<!-- 							</ui:fragment> -->
+<!-- 							#{page} -->
+<!-- 							<ui:fragment rendered="#{totalPage > page}"> -->
+<!-- 								<h:commandLink title="下一页" value="下一页"> -->
+<!-- 									<f:ajax listener="#{investList.setCurrentPage(page+1)}" execute="@this" render="canTransfer"></f:ajax> -->
+<!-- 								</h:commandLink> -->
+<!-- 							</ui:fragment> -->
+<!-- 						</div>	 -->
+						<div class="clear"></div>
+					</div>
+				</h:panelGroup>
+				<!-- 转让中 -->
+				<h:panelGroup id="transfering">
+					<div class="slidnr sliding_yc" id="con_three_2">
+						<ui:fragment rendered="#{empty investTransferList.lazyModelData}">
+							没有数据
+						</ui:fragment>
+						<ui:repeat var="tf" value="#{investTransferList.lazyModelData}">
+							<div class="date02">
+								<div class="date_p">
+									<div class="l">项目名称：</div>
+									<div class="r">
+										<a href="#{path}/mobile/loanDetail/#{tf.invest.loan.id}">
+											#{fn:substring(tf.invest.loan.name,0,18)}
+											<ui:fragment rendered="#{fn:length(tf.invest.loan.name) > 18}">..</ui:fragment>
+										</a>
+									</div>
+								</div>
+								<div class="date_p">
+									<div class="l">原投资金额：</div>
+									<div class="r">
+										<span>
+											<h:outputText value="#{tf.invest.money}">
+														<f:convertNumber type="currency" currencySymbol="￥"
+															minFractionDigits="2" />
+													</h:outputText>
+										</span>
+									</div>
+								</div>
+								<div class="date_p">
+									<div class="l">转让价格：</div>
+									<div class="r">
+										<span>
+											<h:outputText value="#{tf.transferMoney}">
+														<f:convertNumber type="currency" currencySymbol="￥"
+															minFractionDigits="2" />
+													</h:outputText>
+										</span>
+									</div>
+								</div>
+								<div class="date_p">
+									<div class="l">操作：</div>
+									<div class="r">
+										<h:commandLink value="取消转让" onclick="if(!confirm('是否确定取消?'))return false">
+											<f:ajax render="@form" listener="#{investTransferHome.expireInvestTransfer(tf.id)}"></f:ajax>
+										</h:commandLink>
+									</div>
+								</div>
+								<div class="wytz_p">&#160;</div>
+							</div>
+						</ui:repeat>
+						<div class="page">
+							<ui:param name="page" value="#{empty investTransferList.currentPage ? 1 : investTransferList.currentPage }"></ui:param>
+							<ui:param name="totalPage" value="#{math:ceil(investTransferList.lazyModel.rowCount/investTransferList.pageSize)}"></ui:param>
+							<ui:fragment rendered="#{page > 1}">
+								<h:commandLink title="上一页" value="上一页">
+									<f:ajax listener="#{investTransferList.setCurrentPage(page-1)}" execute="@this" render="transfering"></f:ajax>
+								</h:commandLink>
+							</ui:fragment>
+							#{page}
+							<ui:fragment rendered="#{totalPage > page}">
+								<h:commandLink title="下一页" value="下一页">
+									<f:ajax listener="#{investTransferList.setCurrentPage(page+1)}" execute="@this" render="transfering"></f:ajax>
+								</h:commandLink>
+							</ui:fragment>
+						</div>	
+						<div class="clear"></div>
+					</div>
+				</h:panelGroup>
+				<!-- 已转让 -->
+				<h:panelGroup id="already">
+					<div class="slidnr sliding_yc" id="con_three_3">
+						<ui:fragment rendered="#{empty investTransferList2.lazyModelData}">
+							没有数据
+						</ui:fragment>
+						<ui:repeat var="tf" value="#{investTransferList2.lazyModelData}">
+							<div class="date02">
+								<div class="date_p">
+									<div class="l">项目名称：</div>
+									<div class="r">
+										<a href="#{path}/mobile/loanDetail/#{tf.invest.loan.id}">
+											#{fn:substring(tf.invest.loan.name,0,18)}
+											<ui:fragment rendered="#{fn:length(tf.invest.loan.name) > 18}">..</ui:fragment>
+										</a>
+									</div>
+								</div>
+								<div class="date_p">
+									<div class="l">原投资金额：</div>
+									<div class="r">
+										<span>
+											<h:outputText value="#{tf.corpus}">
+												<f:convertNumber type="number" pattern="￥#,###.##" />
+											</h:outputText>
+										</span>
+									</div>
+								</div>
+								<div class="date_p">
+									<div class="l">转让价格：</div>
+									<div class="r">
+										<span>
+											<h:outputText value="#{tf.transferMoney}">
+														<f:convertNumber type="currency" currencySymbol="￥"
+															minFractionDigits="2" />
+													</h:outputText>
+										</span>
+									</div>
+								</div>
+								<div class="date_p">
+									<div class="l">购买人：</div>
+									<div class="r">
+										<div class="p10">
+											#{tf.user.username}
+										</div>
+									</div>
+								</div>
+								<div class="wytz_p">&#160;</div>
+							</div>
+						</ui:repeat>
+						<div class="page">
+							<ui:param name="page" value="#{empty investTransferList2.currentPage ? 1 : investTransferList2.currentPage }"></ui:param>
+							<ui:param name="totalPage" value="#{math:ceil(investTransferList2.lazyModel.rowCount/investTransferList2.pageSize)}"></ui:param>
+							<ui:fragment rendered="#{page > 1}">
+								<h:commandLink title="上一页" value="上一页">
+									<f:ajax listener="#{investTransferList2.setCurrentPage(page-1)}" execute="@this" render="already"></f:ajax>
+								</h:commandLink>
+							</ui:fragment>
+							#{page}
+							<ui:fragment rendered="#{totalPage > page}">
+								<h:commandLink title="下一页" value="下一页">
+									<f:ajax listener="#{investTransferList2.setCurrentPage(page+1)}" execute="@this" render="already"></f:ajax>
+								</h:commandLink>
+							</ui:fragment>
+						</div>	
+						<div class="clear"></div>
+					</div>
+				</h:panelGroup>
+				<!-- 已购买 -->
+				<h:panelGroup id="buy">
+					<div class="slidnr sliding_yc" id="con_three_4">
+						<ui:fragment rendered="#{empty investTransferList3.lazyModelData}">
+							没有数据
+						</ui:fragment>
+						<ui:repeat var="tf" value="#{investTransferList3.lazyModelData}">
+							<div class="date02">
+								<div class="date_p">
+									<div class="l">项目名称：</div>
+									<div class="r">
+										<a href="#{path}/mobile/loanDetail/#{tf.invest.loan.id}">
+											#{fn:substring(tf.invest.loan.name,0,18)}
+											<ui:fragment rendered="#{fn:length(tf.invest.loan.name) > 18}">..</ui:fragment>
+										</a>
+									</div>
+								</div>
+								<div class="date_p">
+									<div class="l">原投资金额：</div>
+									<div class="r">
+										<span>
+											<h:outputText value="#{tf.corpus}">
+												<f:convertNumber type="number" pattern="￥#,###.##" />
+											</h:outputText>
+										</span>
+									</div>
+								</div>
+								<div class="date_p">
+									<div class="l">转让价格：</div>
+									<div class="r">
+										<span>
+											<h:outputText value="#{tf.transferMoney}">
+														<f:convertNumber type="currency" currencySymbol="￥"
+															minFractionDigits="2" />
+													</h:outputText>
+										</span>
+									</div>
+								</div>
+								<div class="date_p">
+									<div class="l">下个还款日：</div>
+									<div class="r">
+										<div class="p10">
+											<h:outputText value="#{tf.time}">
+														<f:convertDateTime pattern="yyyy-MM-dd"
+															locale="cn" timeZone="GMT+8" />
+													</h:outputText>
+										</div>
+									</div>
+								</div>
+								<div class="wytz_p">&#160;</div>
+							</div>
+						</ui:repeat>
+						<div class="page">
+							<ui:param name="page" value="#{empty investTransferList3.currentPage ? 1 : investTransferList3.currentPage }"></ui:param>
+							<ui:param name="totalPage" value="#{math:ceil(investTransferList3.lazyModel.rowCount/investTransferList3.pageSize)}"></ui:param>
+							<ui:fragment rendered="#{page > 1}">
+								<h:commandLink title="上一页" value="上一页">
+									<f:ajax listener="#{investTransferList3.setCurrentPage(page-1)}" execute="@this" render="buy"></f:ajax>
+								</h:commandLink>
+							</ui:fragment>
+							#{page}
+							<ui:fragment rendered="#{totalPage > page}">
+								<h:commandLink title="下一页" value="下一页">
+									<f:ajax listener="#{investTransferList3.setCurrentPage(page+1)}" execute="@this" render="buy"></f:ajax>
+								</h:commandLink>
+							</ui:fragment>
+						</div>	
+						<div class="clear"></div>
+					</div>
+				</h:panelGroup>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(".sliding_yc").hide();
+		</script>
+		</h:form>
+	</ui:define>
+</ui:composition>

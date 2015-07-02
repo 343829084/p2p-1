@@ -1,0 +1,61 @@
+<ui:component xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+<!-- 	<link type="text/css" rel="stylesheet" -->
+<!-- 			href="#{tplVars.themeStylePath}/banner.css" /> -->
+	
+		<div id="Banner">
+		<ul id="fcimg">
+			<ui:repeat var="pic"
+				value="#{bannerList.getBannerById('index').pictures}" varStatus="i">
+				
+					<a href="#{pic.url}">
+					 <ui:fragment rendered="#{pic.picture eq '/upload/20141118/10271416309853103.jpg' }">
+						<li style="background-image: url(#{path}#{pic.picture}); 
+			      		    background-position: 50% 0px;
+			      			background-repeat: no-repeat no-repeat;
+			      			display:#{i.index eq 0 ? 'list-item' : 'none'};
+			      			"  alt="好友来投、p2p网贷平台"></li>
+					</ui:fragment>
+					<ui:fragment rendered="#{pic.picture eq '/upload/20141117/82441416188869242.jpg' }">
+						<li style="background-image: url(#{path}#{pic.picture}); 
+			      		    background-position: 50% 0px;
+			      			background-repeat: no-repeat no-repeat;
+			      			display:#{i.index eq 0 ? 'list-item' : 'none'};
+			      			"  alt="网贷资金托管、网络贷款征信"></li>
+					</ui:fragment>
+					<ui:fragment rendered="#{pic.picture eq '/upload/20141117/84151416188901173.jpg' }">
+						<li style="background-image: url(#{path}#{pic.picture}); 
+			      		    background-position: 50% 0px;
+			      			background-repeat: no-repeat no-repeat;
+			      			display:#{i.index eq 0 ? 'list-item' : 'none'};
+			      			"  alt="个人贷款、投资理财"></li>
+					</ui:fragment>
+					<ui:fragment rendered="#{pic.picture eq '/upload/20141117/20091416188917748.jpg' }">
+						<li style="background-image: url(#{path}#{pic.picture}); 
+			      		    background-position: 50% 0px;
+			      			background-repeat: no-repeat no-repeat;
+			      			display:#{i.index eq 0 ? 'list-item' : 'none'};
+			      			"  alt="好友来投微信平台"></li>
+					</ui:fragment>
+					<ui:fragment rendered="#{pic.picture eq '/upload/20141202/70901417488575546.jpg' }">
+						<li style="background-image: url(#{path}#{pic.picture}); 
+			      		    background-position: 50% 0px;
+			      			background-repeat: no-repeat no-repeat;
+			      			display:#{i.index eq 0 ? 'list-item' : 'none'};
+			      			"  alt="投资理财、P2P理财"></li>
+					</ui:fragment>
+					</a>
+
+				
+			</ui:repeat>
+		</ul>
+		<script language="javascript" src="#{tplVars.getThemeJSPath()}/duice.js"></script>
+	</div>
+<!--banner end-->
+
+</ui:component>

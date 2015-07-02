@@ -1,0 +1,242 @@
+<ui:composition template="center.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:param name="typeId" value="1"></ui:param>
+	<ui:param name="activeCenterMenuUrl"
+		value="/user/get_investor_permission"></ui:param>
+	<ui:define name="center_right">
+		<f:event type="preRenderView"
+			listener="#{borrowerInfoHome.setId(loginUserInfo.loginUserId)}"></f:event>
+		<f:event type="preRenderView"
+			listener="#{userHome.setId(loginUserInfo.loginUserId)}"></f:event>
+		<div class="center_right">
+			<script>
+			//<![CDATA[
+				$(function() {
+					$(".datepicker").datepicker({
+						changeMonth : true,
+						changeYear : true,
+						yearRange : "1920:2020"
+					});
+					
+					//如果是汇付托管则直接提交
+					var pnr_enable = "#{configHome.getConfigValue('pnrpay_enable')}";
+					if(pnr_enable == '1'){
+						var pnr_btn = $("#form\\:commit_pnr");
+						if(pnr_btn[0]){
+							pnr_btn.click();
+						}
+					}
+					
+					var ipspay_enable = "#{configHome.getConfigValue('ipspay_enable')}";
+					var email= '#{userHome.instance.email}';
+					if(ipspay_enable == '1' && !email){
+						$.dialog
+						.alert(
+								'为了您的账户资金安全，请先绑定邮箱!',
+								function() {
+									window.location.href = "#{path}/user/binding_email";
+								});
+					}
+				});
+				//]]>
+			</script>
+
+			<div class="zhcz_h3">个人信息</div>
+			<h:form id="form">
+				<!-- 不是汇付资金托管时显示。 -->
+				<table width="456" border="0" cellspacing="0" cellpadding="0"
+					class="jcxx_tab">
+					<tr>
+						<td width="135" align="right"><span>*</span>用户名：</td>
+						<td colspan="2">#{userHome.instance.username}</td>
+					</tr>
+					<sec:ifAllGranted roles="INVESTOR">
+						<tr>
+							<td align="right"><span>*</span>真实姓名：</td>
+							<td width="280">#{fn:substring(userHome.instance.realname,0,1)}**</td>
+							<td width="85" class="gray"><img
+								src="#{tplVars.themeImagePath}/img71.png" width="16" height="16" />已认证</td>
+						</tr>
+						<tr>
+							<td align="right"><span>*</span>身份证号：</td>
+							<td>#{fn:substring(userHome.instance.idCard,0,6)} **** **** ****
+								****</td>
+							<td class="gray"><img
+								src="#{tplVars.themeImagePath}/img71.png" alt="" width="16"
+								height="16" />已认证</td>
+						</tr>
+						<tr>
+							<td align="right"><span>*</span>性别：</td>
+							<td>
+								<h:outputText value="#{dictUtil.getValue('user_sex',userHome.instance.sex)}"/>
+							</td>
+							<td class="gray"><img
+								src="#{tplVars.themeImagePath}/img71.png" alt="" width="16"
+								height="16" />已认证</td>
+						</tr>
+						<tr>
+							<td align="right"><span>*</span>出生日期：</td>
+							<td><h:outputText value="#{userHome.instance.birthday}">
+									<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8" />
+								</h:outputText></td>
+							<td class="gray"><img
+								src="#{tplVars.themeImagePath}/img71.png" alt="" width="16"
+								height="16" />已认证</td>
+						</tr>
+
+						<ui:fragment
+							rendered="#{not empty borrowerInfoHome.instance.borrowerPersonalInfo}">
+							<tr>
+								<td align="right"><span>*</span>个人基础信息</td>
+								<td></td>
+								<td class="gray"><img
+									src="#{tplVars.themeImagePath}/img71.png" alt="" width="16"
+									height="16" />已认证	</td>
+							</tr>
+						</ui:fragment>
+						<ui:fragment
+							rendered="#{not empty borrowerInfoHome.instance.borrowerAdditionalInfo}">
+							<tr>
+								<td align="right"><span>*</span>工作财务信息</td>
+								<td></td>
+								<td class="gray"><img
+									src="#{tplVars.themeImagePath}/img71.png" alt="" width="16"
+									height="16" />已认证</td>
+							</tr>
+						</ui:fragment>
+						<ui:fragment
+							rendered="#{not empty borrowerInfoHome.instance.borrowerAuthentication}">
+							<tr>
+								<td align="right"><span>*</span>认证资料</td>
+								<td></td>
+								<td class="gray"><img
+									src="#{tplVars.themeImagePath}/img71.png" alt="" width="16"
+									height="16" />已认证</td>
+							</tr>
+						</ui:fragment>
+					</sec:ifAllGranted>
+					<sec:ifNotGranted roles="INVESTOR">
+						<sec:ifNotGranted roles="user_wealth_attestation">
+						<ui:fragment rendered="#{configHome.getConfigValue('pnrpay_enable') ne '1'}">
+							<tr>
+								<td align="right"><span>*</span>真实姓名：</td>
+								<td width="280" colspan="2"><h:inputText label="真实姓名"
+										maxlength="20" styleClass="bdsj_txt" id="realname"
+										required="true" value="#{userHome.instance.realname}">
+										<f:ajax event="blur" render="@this"></f:ajax>
+									</h:inputText> <span style="color:red">用于提现，慎重！</span></td>
+							</tr>
+							<tr>
+								<td align="right"><span>*</span>身份证号：</td>
+								<td><h:inputText label="身份证号" styleClass="bdsj_txt"
+										id="idCard" required="true" value="#{userHome.instance.idCard}"
+										maxlength="50">
+										<archer:validateInputRule ruleId="input.idCard"></archer:validateInputRule>
+										<archer:validateAlreadyExist></archer:validateAlreadyExist>
+										<f:ajax event="blur" render="@this"></f:ajax>
+									</h:inputText></td>
+							</tr>
+							<tr>
+								<td align="right"><span>*</span>性别：</td>
+								<td>
+									<h:selectOneMenu value="#{userHome.instance.sex}"
+										required="true">
+										<f:selectItem itemLabel="#{userMsg.male}" itemValue="M"></f:selectItem>
+	                            		<f:selectItem itemLabel="#{userMsg.female}" itemValue="F"></f:selectItem>
+									</h:selectOneMenu>
+								</td>
+							</tr>
+							<tr>
+								<td align="right"><span>*</span>出生日期：</td>
+								<td><h:inputText value="#{userHome.instance.birthday}"
+										required="true" label="出生日期" styleClass="bdsj_txt datepicker">
+										<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8"
+											locale="zh_CN" />
+									</h:inputText></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="last"><h:commandLink
+										onclick="return confirm('请再次核查信息，确认后不可修改')" value="认证"
+										action="#{userHome.getInvestorPermission}">
+									</h:commandLink></td>
+							</tr>
+						</ui:fragment>
+						<ui:fragment rendered="#{configHome.getConfigValue('pnrpay_enable') eq '1'}">
+							<h:commandLink value="保存" id="commit_pnr"
+											action="#{userHome.getInvestorPermission}">
+										</h:commandLink>
+						</ui:fragment>
+						</sec:ifNotGranted>
+						
+						<sec:ifAllGranted roles="user_wealth_attestation"><!-- 有好友钱认证 -->
+						<ui:fragment rendered="#{configHome.getConfigValue('pnrpay_enable') ne '1'}">
+							<tr>
+								<td align="right"><span>*</span>真实姓名：</td>
+								<td width="280" colspan="2"><h:inputText label="真实姓名"
+										maxlength="20" styleClass="bdsj_txt" id="realname"
+										required="true" value="#{userHome.instance.realname}" disabled="true">
+										<f:ajax event="blur" render="@this"></f:ajax>
+									</h:inputText> <span style="color:red">用于提现，慎重！</span></td>
+							</tr>
+							<tr>
+								<td align="right"><span>*</span>身份证号：</td>
+								<td><h:inputText label="身份证号" styleClass="bdsj_txt"
+										id="idCard" required="true" value="#{userHome.instance.idCard}"
+										maxlength="50" disabled="true">
+										<archer:validateInputRule ruleId="input.idCard"></archer:validateInputRule>
+										<archer:validateAlreadyExist></archer:validateAlreadyExist>
+										<f:ajax event="blur" render="@this"></f:ajax>
+									</h:inputText></td>
+							</tr>
+							<tr>
+								<td align="right"><span>*</span>性别：</td>
+								<td>
+									<h:selectOneMenu value="#{userHome.instance.sex}" disabled="true" 
+										required="true">
+										<f:selectItem itemLabel="#{userMsg.male}" itemValue="M"></f:selectItem>
+	                            		<f:selectItem itemLabel="#{userMsg.female}" itemValue="F"></f:selectItem>
+									</h:selectOneMenu>
+								</td>
+							</tr>
+							<tr>
+								<td align="right"><span>*</span>出生日期：</td>
+								<td><h:inputText value="#{userHome.instance.birthday}" disabled="true" 
+										required="true" label="出生日期" styleClass="bdsj_txt datepicker">
+										<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8"
+											locale="zh_CN" />
+									</h:inputText></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="last"><h:commandLink
+										 value="认证"
+										action="#{userHome.getInvestorPermission}">
+									</h:commandLink></td>
+							</tr>
+						</ui:fragment>
+						<ui:fragment rendered="#{configHome.getConfigValue('pnrpay_enable') eq '1'}">
+							<h:commandLink value="认证" id="commit_pnr"
+											action="#{userHome.getInvestorPermission}">
+										</h:commandLink>
+						</ui:fragment>
+						</sec:ifAllGranted>
+						
+					</sec:ifNotGranted>
+				</table>
+			</h:form>
+		</div>
+		<div class="clear"></div>
+
+	</ui:define>
+</ui:composition>

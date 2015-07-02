@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="../page.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<f:metadata>
+		<f:viewParam name="loanId" value="#{loanHome.id}"></f:viewParam>
+	</f:metadata>
+	<ui:define name="content">
+		<link type="text/css" rel="stylesheet"
+			href="#{tplVars.themeStylePath}/p2c.css" />
+		<link type="text/css" rel="stylesheet"
+			href="#{tplVars.themeStylePath}/p2p.css" />
+		<link type="text/css" rel="stylesheet"
+			href="#{tplVars.themeStylePath}/tixian.css" />
+		<ui:param name="loan" value="#{loanHome.instance}"></ui:param>
+		<script>
+		</script>
+		<div class="main">
+			
+	<div class="all">
+	     <h:form id="form">
+      <div class="wytz">
+         <div class="wytz-top">
+            <p><span>#{loan.name}</span></p>
+            <ul class="wytz-con">
+              <li>投标金额：<span class="wC-one">							
+                            <h:outputText value="#{money}">
+								<f:convertNumber type="number" />
+							</h:outputText></span>元</li>
+              <li>年化收益率：<span class="wC-two"><h:outputText value="#{loan.ratePercent}">
+									<f:convertNumber minFractionDigits="2" />
+								</h:outputText>%</span></li>
+         <!--      <li>项目结束日期：<span>#{loan.deadline*loan.type.repayTimePeriod}(#{dictUtil.getValue('repay_unit',loan.type.repayTimeUnit)})</span></li> -->
+            </ul>
+            <p id="wBg">请选择投资账户</p>
+          </div>
+          <div class="wytz-down">
+           <ul class="wytz-zh">
+           <li id="pLnone">投资账户：</li>
+          <li id="pL5">
+          
+          
+
+		<input type="radio" name="accountFlag"  checked ="true" value="H" /> <h:graphicImage value="/site/themes/default/images/hyqtz.png" />
+         <span class="co3e font14 fl"><h:outputLabel value="#{wealthStatistics.getBalanceByUserId(loginUserInfo.loginUserId)+wealthStatistics.getFrozenMoneyByUserId(loginUserInfo.loginUserId)+investStatistics.getReceivableCorpus(loginUserInfo.loginUserId)+investStatistics.getReceivableInterest(loginUserInfo.loginUserId)}">
+		<f:convertNumber type="number"/>
+		</h:outputLabel>元
+	    </span>
+		</li>
+		<li><input type="radio" name="accountFlag"   value="P"  /><h:graphicImage value="/site/themes/default/images/zhtz.png" />
+		<span class="co3e font14 fl"><h:outputLabel value="#{billStatistics.getBalanceByUserId(loginUserInfo.loginUserId)+billStatistics.getFrozenMoneyByUserId(loginUserInfo.loginUserId)+investStatistics.getReceivableCorpus(loginUserInfo.loginUserId)+investStatistics.getReceivableInterest(loginUserInfo.loginUserId)}">
+		<f:convertNumber  type="number"/>
+	    </h:outputLabel>元
+		</span>
+		   </li>
+		   <li><input type="radio" name="accountFlag" id="j_idt6:j_idt8:0" value="Red" /> <h:graphicImage value="/site/themes/default/images/jftz.png" /></li>						
+									
+             </ul>
+             <div class="clear"></div>
+           <!--    <div class="wytz-mm">           
+             <label>输入密码：</label>
+            <input type="text" id="czmoney" name="money" placeholder="请输入密码"><span>请确认是您本人操作。</span></input>  
+             </div> -->
+             
+        
+              <div class="ljtx1">
+					<span class="stxt"></span><span><h:selectBooleanCheckbox
+							id="agree" selected="true" requiredMessage="请阅读并同意《投资协议》!" style="width: 25px;float:left;margin-top: 2px;">
+							<f:validator validatorId="omnifaces.RequiredCheckboxValidator" />
+							<f:ajax event="click"></f:ajax>
+						</h:selectBooleanCheckbox><label for="xy">我已阅读并同意<a href="#{path}/node/pingtaizhinan/registerService" target="_blank">《投资协议》</a></label></span>
+ 						
+ 						<h:commandLink action="#{capitalPoolInvestHome.save}" style="color:#fff;" value="立即投资" 
+							styleClass="tb-btn">
+                            <f:setPropertyActionListener target="#{capitalPoolInvestHome.instance.loan}"  value="#{loan}"></f:setPropertyActionListener>
+						</h:commandLink>
+             </div>
+           
+          </div>
+      </div>
+        </h:form>
+     </div>
+		</div>
+	</ui:define>
+</ui:composition>

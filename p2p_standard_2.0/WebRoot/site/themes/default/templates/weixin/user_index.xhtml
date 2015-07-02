@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	<head>
+
+<ui:insert name="header">
+	<ui:include src="template/header.xhtml"></ui:include>
+</ui:insert>
+<script type="text/javascript" src="#{tplVars.themeJSPath}/jquery.artDialog.js?skin=idialog"></script>
+<script type="text/javascript" src="#{tplVars.themeJSPath}/common.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+a {
+	color: #fff
+}
+</style>
+	</head>
+	<body>
+		<div data-role="page" id="index1">
+			<div data-role="header" data-position="fixed" data-theme="b">
+				<h1>账户中心</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<div class="middle-up">
+					<div class="middle-up-left">
+						<img src="#{tplVars.themeImagePath}/head.png"
+							style="padding-top: 0%;"/>
+					</div>
+					<div class="middle-up-left">
+						<h3 style="margin:2px;">#{loginUserInfo.loginUserId}</h3>
+						<p style="margin:5px;font-size:12px;">注册会员</p>
+						<div data-role="controlgroup" data-mini="true"
+							data-type="horizontal">
+
+							<a href="javascript:$.dialog.tips('请登录官方网站操作', 2)"
+								data-role="button">充值</a> <a
+								href="javascript:$.dialog.tips('请登录官方网站操作', 2)"
+								data-role="button">提现</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="middle">
+					<div class="middle-left" style="border-top:1px solid #ccc">
+						<p>#{billStatistics.getBalanceByUserId(loginUserInfo.loginUserId)}元</p>
+						<p style="color:#626262;">可用余额</p>
+					</div>
+					<div class="middle-right" style="border-top:1px solid #ccc">
+						<p>#{billStatistics.getFrozenMoneyByUserId(loginUserInfo.loginUserId)}元</p>
+						<p style="color:#626262;">冻结资金</p>
+					</div>
+
+					<div class="middle-left">
+						<p>#{investStatistics.getReceivableInterest(loginUserInfo.loginUserId)}元</p>
+						<p style="color:#626262;">待收收益</p>
+					</div>
+					<div class="middle-right">
+						<p>#{investStatistics.getReceivableCorpus(loginUserInfo.loginUserId)}元</p>
+						<p style="color:#626262;">待收本金</p>
+					</div>
+					<div class="middle-left">
+						<p>#{investStatistics.getReceivedInterest(loginUserInfo.loginUserId)}元</p>
+						<p style="color:#626262;">累计收益</p>
+					</div>
+					<div class="middle-right">
+						<p>#{billStatistics.getBalanceByUserId(loginUserInfo.loginUserId)+billStatistics.getFrozenMoneyByUserId(loginUserInfo.loginUserId)+investStatistics.getReceivableCorpus(loginUserInfo.loginUserId)+investStatistics.getReceivableInterest(loginUserInfo.loginUserId)}元</p>
+						<p style="color:#626262;">账户总额</p>
+					</div>
+				</div>
+
+				<div class="details">
+					<h3>会员操作</h3>
+				</div>
+				<div data-role="controlgroup" data-mini="true">
+					<a href="#{request.contextPath}/weixin/user/myinvest"
+						data-role="button">我的投资</a> <a
+						href="#{request.contextPath}/weixin/user/myapplyLoan"
+						data-role="button">我的融资</a> <a
+						href="#{request.contextPath}/weixin/user/jifenhistory"
+						data-role="button">我的积分</a> <a
+						href="#{request.contextPath}/weixin/user/wodeduihuan"
+						data-role="button">我的兑换</a>
+				</div>
+
+			</div>
+			<ui:insert name="footcontent">
+				<ui:include src="template/footer.xhtml"></ui:include>
+			</ui:insert>
+		</div>
+
+	</body>
+</ui:composition>
+

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+<h:head>
+	<title>好友来投</title>
+	<meta http-equiv="keywords" content="p2p网贷平台" />
+	<meta http-equiv="description" content="网上借贷" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<link rel="apple-touch-icon"
+		href="#{tplVars.themeImagePath}/touch-icon-iphone.png" />
+	<!--<link rel="stylesheet" type="text/css" href="styles.css">-->
+	<ui:insert name="footcontent">
+		<ui:include src="template/user_css.xhtml"></ui:include>
+	</ui:insert>
+
+</h:head>
+
+<f:view contentType="text/html">
+	<h:body>
+
+		<div>
+
+			<form method="post" action="#{request.contextPath}/weixin_login"
+				id="form1">
+				<header id="title">
+				<div class="back"></div>
+				个人登录 </header>
+				<div class="logo">
+					<img src="#{tplVars.themeImagePath}/logo.png" />
+				</div>
+
+
+
+				<section id="login">
+				<div>
+					<span> <img src="#{tplVars.themeImagePath}/icon_user.png"
+						width="24" height="24" alt="用户名图标" /> </span>
+					<p:inputText label="用户名" id="j_username" required="true"
+						placeholder="请输入用户名"></p:inputText>
+				</div>
+				<div>
+					<span> <img
+						src="#{tplVars.themeImagePath}/icon_password.png" width="24"
+						height="24" alt="密码图标" /> </span>
+					<p:password id="j_password" placeholder="请输入密码"></p:password>
+				</div>
+
+
+
+				<ui:fragment
+					rendered="#{sessionScope.need_validate_code or configHome.getConfigValue('login_fail_max_times') eq '0'}">
+					<div class="yanzhengma">
+						<span> <img
+							src="#{tplVars.themeImagePath}/icon_password.png" width="24"
+							height="24" alt="密码图标" /> </span>
+						<p:inputText style="width:50%;" id="captcha_input" placeholder="请输入验证码"></p:inputText>
+
+						<a class="login_yzm" href="#"><img alt="点击刷新" id="verifyCode"
+						    src="#{request.contextPath}/verifyCodeServlet"
+							onclick="this.src='#{request.contextPath}/verifyCodeServlet?'+new Date().getTime()" />
+						</a>
+					</div>
+				</ui:fragment> <input type="hidden" name="openid" value="" /> <a id="asubmit"
+					class="btnLogin">登录</a> <a href="#{request.contextPath}/weixin/register" class="btnRegister">注册</a>
+				</section>
+			</form>
+			<ui:insert name="footcontent">
+				<ui:include src="template/user_js.xhtml"></ui:include>
+			</ui:insert>
+			<script type="text/javascript">
+			// alert('#{tplVars.themeStylePath}');
+		 $(function() {
+				$("#j_username").removeClass(); 
+				$("#j_password").removeClass();
+				$("#captcha_input").removeClass(); 
+			}); 
+			$('#asubmit').click(function(){
+			 	$("#form1").submit(); 
+			 });
+			</script>
+
+		</div>
+
+		<ui:fragment
+			rendered="#{not empty requestScope['SPRING_SECURITY_LAST_EXCEPTION'] and requestScope['SPRING_SECURITY_LAST_EXCEPTION'].message ne 'Authentication method not supported: GET'}">
+			<script>
+						$.dialog.tips('#{requestScope['SPRING_SECURITY_LAST_EXCEPTION'].message}', 2);
+					</script>
+		</ui:fragment>
+	</h:body>
+</f:view>
+</ui:composition>

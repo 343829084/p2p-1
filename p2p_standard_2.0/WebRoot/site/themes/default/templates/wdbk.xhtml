@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	<link type="text/css" rel="stylesheet"
+			href="#{tplVars.themeStylePath}/common.css"/>
+
+<link type="text/css" rel="stylesheet"
+	href="#{tplVars.themeStylePath}/untitled.css " />
+
+<body>
+<div>
+	<ui:include src="header.xhtml"></ui:include>
+</div>
+
+	<div class="all">
+		<div class="left">
+			<div class="left-top">
+				<div class="left-topz">
+					<h3>热门词条</h3>
+					<p>热门词条热门词条热门热门词条热门 词条热门热门词条热门词条热门热门词条热 门词条热门词条热门热门词条热门词条热门
+						词条热门热门词条热门词条热门词条热门热 热门词条热门词条热门词条。</p>
+					<p style="padding-left: 173px; padding-top: 5px; ">
+						<a href="#">详细>></a>
+					</p>
+
+					<div class="xiahuaxian"></div>
+					<div class="rmct">
+						<ul>
+						<ui:repeat var="node" value="#{pageModel.data}">
+						<li><a href="#{request.contextPath}/node/rmct/#{node.id}"
+						class="fontsize18 color3d" title="#{node.title}">#{node.title}</a>
+						<span style="float: right; padding-right: 10px; font-size:12px;font-weight:100;"> <h:outputText
+							value="#{node.updateTime}">
+							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" locale="zh_CN"
+								timeZone="GMT+8"></f:convertDateTime>
+						</h:outputText>
+				</span></li>
+			</ui:repeat>
+						</ul>
+						<p>
+							<a href="#{request.contextPath}/node/rmct">查看更多>></a>
+						</p>
+					</div>
+				</div>
+				<div class="left-topy">
+					<h3>网贷事件</h3>
+					<p>热门词条热门词条热门热门词条热门 词条热门热门词条热门词条热门热门词条热 门词条热门词条热门热门词条热门词条热门
+						词条热门热门词条热门词条热门词条热门热 热门词条热门词条热门词条。</p>
+					<p style="padding-left: 173px; padding-top: 5px; ">
+						<a href="#">详细>></a>
+					</p>
+					<div class="xiahuaxian"></div>
+					<div class="wdsj">
+						<ul>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+						</ul>
+						<p>
+							<a href="#">查看更多>></a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="left-bottom">
+				<div class="left-bottomz">
+					<h3>网贷名人</h3>
+					<p>热门词条热门词条热门热门词条热门 词条热门热门词条热门词条热门热门词条热 门词条热门词条热门热门词条热门词条热门
+						词条热门热门词条热门词条热门词条热门热 热门词条热门词条热门词条。</p>
+					<p style="padding-left: 173px; padding-top: 5px; ">
+						<a href="#">详细>></a>
+					</p>
+					<div class="xiahuaxian"></div>
+					<div class="wdmr">
+						<ul>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+						</ul>
+						<p>
+							<a href="#">查看更多>></a>
+						</p>
+					</div>
+				</div>
+				<div class="left-bottomy">
+					<h3>网贷名词</h3>
+					<p>热门词条热门词条热门热门词条热门 词条热门热门词条热门词条热门热门词条热 门词条热门词条热门热门词条热门词条热门
+						词条热门热门词条热门词条热门词条热门热 热门词条热门词条热门词条。</p>
+					<p style="padding-left: 173px; padding-top: 5px;">
+						<a href="#">详细>></a>
+					</p>
+					<div class="xiahuaxian"></div>
+					<div class="wdmc">
+						<ul>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+							<li><span><img src="images/tzlc-yd.png" />
+							</span><a href="#">股票知识股票知识股票知识</a>
+							</li>
+						</ul>
+						<p>
+							<a href="#">查看更多>></a>
+						</p>
+					</div>
+				</div>
+				<div class="xia-tu">
+					<img src="images/tzlc-xia.png" />
+				</div>
+			</div>
+		
+			<div class="right">
+				<div class="rights">
+					<div class="rightwdmc">
+						<p
+							style="background: #5dc8ff;text-align: -moz-center;width: 180px; height: 41px; ">
+							<a style="color:#fff;" href="#">网贷名词</a>
+						</p>
+						<p>
+							<span><img src="images/jiantou.png" />
+							</span><a href="#">网络术语</a>
+						</p>
+						<p>
+							<span><img src="images/jiantou.png" />
+							</span><a href="#">标的类型</a>
+						</p>
+						<p>
+							<span><img src="images/jiantou.png" />
+							</span><a href="#">还款方式</a>
+						</p>
+						<p>
+							<span><img src="images/jiantou.png" />
+							</span><a href="#">保障机制</a>
+						</p>
+						<p
+							style="background: #5dc8ff;text-align: -moz-center;width: 180px; height: 41px;">
+							<a style="color:#fff;" href="#">名人介绍</a>
+						</p>
+						<p>
+							<span><img src="images/jiantou.png" />
+							</span><a href="#">平台高层</a>
+						</p>
+						<p>
+							<span><img src="images/jiantou.png" />
+							</span><a href="#">网贷名人</a>
+						</p>
+						<p>
+							<span><img src="images/jiantou.png" />
+							</span><a href="#">行业专家</a>
+						</p>
+						<p
+							style="background: #5dc8ff;text-align: -moz-center;width: 180px; height: 41px;">
+							<a style="color:#fff;" href="#">网贷事件</a>
+						</p>
+						<p>
+							<span><img src="images/jiantou.png" />
+							</span><a href="#">2015年</a>
+						</p>
+					</div>
+					<div class="zuo-tu">
+						<a href="#{request.contextPath}/register"><img src="images/tzlc-zuo.png" /></a>
+					</div>
+
+				</div>
+				<div class="clear"></div>
+			</div>
+			
+				 <div class="footer" id="Footer">
+  					<ui:include src="footer.xhtml"></ui:include>
+  				</div>
+		</div>
+	</div>
+		
+</body>
+
+</html>

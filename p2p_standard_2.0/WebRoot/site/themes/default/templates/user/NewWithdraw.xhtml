@@ -1,0 +1,264 @@
+<ui:composition template="center.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<f:metadata>
+		<f:viewParam name="uid" value="#{userHome.uid}"></f:viewParam>
+	</f:metadata>
+	<ui:define name="center_right">
+		<link type="text/css" rel="stylesheet"
+			href="#{tplVars.themeCssPath}/tixian.css" />
+		<script>
+			$(document).ready(function() {
+				$("#cap_withdraw_hidden").show();
+				$("#ips_withdraw_hidden").hide();
+			});
+		</script>
+		<div class="center_right" id="cap_withdraw_hidden">
+
+			<!-- 	已实名认证 -->
+
+			<h:form id="form">
+				<div class="zhcz">
+					<p>提现到银行卡</p>
+					<a href="#{path}/user/bankCardList">+添加银行卡</a> <span>|</span> <a
+						href="#{path}/user/myCashFlow">交易记录</a>
+				</div>
+				<div class="main-bank">
+					<div class="bank1">
+						<p>选择发卡银行：</p>
+						<ul class="zhtx_ull">
+							<h:panelGroup id="bankCards">
+								<ui:fragment
+									rendered="#{bankCardList.bankCardListbyLogin-top: 12px;">+请添加银行卡</a>
+								</ui:fragment>
+								<ui:fragment
+									rendered="#{bankCardList.bankCardListbyLoginUser.size()>0}">
+									<ui:repeat var="bc"
+										value="#{bankCardList.bankCardListbyLoginUser}"
+										size="#{bankCardList.setPageSize(1)}">
+										<!--   <p style="width:86px;text-align: center;">储蓄卡：</p>			-->
+										<li
+											class="#{bc.id.equals(capitalPoolWithdrawHome.instance.bankCard.id)?'zhtx_lii':''}">
+											<p:commandLink update=":form:bankCards :form:CapwithdrawBtn"
+												process="@this"
+												actionListener="#{capitalPoolWithdrawHome.instance.setBankCard(bc)}">
+												<img src="#{tplVars.themeImagePath}/banklogo/bjyh.jpg" />
+												<ui:param name="bcnL" value="#{bc.cardNo.length()}"></ui:param><p id="numBank">****#{bc.cardNo.substring(bcnL-4,bcnL)}</p>
+										</p:commandLink><em></em></li>
+									</ui:repeat>
+								</ui:fragment>
+							</h:panelGroup>
+						</ul>
+						<div class="clear"></div>
+					</div>
+					<div class="bank1">
+						<div class="txczje_r">
+							<p>提现金额：</p>
+							<h:inputText label="提现金额" styleClass="txt02" required="true"
+								id="money" value="#{capitalPoolWithdrawHome.instance.money}">
+								<archer:validateNumber precision="2"></archer:validateNumber>
+								<f:validateDoubleRange minimum="1"></f:validateDoubleRange>
+								<f:ajax event="blur" render="fee" execute="money"
+									listener="#{capitalPoolWithdrawHome.calculateFee}"></f:ajax>
+							</h:inputText>
+							元
+							<div hidden="true">
+								<h:inputText label="type"
+									value="#{capitalPoolWithdrawHome.instance.type}">
+									<span>cap</span>
+								</h:inputText>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="slideBox">
+						<ul class="mlnav">
+							<div class="bank2">
+								<p>提现账户：</p>
+								<img class="picone"
+									src="#{tplVars.themeImagePath}/withdraw/haoyouqian.jpg"
+									onclick="OpenClosezqw('picone') " /> <img class="pictwo"
+									src="#{tplVars.themeImagePath}/withdraw/zijinzhanghuh.png"
+									onclick="OpenClosezqw('pictwo') " />
+
+							</div>
+						</ul>
+					</div>
+					<span>可用资金
+						<p style="color:#f60;display: -webkit-inline-box;display:inline;">
+							<h:outputLabel
+								value="#{userWealthHome.getBalanceByUserId(loginUserInfo.loginUserId)}">
+								<f:convertNumber />
+							</h:outputLabel>
+						</p> </span>元 <span style="padding-left:50px;">手续费
+						<p style="color:#f60;display: -webkit-inline-box;display:inline;">
+							<h:outputLabel id="fee"
+								value="#{capitalPoolWithdrawHome.instance.fee}">
+								<f:convertNumber minFractionDigits="2" />
+							</h:outputLabel>
+							<a href="#"><img src="#{tplVars.themeImagePath}/img42.png" />
+							</a>
+						</p>元</span>
+					<div class="clear"></div>
+				</div>
+				<div class="ljtx">
+						<div>
+						<input type="checkbox" id="cap_check" style="width: 25px;float:left;" value="cap" /><p>我已阅读<a
+							href="#">《提现协议》</a>并同意协议内容</p><br />
+
+
+					</div>
+
+					<h:panelGroup id="CapwithdrawBtn">
+						<div class="btn">
+							<h:commandButton action="#{capitalPoolWithdrawHome.withdraw}" value="立即提现"
+								rendered="#{capitalPoolWithdrawHome.instance.bankCard.id!=null}"
+								onclick="return checkCapAgree('cap')"
+								styleClass="txczje02_btn txczje02_btn_02">
+							</h:commandButton>
+						</div>
+						<ui:fragment
+							rendered="#{capitalPoolWithdrawHome.instance.bankCard.id==null}">
+							<a style="color:#fff;" href="javascript:void(0)" onclick="$.dialog.tips('请先选择银行卡！')"
+								class="txczje02_btn txczje02_btn_02"> 立即提现 </a>
+						</ui:fragment>
+					<div class="clear"></div>
+					</h:panelGroup>
+				</div>
+			</h:form>
+		</div>
+		<div class="center_right" id="ips_withdraw_hidden">
+			<!-- 	已实名认证 -->
+			<h:form id="form_2">
+				<div class="zhcz">
+					<p>提现</p>
+					<span>|</span> <a href="#">提现记录</a>
+				</div>
+				<div class="main-bank">
+					<div class="bank1">
+						<label>提现金额：</label>
+						<h:inputText label="提现金额" styleClass="txt02" required="true"
+							id="money" value="#{withdrawHome.instance.money}">
+							<archer:validateNumber precision="2"></archer:validateNumber>
+							<f:validateDoubleRange minimum="1"></f:validateDoubleRange>
+							<f:ajax event="blur" render="fee" execute="money"
+								listener="#{withdrawHome.calculateFee}"></f:ajax>
+						</h:inputText>
+						<span style="padding-left: 10px;">元</span>
+						<div hidden="true">
+							<h:inputText label="type" value="#{withdrawHome.instance.type}">
+								<span>ips</span>
+							</h:inputText>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="slideBox">
+						<ul class="mlnav">
+							<div class="bank2">
+								<p>提现账户：</p>
+								<h:inputHidden value="withdrawHome.instance.setType('ips')"></h:inputHidden>
+								<img class="picone"
+									src="#{tplVars.themeImagePath}/withdraw/haoyouqian.png"
+									onclick="OpenClosezqw('picone') " /> <img class="pictwo"
+									src="#{tplVars.themeImagePath}/withdraw/zijinzhanghuh.png"
+									onclick="OpenClosezqw('pictwo') " />
+							</div>
+						</ul>
+					</div>
+					<div class="txczje02">
+						<div class="txczje_r">
+							<span style="font-size:12px;">可用资金
+								<p style="color:#f60;display: -webkit-inline-box;display:inline;font-size:12px;">
+									<h:outputLabel
+										value="#{userBillHome.getBalanceByUserId(loginUserInfo.loginUserId)}">
+										<f:convertNumber />
+									</h:outputLabel>
+								</p> </span>元 
+								<span style="padding-left:30px;font-size:12px;">手续费
+								   <p style="color:#f60;display: -webkit-inline-box;display:inline;">
+									<h:outputLabel id="fee" value="#{withdrawHome.instance.fee}">
+										<f:convertNumber minFractionDigits="2" />
+									</h:outputLabel>
+									<a href="#"><img src="#{tplVars.themeImagePath}/img42.png" />
+									</a>
+								</p>元</span>
+							<div class="clear"></div>
+						</div>
+					</div>
+				</div>
+				<div class="ljtx">
+					<div style="height:34px;">
+						<input type="checkbox" id="ips_check" style="width: 25px;float:left;" value="ips" />我已阅读<a
+							href="#">《提现协议》</a>并同意协议内容<br/>
+					</div>
+
+					<h:panelGroup id="withdrawBtn">
+						<div class="btn">
+							<h:commandButton action="#{withdrawHome.withdraw}" value="立即提现"
+								onclick="return checkIpsAgree('ips')"
+								styleClass="txczje02_btn txczje02_btn_02">
+							</h:commandButton>
+						</div>
+						<div class="clear"></div>
+					</h:panelGroup>
+
+				</div>
+			</h:form>
+		</div>
+		<script>
+		
+			function OpenClosezqw(CID) {
+			
+				if (CID == "picone") {
+					$("#cap_withdraw_hidden").show();
+					$("#ips_withdraw_hidden").hide();
+					$(".picone")
+							.attr("src",
+									"#{tplVars.themeImagePath}/withdraw/haoyouqian.jpg");
+					$(".pictwo")
+							.attr("src",
+									"#{tplVars.themeImagePath}/withdraw/zijinzhanghuh.png");
+
+				} else {
+					$("#cap_withdraw_hidden").hide();
+					$("#ips_withdraw_hidden").show();
+					$(".picone")
+							.attr("src",
+									"#{tplVars.themeImagePath}/withdraw/haoyouqianh.png");
+					$(".pictwo")
+							.attr("src",
+									"#{tplVars.themeImagePath}/withdraw/zijinzhanghuc.png");
+				}
+			}
+			function checkCapAgree(type){
+				var isCheck=$('#cap_check').is(':checked');
+				if(!isCheck){
+				
+					$.dialog.tips('请先同意提现协议！')
+				}
+				
+				return isCheck;
+			}
+			function checkIpsAgree(type){
+				var isCheck=$('#ips_check').is(':checked');
+				if(!isCheck){
+				
+					$.dialog.tips('请先同意提现协议！')
+				}
+				
+				return isCheck;
+			}
+			
+		</script>
+	</ui:define>
+</ui:composition>
+

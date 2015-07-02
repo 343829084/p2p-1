@@ -1,0 +1,30 @@
+/* CSS Document */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
+ol,ul{list-style:none;margin:0px;padding:0px;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+table{border-collapse:collapse;border-spacing:0;}
+/* start editing from here */
+a{text-decoration:none;}
+img{max-width:100%;}
+/* reset */
+body{padding:0;margin:0;font-family: Arial, Helvetica, sans-serif;font-size: 100%;background:#fff;
+}
+/*-------duihuan--------*/
+.duihuan-top-nav{ 
+font-size:1.2em; color:#fff; height:2.4em; line-height:2.4em; text-align:center; background:#063f5c; position:relative; }
+/*----------------*/
+.duihuan-middle-nav{height:85%; width:90%;margin-top:5%;margin-left:5%;box-shadow:2px 2px 2px #e0e0e0;border:1px solid #ccc;
+padding-bottom:4%;}
+.duihuan-middle-up{height:100%; width:90%;margin-top:4%;margin-left:5%;}
+.biaoti{font-size:1.2em;font-weight:bold;color:#42bbfa;border-bottom:1px solid #42bbfa;height:35px;}
+.duihuan-wenzikuang{line-height:40px;border-bottom:1px solid #e0e0e0;width:100%;font-weight:bold;font-size:14px; }
+.duihuan-wenzikuang td{width:30%;}
+.duihuan-wenzikuang1{ height:100%;line-height:40px;border-bottom:1px solid #e0e0e0;width:100%;font-size:12px;}
+.duihuan-wenzikuang1 td{width:24%;}
+.duihuan-wenzikuang1 td a{color:#fff;}
+/*导航栏*/
+.down-nav{width:100%;height:45px; font-size:16px;font-weight:bold;list-style:none;background:#496278;line-height:45px;text-align:center;border-top:1px solid #000;}
+.down-nav li{float:left;width:24%;display:block;background:#496278;color:#fff;text-align:center;border-right:1px solid #000;}
+.down-nav li a{ text-decoration:none; display:block;color:#fff;}

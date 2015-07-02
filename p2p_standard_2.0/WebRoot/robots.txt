@@ -1,0 +1,4 @@
+User-agent:*
+disallow:/memberLoginPage
+disallow:/register
+disallow:/admin

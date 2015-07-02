@@ -1,0 +1,153 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="page.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="content">
+		<div class="date">
+			<div class="date02">
+				<h3>项目列表</h3>
+			</div>
+		</div>
+		<div class="h30"></div>
+		<h:form id="form">
+			<p:remoteCommand process="@this" immediate="true" name="clearPage"
+				actionListener="#{loanList.setCurrentPage(1)}"></p:remoteCommand>
+			<div class="content">
+				<div class="content-title">
+					<h2>全部项目</h2>
+				</div>
+				<div class="content_ul">
+					<ul class="con_ul">
+						<li>项目收益</li>
+						<li><h:commandLink styleClass="hover" title="全部" value="全部">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.setMinAndMaxRate(0.01,0.25)}"></f:ajax>
+							</h:commandLink></li>
+						<li><h:commandLink title="10%以下" value="10%以下">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.setMinAndMaxRate(0,0.1)}"></f:ajax>
+							</h:commandLink></li>
+						<li><h:commandLink title="10%-15%" value="10%-15%">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.setMinAndMaxRate(0.1,0.15)}"></f:ajax>
+							</h:commandLink></li>
+						<li><h:commandLink title="15%-20%" value="15%-20%">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.setMinAndMaxRate(0.15,0.2)}"></f:ajax>
+							</h:commandLink></li>
+						<li><h:commandLink title="20%以上" value="20%以上">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.setMinAndMaxRate(0.2,10)}"></f:ajax>
+							</h:commandLink></li>
+					</ul>
+					<ul class="con_ul">
+						<li>项目状态</li>
+						<li><h:commandLink styleClass="hover" title="全部" value="全部">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.example.setStatus('')}"></f:ajax>
+							</h:commandLink></li>
+						<li><h:commandLink title="可投资" value="可投资">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.example.setStatus(LoanStatus.RAISING)}"></f:ajax>
+							</h:commandLink></li>
+						<li><h:commandLink title="还款中" value="还款中">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.example.setStatus(LoanStatus.REPAYING)}"></f:ajax>
+							</h:commandLink></li>
+						<li><h:commandLink title="已完成" value="已完成">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.example.setStatus(LoanStatus.COMPLETE)}"></f:ajax>
+							</h:commandLink></li>
+					</ul>
+					<ul class="con_ul">
+						<li>项目规模</li>
+						<li><h:commandLink styleClass="hover" title="全部" value="全部">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.setMinAndMaxLoanMoney(1,500000*1000000)}"></f:ajax>
+							</h:commandLink></li>
+						<li><h:commandLink title="10万以下" value="10万以下">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.setMinAndMaxLoanMoney(0,100000)}"></f:ajax>
+							</h:commandLink></li>
+						<li><h:commandLink title="10~50万" value="10~50万">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.setMinAndMaxLoanMoney(100000+1,500000)}"></f:ajax>
+							</h:commandLink></li>
+						<li><h:commandLink title="50~100万" value="50~100万">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.setMinAndMaxLoanMoney(500000+1,1000000)}"></f:ajax>
+							</h:commandLink></li>
+						<li><h:commandLink title="100~500万" value="100~500万">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.setMinAndMaxLoanMoney(1000000+1,5000000)}"></f:ajax>
+							</h:commandLink></li>
+						<li><h:commandLink title="500万以上" value="500万以上">
+								<f:ajax render=":form:showlist"
+									listener="#{loanList.setMinAndMaxLoanMoney(500*10000+1,5000*10000)}"></f:ajax>
+							</h:commandLink></li>
+					</ul>
+				</div>
+				<h:panelGroup id="showlist">
+					<ui:param name="restriction"
+						value="#{'(loan.status=\''}#{LoanStatus.RAISING}#{'\' or loan.status=\''}#{LoanStatus.COMPLETE}#{''}#{'\' or loan.status=\''}#{LoanStatus.RECHECK}#{'\' or loan.status=\''}#{InvestTransferStatus.TRANSFERING}#{'\' or loan.status=\''}#{LoanStatus.REPAYING}#{'\')'}"></ui:param>
+					<f:event type="preRenderComponent"
+						listener="#{loanList.addRestriction(restriction)}"></f:event>
+					<f:event type="preRenderComponent"
+						listener="#{loanList.setPageSize(6)}"></f:event>
+					<f:event type="preRenderComponent"
+						listener="#{loanList.addOrder('field(loan.status, \'筹款中\' ,\'转让中\',\'等待复核\', \'还款中\',\'逾期\',\'完成\')','asc')}"></f:event>
+					<f:event type="preRenderComponent"
+						listener="#{loanList.addOrder('loan.commitTime','desc')}"></f:event>
+					<ui:repeat var="loan" value="#{loanList.lazyModelData}">
+						<div class="content-list"
+							onclick="location.href='#{path}/mobile/loanDetail/#{loan.id}'">
+							<div class="content-list-text">
+								#{loan.name}<br />
+								<div class="p10">
+									<ui:param name="cr"
+										value="#{loanCalculator.calculateRaiseCompletedRate(loan.id)}"></ui:param>
+									进度：<span class="jdt jd"><em><b
+											style="width:#{cr}%;"></b></em><i>#{cr}%</i></span>
+								</div>
+								可投金额：
+								<h:outputText
+									value="#{loanCalculator.calculateMoneyNeedRaised(loan.id)}">
+									<f:convertNumber type="number" pattern="￥#,###" />
+								</h:outputText>
+								<br /> <span>#{loan.ratePercent}</span>%&#160;&#160;&#160;#{loan.deadline*loan.type.repayTimePeriod}(#{dictUtil.getValue('repay_unit',loan.type.repayTimeUnit)})&#160;&#160;&#160;
+								<h:outputText value="#{loan.loanMoney}">
+									<f:convertNumber type="number" pattern="￥#,###" />
+								</h:outputText>
+							</div>
+						</div>
+					</ui:repeat>
+					<div class="page">
+						<ui:param name="page"
+							value="#{empty loanList.currentPage ? 1 : loanList.currentPage }"></ui:param>
+						<ui:param name="totalPage"
+							value="#{math:ceil(loanList.lazyModel.rowCount/loanList.pageSize)}"></ui:param>
+						<ui:fragment rendered="#{page > 1}">
+							<h:commandLink title="上一页" value="上一页">
+								<f:ajax listener="#{loanList.setCurrentPage(page-1)}"
+									execute="@this" render=":form:showlist"></f:ajax>
+							</h:commandLink>
+						</ui:fragment>
+						#{page}
+						<ui:fragment rendered="#{totalPage > page}">
+							<h:commandLink title="下一页" value="下一页">
+								<f:ajax listener="#{loanList.setCurrentPage(page+1)}"
+									execute="@this" render=":form:showlist"></f:ajax>
+							</h:commandLink>
+						</ui:fragment>
+					</div>
+				</h:panelGroup>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

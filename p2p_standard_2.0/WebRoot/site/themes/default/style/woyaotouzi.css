@@ -1,0 +1,46 @@
+/* CSS Document */
+*{ margin:0; padding:0; -webkit-text-size-adjust:none;}
+body {
+	font-family: "Microsoft YaHei","Lucida Sans Unicode","Myriad Pro","Hiragino Sans GB","Heiti SC","Verdana","simsun";
+	font-size: 12px;
+	padding: 0;
+	border: 0;
+	margin: 0;
+	background: #fff;
+}
+
+img,h1,h2,h3,h4,h5,ul,li,dl,dt,dd,p,a {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+	text-decoration: none;}
+
+.all{width:1000px;margin:0 auto;margin-top:20px;}
+
+.up{width:100%;height:285px;}
+.upleft{width:33%;float:left;height:285px;}
+.upleft img{margin:0 auto;padding-left: 31%;}
+.upleft p{width:60%;margin:10% auto 30%;}
+
+.upmiddle{width:33%;float:left;height:285px;}
+.upmiddle img{margin:0 auto;padding-left: 31%;}
+.upmiddle p{width:60%;margin:10% auto 30%;}
+
+.upright{width:33%;float:left;height:285px;}
+.upright img{margin:0 auto;padding-left: 31%;}
+.upright p{width:60%;margin:10% auto 30%;;}
+
+
+.down{width:100%;height:285px;}
+.downleft{width:33%;float:left;}
+.downleft img{margin:0 auto;padding-left: 20px;}
+.downleft p{width:60%;margin:20% auto;}
+
+.downmiddle{width:33%;float:left;height:285px;}
+.downmiddle img{margin:0 auto;padding-left: 31%;}
+.downmiddle p{width:60%;margin:10% auto 30%;}
+
+.downright{width:33%;float:left;height:285px;}
+.downright img{margin:0 auto;}
+.downright p{width:60%;margin:20% auto;}

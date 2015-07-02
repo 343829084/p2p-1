@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	<script type="text/javascript" src="#{tplVars.themeJSPath}/timer.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('#form\\:money').val('#{param.money}');
+			$('#form\\:type1').val('#{param.type}');
+			$('#form\\:rate').val('#{param.rate}');
+			$('#form\\:deadline').val('#{param.deadline}');
+		});
+	</script>
+
+	<header class="top-nav">
+
+	<link rel="stylesheet"
+		href="#{tplVars.themeCssPath}/jquery.mobile-1.4.5.css" />
+	
+	<script src="#{tplVars.themeJSPath}/jquery-1.11.1.js"></script>
+    <script src="#{tplVars.themeJSPath}/jquery.mobile-1.4.5.js"></script> 
+    <link rel="stylesheet" href="#{tplVars.themeCssPath}/all.css" />
+	</header>
+	<body>
+
+		<div data-role="page" id="index1">
+			<h:form id="form">
+				<section class="register">
+				<div data-role="header" data-position="fixed" data-theme="b">
+					<h1>理财小工具</h1>
+				</div>
+				<div role="main" class="ui-content">
+
+					<div class="ui-field-contain">
+						<label>投资金额：</label>
+						<h:inputText id="money" styleClass="ui-text ffA" label="投资金额"
+							required="true" value="#{loanHome.instance.loanMoney}">
+							<f:validateDoubleRange minimum="1"></f:validateDoubleRange>
+							<archer:validateNumber precision="0" cardinalNumber="100"></archer:validateNumber>
+							<f:ajax event="blur"></f:ajax>
+						</h:inputText>
+					</div>
+					<div class="ui-field-contain">
+						<label>标的类型:</label>
+						<h:selectOneMenu
+							style="width: 61%;border:1px solid #A1D2FD; height:80%;"
+							id="type" value="#{loanHome.instance.type}" name="register1"
+							class="validate-selection" required="true"
+							converter="archer.EntityConverter" label="标的类型">
+							<f:selectItem itemLabel="请选择" noSelectionOption="true" />
+							<f:selectItems value="#{loanTypeList.allResultList}" var="type"
+								itemLabel="#{type.name}" itemValue="#{type}" />
+						</h:selectOneMenu>
+					</div>
+					<div class="ui-field-contain">
+						<label>年化收益:</label>
+						<h:inputText id="rate" label="年化收益" required="true"
+							styleClass="ui-text ffA" value="#{loanHome.instance.ratePercent}">
+							<archer:validateNumber precision="2"></archer:validateNumber>
+							<f:validateDoubleRange minimum="0.01"></f:validateDoubleRange>
+							<f:ajax event="blur" render="@this"></f:ajax>
+						</h:inputText>
+					</div>
+					<div class="ui-field-contain">
+						<label>投资期限:</label>
+						<h:inputText id="deadline" value="#{loanHome.instance.deadline}"
+							label="投资期限" required="true" styleClass="ui-text ffA">
+							<f:ajax event="blur" render="@this"></f:ajax>
+							<f:validateLongRange minimum="1"></f:validateLongRange>
+						</h:inputText>
+						<span>&#160;期</span>
+					</div>
+					<input type="reset" value="重置" id="hid_Action" name="hid_Action"
+						class="btn1" />
+					<h:commandButton value="开始计算" class="btn1">
+						<f:setPropertyActionListener value="#{now}"
+							target="#{loanHome.instance.interestBeginTime}" />
+						<f:ajax render=":result" execute="@form"></f:ajax>
+					</h:commandButton>
+
+				</div>
+				</section>
+			</h:form>
+			<div class="ui-field-contain">
+				<h2 style="border-bottom:2px solid #42bbfa;">计算结果</h2>
+				<h:panelGroup id="result">
+					<ui:param name="loan" value="#{loanHome.instance}"></ui:param>
+					<ul data-role="listview" data-inset="true">
+						<li data-icon="false"><a href="#"><span>投资金额：<h:outputText
+										value="#{loanHome.instance.loanMoney}">
+										<f:convertNumber minIntegerDigits="1" maxFractionDigits="0" />
+									</h:outputText> </span>元 </a></li>
+						<li data-icon="false"><a href="#">计息时长：<span class="ffA">#{loan.deadline*loan.type.repayTimePeriod}</span>#{dictUtil.getValue('repay_unit',loan.type.repayTimeUnit)}
+						</a></li>
+						<li data-icon="false"><a href="#">投资到期总收入：<span><em
+									class="ffA strong"><h:outputText
+											value="#{loanCalculator.calculateAnticipatedInterest(loanHome.instance)}">
+											<f:convertNumber minIntegerDigits="1" maxFractionDigits="2" />
+										</h:outputText> </em>元</span> </a>
+						</li>
+					</ul>
+				</h:panelGroup>
+			</div>
+			<div class="ui-field-contain">
+				<div class="ui-grid-c">
+					<div class="ui-block-a">
+						<div class="ui-bar ui-bar-e" id="border-bottom"
+							style="height:40px;">还款日期</div>
+					</div>
+					<div class="ui-block-b">
+						<div class="ui-bar ui-bar-e" id="border-bottom"
+							style="height:40px;">应收本息/元</div>
+					</div>
+					<div class="ui-block-c">
+						<div class="ui-bar ui-bar-e" id="border-bottom"
+							style="height:40px;">应收利息/元</div>
+					</div>
+					<div class="ui-block-d">
+						<div class="ui-bar ui-bar-e" id="border-bottom"
+							style="height:40px;">应收本金/元</div>
+					</div>
+				</div>
+			</div>
+			<ui:repeat var="ir"
+				value="#{loanCalculator.calculateAnticipatedRepays(loanHome.instance)}">
+				<div class="ui-grid-c">
+					<div class="ui-block-a">
+						<div class="ui-bar ui-bar-e" id="border-bottom">
+							<h:outputText value="#{ir.repayDay}">
+								<f:convertDateTime pattern="yyyyMMdd" timeZone="GMT+8" />
+							</h:outputText>
+						</div>
+					</div>
+					<div class="ui-block-b">
+						<div class="ui-bar ui-bar-e" id="border-bottom">
+							<h:outputText value="#{ir.corpus+ir.interest}">
+								<f:convertNumber minIntegerDigits="1" maxFractionDigits="2"
+									minFractionDigits="2" />
+							</h:outputText>
+						</div>
+					</div>
+					<div class="ui-block-c">
+						<div class="ui-bar ui-bar-e" id="border-bottom">
+							<h:outputText value="#{ir.interest}">
+								<f:convertNumber minIntegerDigits="1" maxFractionDigits="2"
+									minFractionDigits="2" />
+							</h:outputText>
+						</div>
+					</div>
+					<div class="ui-block-d">
+						<div class="ui-bar ui-bar-e" id="border-bottom">
+							<h:outputText value="#{ir.corpus}">
+								<f:convertNumber minIntegerDigits="1" maxFractionDigits="2"
+									minFractionDigits="2" />
+							</h:outputText>
+						</div>
+					</div>
+				</div>
+			</ui:repeat>
+			<ui:insert name="footcontent">
+				<ui:include src="template/footer.xhtml"></ui:include>
+			</ui:insert>
+		</div>
+	</body>
+</ui:composition>

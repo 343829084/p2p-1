@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	<head>
+
+<ui:insert name="footcontent">
+	<ui:include src="template/header.xhtml"></ui:include>
+</ui:insert>
+	</head>
+	<body>
+		<div data-role="page" id="subpage" data-add-back-btn="true">
+			<div data-role="header" data-position="fixed" data-theme="b">
+				<a href="#" data-role="button"  data-rel="back" data-mini="true" class="fhbtn">返回</a>
+				<h1>我的融资</h1>
+			</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>项目名称</th>
+						<th>借款金额</th>
+						<th>利率</th>
+						<th>项目状态</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<f:event type="preRenderComponent"
+						listener="#{loanList.example.user.setId(loginUserInfo.loginUserId)}"></f:event>
+					<ui:repeat var="loan" value="#{loanList.lazyModelData}"
+						varStatus="status">
+						<tr>
+							<td>#{stringHome.ellipsis(loan.name,5)}</td>
+							<td><h:outputText value="#{loan.loanMoney}">
+									<f:convertNumber />
+								</h:outputText>元</td>
+							<td><h:outputText value="#{loan.rate}">
+									<f:convertNumber type="percent" minFractionDigits="2" />
+								</h:outputText>
+							</td>
+							<td><h:outputText rendered="#{loan.status !='raising'}"
+									value="#{dictUtil.getValue('loan',loan.status)}">
+								</h:outputText> <ui:fragment rendered="#{loan.status eq 'raising'}">
+									<ui:param name="cr"
+										value="#{loanCalculator.calculateRaiseCompletedRate(loan.id)}"></ui:param>
+									<div class="progress">
+
+										<div
+											class="progress-bar progress-bar-success progress-bar-striped"
+											role="progressbar" aria-valuenow="#{cr}" aria-valuemin="0"
+											aria-valuemax="100" style="width:#{cr}%;">#{cr}%</div>
+									</div>
+								</ui:fragment>
+							</td>
+						</tr>
+					</ui:repeat>
+				</tbody>
+			</table>
+			<ui:insert name="footcontent">
+				<ui:include src="template/footer.xhtml"></ui:include>
+			</ui:insert>
+		</div>
+	</body>
+</ui:composition>

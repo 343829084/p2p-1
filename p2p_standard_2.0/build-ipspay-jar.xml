@@ -1,0 +1,373 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="page.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="content">
+		<f:event type="preRenderView"
+			listener="#{userHome.setId(loginUserInfo.loginUserId)}"></f:event>
+		<link type="text/css" rel="stylesheet"
+			href="#{tplVars.themeStylePath}/index.css" />
+		<div id="banner">
+			<ui:include src="banner.xhtml"></ui:include>
+		</div>
+
+		<div id="Amount">
+			<div class="touzi">
+				<p>
+					累计投资金额<strong> <h:outputText
+							value="#{investStatistics.getAllInvestsMoney()}">
+							<f:convertNumber minFractionDigits="2" />
+						</h:outputText> </strong>元
+				</p>
+				<p>
+					为投资人带来预期收益<strong> <h:outputText
+							value="#{investStatistics.getAllInvestsInterest()}">
+							<f:convertNumber minFractionDigits="2" />
+						</h:outputText> </strong>元
+				</p>
+				<br />
+			</div>
+		</div>
+		<div id="Layout">
+			<div class="left">
+				<div class="xm">
+					<h2>推荐项目</h2>
+					<ui:param name="restriction"
+						value="#{'(loan.status=\''}#{LoanStatus.RAISING}#{'\')'}"></ui:param>
+					<f:event type="preRenderComponent"
+						listener="#{loanList2.addRestriction(restriction)}"></f:event>
+					<f:event type="preRenderComponent"
+						listener="#{loanList2.setPageSize(1)}"></f:event>
+					<f:event type="preRenderComponent"
+						listener="#{loanList2.addOrder('loan.commitTime','desc')}"></f:event>
+					<div class="tuijian">
+						<p class="left-pic">
+							<img src="#{tplVars.themeImagePath}/index/a12.jpg"
+								style="width: 436px;height: 342px;" />
+						</p>
+						<ui:repeat var="loan" value="#{loanList2.lazyModelData}">
+
+							<div class="xm-right">
+								<h3>
+									<a href="#{path}/loan/#{loan.id}">#{loan.name} </a>
+								</h3>
+								<p class="ab">
+									<h:outputText value="#{fn:substring(loan.description,0,70)}"
+										escape="false"></h:outputText>
+									<ui:fragment rendered="#{loan.description.length()>70}">
+									...
+								</ui:fragment>
+								</p>
+								<dl>
+									<dt>
+										<span title="#{loan.id}">编号：#{fn:substring(loan.id,4,12)}</span>
+										<b>#{loan.businessType}</b>
+									</dt>
+									<dd>
+										<p>
+											<span>融资金额</span><em> <h:outputText
+													value="#{loan.loanMoney}">
+													<f:convertNumber minFractionDigits="2" />
+												</h:outputText> </em>
+										</p>
+										<p>
+											<span>年化收益</span><em>#{loan.ratePercent}%</em>
+										</p>
+										<p>
+											<span>融资期限</span><em>#{loan.deadline*loan.type.repayTimePeriod}(#{dictUtil.getValue('repay_unit',loan.type.repayTimeUnit)})</em>
+										</p>
+										<p>
+											<span>剩余时间</span><em>#{loanCalculator.calculateRemainTime(loan.id)}</em>
+										</p>
+									</dd>
+									<br clear="all" />
+								</dl>
+								<div class="more">
+									<a href="#{path}/loan/#{loan.id}">查看详情</a>
+								</div>
+							</div>
+						</ui:repeat>
+					</div>
+				</div>
+				<div class="sy">
+					年化收益<span>8％——16％</span>您身边放心得力的理财助手！
+				</div>
+				<!--项目列表-->
+				<div class="xm xm-lish">
+					<h2>项目列表</h2>
+					<f:event type="preRenderComponent"
+						listener="#{loanList.addOrder('field(loan.status,\'筹款中\')','desc')}"></f:event>
+					<f:event type="preRenderComponent"
+						listener="#{loanList.setPageSize(6)}"></f:event>
+					<f:event type="preRenderComponent"
+						listener="#{loanList.addOrder('loan.commitTime','desc')}"></f:event>
+					<ui:param name="restriction"
+						value="#{'(loan.status=\''}#{LoanStatus.RAISING}#{'\' or loan.status=\''}#{LoanStatus.RECHECK}#{'\' or loan.status=\''}#{LoanStatus.REPAYING}#{'\')'}"></ui:param>
+					<f:event type="preRenderComponent"
+						listener="#{loanList.addRestriction(restriction)}"></f:event>
+					<ui:repeat var="loan" value="#{loanList.lazyModelData}">
+						<div class="lb-lish">
+							<dl>
+								<dt>
+									<img src="#{tplVars.themeImagePath}/index/b9.png" width="75"
+										height="75" />
+									<p>
+										<h:outputText
+											value="#{stringHome.ellipsis(loan.user.username,12)}"></h:outputText>
+									</p>
+								</dt>
+								<dd>
+									<h3 title="#{loan.name}">
+										<a href="#{path}/loan/#{loan.id}" style="color: #636363">
+											<h:outputText value="#{stringHome.ellipsis(loan.name,5)}"></h:outputText>
+										</a>
+									</h3>
+									<p>
+										<b>#{loanHome.instance.loanAttrs}</b><b>抵</b><b>担</b><b>实</b>
+										
+										
+										
+										
+									</p>
+									<span>#{loan.businessType}</span> <em>#{dictUtil.getValue('loan',loan.status)}</em>
+								</dd>
+							</dl>
+							<ul>
+								<li><p>融资金额</p> <span> <h:outputLabel
+											value="#{loan.loanMoney}">
+											<f:convertNumber minIntegerDigits="1" minFractionDigits="2" />
+										</h:outputLabel>元 </span>
+								</li>
+								<li><p>年化收益</p> <em>#{loan.ratePercent}%</em>
+								</li>
+								<li><p>融资期限</p> <span>#{loan.deadline*loan.type.repayTimePeriod}(#{dictUtil.getValue('repay_unit',loan.type.repayTimeUnit)})</span>
+								</li>
+								<li><p>剩余时间</p> <span>#{loanCalculator.calculateRemainTime(loan.id)}</span>
+								</li>
+							</ul>
+							<div class="jindu">
+								<ui:param name="cr"
+									value="#{loanCalculator.calculateRaiseCompletedRate(loan.id)}"></ui:param>
+								<p style="width:#{cr}%">
+									<span>#{cr}</span>
+								</p>
+							</div>
+							<div class="bh">
+								<p title="#{loan.id}">
+									编号：
+									<h:outputText value="#{stringHome.ellipsis(loan.id,5)}"></h:outputText>
+								</p>
+								<ui:fragment rendered="#{loan.status ==LoanStatus.RAISING}">
+									<a href="#{path}/loan/#{loan.id}">我要投资</a>
+								</ui:fragment>
+								<ui:fragment rendered="#{loan.status !=LoanStatus.RAISING}">
+									<input value="#{dictUtil.getValue('loan',loan.status)}"
+										style="width:95px;height: 31px;margin-top: 3px;font-size: 14px;color: #fff;border-radius:4px;border:none; margin-left: -20px; margin-top: 10px;"
+										disabled="disabled" type="submit" />
+								</ui:fragment>
+							</div>
+							<div
+								style="float:right; margin: 75px 5px 0 0;text-align: center;width: 36px;">
+								<img style="margin-top:5px; margin-left:-23px;" src="#{tplVars.themeImagePath}/index/#{loan.riskLevel}.png"
+									width="36px" height="36px" />
+							</div>
+							<div class="ketou">
+								<p>
+									已投<em><h:outputText
+											value="#{loan.loanMoney-loanCalculator.calculateMoneyNeedRaised(loan.id)}">
+											<f:convertNumber minIntegerDigits="1" minFractionDigits="2" />
+										</h:outputText> </em>元
+								</p>
+								<p>
+									可投<span style="width: 30px;"><h:outputText
+											value="#{loanCalculator.calculateMoneyNeedRaised(loan.id)}">
+											<f:convertNumber minIntegerDigits="1" minFractionDigits="2" />
+										</h:outputText> </span>元
+								</p>
+
+							</div>
+
+
+						</div>
+					</ui:repeat>
+					<div class="g-more">
+						<a href="#{path}/p2p_loan-list">查看更多项目</a>
+					</div>
+				</div>
+			</div>
+			<div class="right">
+				<div class="yh">
+					<ui:fragment rendered="#{empty loginUserInfo.loginUserId}">
+						<dl class="tx1">
+							<dt>
+								<img src="#{tplVars.themeImagePath}/index/liogn-img.jpg" width="97px" height="98px" />
+								<p></p>
+							</dt>
+							<dd>
+								<span>欢迎登录！</span>
+							</dd>
+						</dl>
+						<input type="button" value="登录" class="zq_zr_bnt"
+							onclick="window.location.href='#{path}/memberLoginPage'" />
+						<input type="button" value="注册" class="zq_zr_bnt01"
+							onclick="window.location.href='#{path}/register'" />
+					</ui:fragment>
+					<ui:fragment rendered="#{not empty loginUserInfo.loginUserId}">
+						<dl class="tx1">
+							<dt>
+							<p:graphicImage id="photoImage" 
+							value="#{userHome.instance.photo}" 
+							rendered="#{not empty userHome.instance.photo}" style="width:98px; height:98px;border-radius:55px;">
+							</p:graphicImage>
+							
+							<p></p>
+							</dt>
+							<dd>
+								<span>欢迎回来！</span>
+								<p>#{loginUserInfo.loginUserId}</p>
+							</dd>
+						</dl>
+						<dl class="cz-tx">
+							<dt>
+								<p>
+									<span><h:outputText
+											value="#{userBillHome.getBalanceByUserId(loginUserInfo.loginUserId)}">
+											<f:convertNumber minFractionDigits="2" />
+										</h:outputText> </span>可用金额
+								</p>
+								<p>
+									<em> <h:outputText
+											value="#{userBillHome.getFrozenMoneyByUserId(loginUserInfo.loginUserId)}">
+											<f:convertNumber minFractionDigits="2" />
+										</h:outputText> </em>冻结资金
+								</p>
+								<p>
+									<em> <h:outputText
+											value="#{investStatistics.getReceivableCorpus(loginUserInfo.loginUserId)}">
+											<f:convertNumber minFractionDigits="2" />
+										</h:outputText> </em>待收本金
+								</p>
+								<p>
+									<em><h:outputText
+											value="#{investStatistics.getReceivableInterest(loginUserInfo.loginUserId)}">
+											<f:convertNumber minFractionDigits="2" />
+										</h:outputText> </em>待收收益
+								</p>
+								<!-- <p>
+									<em><h:outputText value="#{userBillHome.getBalanceByUserId(loginUserInfo.loginUserId)+userBillHome.getFrozenMoneyByUserId(loginUserInfo.loginUserId)}">
+										<f:convertNumber minFractionDigits="2"/>
+									</h:outputText>
+									</em>资产总额
+								</p> -->
+							</dt>
+							<dd>
+								<a href="#{request.contextPath}/user/recharge">充值</a> <a
+									class="t1" href="#{request.contextPath}/user/withdraw"
+									title="提现">提现</a>
+							</dd>
+						</dl>
+					</ui:fragment>
+				</div>
+				<div class="yh meiti">
+					<h2>投资排行</h2>
+					<div class="fd-new-list">
+						<table style="width: 226px;">
+							<ui:repeat var="ips" value="#{investStatistics.getIps()}">
+								<tr>
+									<td style="width: 53px;"><img
+										src="#{tplVars.themeImagePath}/index/tx.jpg"
+										style=" margin-bottom:12px; margin-left:5px;
+                                        width:50px; height:50px;border-radius:55px;border:2px solid #ccc" /></td>
+									<td style="font-size: 14px;width: 150px;">用户名：<h:outputText
+											value="#{stringHome.ellipsis(ips.username,5)}"></h:outputText>
+										<br /> 投资金额<h:outputText value="#{ips.allInvestMoney}">
+											<f:convertNumber currencySymbol="" type="currency"
+												minFractionDigits="2" />
+										</h:outputText></td>
+								</tr>
+							</ui:repeat>
+						</table>
+					</div>
+				</div>
+			<div class="yh meiti">
+					<h3>
+				<a class="meiti1" href="#{request.contextPath}/term/meitibaodao"> </a>
+					<p>媒体报道</p>
+					</h3>
+					<dl>
+						<ui:repeat var="partner"
+							value="#{nodeList.getNodes('meitibaodao',3).data}">
+							<dd>
+								<a href="#{request.contextPath}/node/meitibaodao/#{partner.id}"
+									title="#{partner.title}">#{partner.title}</a>
+							</dd>
+						</ui:repeat>
+						<dt>
+							<a href="#{path}/term/meitibaodao">more>></a>
+						</dt>
+					</dl>
+				</div>
+				<div class="yh meiti">
+					<h3>
+						<a class="meiti2" href="#{request.contextPath}/term/fabiaoyugao">
+						</a>
+						<!-- 						<img src="#{tplVars.themeImagePath}/index/a16.jpg" /> -->
+						<p>发标预告</p>
+					</h3>
+					<dl>
+						<ui:repeat var="partner"
+							value="#{nodeList.getNodes('fabiaoyugao',3).data}">
+							<dd>
+								<a href="#{request.contextPath}/node/fabiaoyugao/#{partner.id}"
+									title="#{partner.title}">#{partner.title}</a>
+							</dd>
+						</ui:repeat>
+						<dt>
+							<a href="#{path}/term/fabiaoyugao">more>></a>
+						</dt>
+					</dl>
+				</div>
+				<div class="yh meiti">
+					<h3>
+						<a class="meiti3"
+							href="#{request.contextPath}/node/zixunpingtai/ptgg"> <!--  <img class="meiti3"/loan-list/>-->
+						</a>
+						<!-- 						<img src="#{tplVars.themeImagePath}/index/a17.jpg" /> -->
+						<p>平台公告</p>
+					</h3>
+					<dl>
+						<ui:repeat var="partner"
+							value="#{nodeList.getNodes('wangzhangonggao',3).data}">
+							<dd>
+								<a
+									href="#{request.contextPath}/node/wangzhangonggao/#{partner.id}"
+									title="明年金价有没戏 就看印度咋">#{partner.title}</a>
+							</dd>
+						</ui:repeat>
+						<dt>
+							<a href="#{path}/term/wangzhangonggao">more>></a>
+						</dt>
+					</dl>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div id="Link">
+			<dl>
+				<dt>友情链接：</dt>
+				<dd>
+					<ui:repeat var="link" value="#{linkList.getFrontLinks()}">
+						<a target="_blank" href="#{link.url}">#{link.name}</a>&#160;&#160;&#160;
+    			</ui:repeat>
+				</dd>
+			</dl>
+		</div>
+	</ui:define>
+</ui:composition>

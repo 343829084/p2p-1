@@ -1,0 +1,114 @@
+@charset "utf-8";
+/*===============
+File name:Style.css
+ Creators:LiXunSheng
+      Q Q:764973620
+     Time:2014-03-04
+  Company:http://www.jindingp2p.com
+=================*/
+*{ margin:0; padding:0; -webkit-text-size-adjust:none;}
+body{ 
+	background:#fff url(../images/bj.jpg) repeat-x top; 
+	-webkit-text-size-adjust: none; 
+	font-size: 12px; 
+	font-family:"Microsoft YaHei","Lucida Sans Unicode","Myriad Pro","Hiragino Sans GB","Heiti SC","Verdana","simsun"; }
+ul,li,dd{ list-style:none; margin:0; padding:0}
+a{ text-decoration:none}
+em{ font-style:normal}
+.clear{ clear:both; height:auto}
+h3{ margin:0}
+img{ border:0;}
+ 
+/*Header*/
+#Header{ height:110px; width:100%; margin:0 auto; position:relative}
+#Header .sousuo{ position:absolute; height:18px; width:105px; top:4px; right:0}
+#Header .sousuo .text{ background:#f0f0f0 url(../images/sou.jpg) no-repeat 4px 4px; border-radius:8px; height:18px; line-height:18px; border:0; padding:0 5px 0 20px; width:80px;}
+#Header .logo{ width:204px; height:54px; float:left;}
+#Header .logo_box .logo_right{float:left;margin-left:15px;}
+#Header .logo_box .logo_right dt,#Header .logo_box .logo_right dd{float:left}
+#Header .logo_box .logo_right dd{font-size:24px; margin-left:10px;margin-top:21px;}
+#Header .logo_box .logo_right dt a{font-size:14px;color:#000;margin-top:28px;display:inline-block;}
+#Header dl.submenu {  line-height:22px; position:absolute; top:20px;text-align:center;display:none;
+border:1px solid #e0e0e0;box-shadow:2px 2px 2px #ccc;background:#fff;width:110px;border-radius:2px;margin-top:0px;}			 
+#Header dl.submenu dt{ float:left;margin-right: 10px;}
+#Header dl.submenu dt,#Header dl.submenu dt a{ color:#000; font-size:14px;}
+#Header ul li:hover .submenu{display:block;margin-left:-15%; }
+#Header dl.submenu dd{font-family:Verdana, Geneva, sans-serif; font-size:14px;line-height:25px;}
+#Header dl.submenu dd a{ color:#818181;font-family:"Microsoft Yahei";display:block;}
+#Header dl.submenu dd a:hover{color:#000;background:#2EA7E0;width:104px; margin:1px 3px; line-height:22px;text-align:center;}
+#Header .nav-right{ height:26px; float:right; margin-top:70px;text-decoration: none;font-size:14px;margin-top:29px;}
+#Header .nav-right li{ float:left; font-size:14px; margin-left:50px;text-decoration: none;font-weight:bold;}
+#Header .nav-right li a{ color:#000;text-decoration: none;}
+#Header .nav-right li a:hover{ color:#42BBFA; text-decoration:none;}
+#Header .nav-right li:hover,#Header .nav-right ul .hover{text-decoration: none;}
+#Header .nav-right li:hover a,#Header .#Header .nav-right a:hover,#Header .nav-right .hover a{ color:#000; text-decoration: none;}
+
+#Header .navber{  height:36px; border-top:1px solid #cbcbcb; margin-top:2px; padding-top:16px;}
+#Header .navber ul li{ float:left; padding:0 34px 0 12px;position:relative;z-index:33;}
+#Header .navber ul li>a{ font-size:16px; color:#818181}
+#Header .navber ul li:hover,#Header .navber ul .hover{ background:url(../images/index/a1.jpg) no-repeat 0 7px;}
+#Header .navber ul li:hover>a,#Header .navber p a:hover,#Header .navber ul .hover a{color:#000}
+#Header .navber p{ float:right; font-size:16px; color:#262626}
+#Header .navber p a{color:#262626}
+
+.logo_box{width:1024px; margin:38px auto 0px;}
+.navber_01{width:1024px; margin:0 auto;}
+/*Backg*/
+#Backg{ height:40px; background:url(../images/a2.jpg);}
+#Backg h2{ width:1009px; font-size:16px; font-weight:normal; color:#fff; margin:0 auto; line-height:40px; padding-left:15px;}
+/*Link*/
+#Link{ height:70px; line-height:65 px; border-top:1px solid #e7e7e7; margin-top:22px;}
+#Link dl{ width:1024px; margin:0 auto; font-size:14px; color:#808080;height:65px;}
+#Link dl dt{ float:left;line-height: 30px;}
+#Link dl dd{ float:left; margin-left:12px;width: 835px;line-height: 30px;}
+#Link dl dd a{ color:#808080}
+#Link dl dd a:hover{ color:#F00}
+.renzheng{float:none;width: 1024px;margin: 0 auto;margin-top: -15px;padding-left: 297px;padding-top: 25px;}
+.renzheng img{padding-left: 8px;}
+
+/*Footer*/
+#Footer{ background:url(../images/index/ft01.png) repeat-x top; height:325px;}
+#Footer .foot{ width:1161px; margin:0 auto; background:url(../images/a5.jpg) no-repeat top; height:300px;}
+#Footer .foot dl{ float:left; color:#fff; margin: 30px 50px 0px 160px;}
+#Footer .foot .lx{ background:url(../images/index/b1.png) no-repeat 0 35px; margin-left:85px;}
+#Footer .foot dl dt{ line-height:26px; font-size:16px; padding-top:6px;}
+#Footer .foot dl dd{ line-height:23px; }
+#Footer .foot .lx dd{padding-left:20px;}
+#Footer .foot dl dd a{ color:#fff}
+#Footer .foot .foot_bq{ border-top:1px solid #fff; margin-top:12px;margin-left:85px;position: relative;}
+#Footer .foot .foot_bq p{ display:block; float:left; margin:20px 65px 0 0 }
+#Footer .foot .foot_bq span{ display:block; float:left; width:550px; text-align:center; height:56px; line-height:76px; color:#fff;}
+
+/**x�¼���ʽ***/
+.new_top_right{float:right; display:inline; height:26px; border-top:1px solid #cbcbcb; margin-right:-25px; padding-top:56px;}
+.new_top_right ul li{ float:left; padding:0 40px 0 12px;}
+.new_top_right ul li a{ font-size:16px; color:#818181}
+.new_top_right ul li:hover,.new_top_right ul .hover{ background:url(../images/index/a1.jpg) no-repeat 0 7px;}
+.new_top_right ul li:hover a,.new_top_right ul .hover a{ color:#000}
+
+p.erweima{
+	background: none repeat scroll 0 0 #fff;
+	border: 1px solid #333;
+	bottom: -10px;
+	height: 90px;
+	width: 105px;
+	left: 280px;
+	padding-top: 10px;
+	position: absolute;
+	text-align: center;
+	
+}
+
+.ui-button-text-icon-left .ui-button-text {
+    padding: 10.3em 1em 0.3em 2.1em;
+}
+
+.renzheng img {
+    padding-left: 8px;
+}
+
+
+
+
+
+

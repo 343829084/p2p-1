@@ -1,0 +1,284 @@
+<ui:composition template="center.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<h:outputScript library="primefaces" name="jquery/jquery-plugins.js"
+			target="head" />
+		<h:outputStylesheet library="primefaces" name="primefaces.css"
+			target="head" />
+		<link href="#{tplVars.themeStylePath}/center.css" type="text/css"
+			rel="stylesheet" />
+		<script type="text/javascript" src="#{path}/include/js/datepicker.js"></script>
+	<link type="text/css" rel="stylesheet"
+			href="#{tplVars.themeCssPath}/tixian.css" />
+	<ui:param name="typeId" value="1"></ui:param>
+	<ui:param name="activeCenterMenuUrl" value="/user/myCashFlow"></ui:param>
+	<ui:define name="center_right">
+		<script>
+			/**初始化时间选择控件*/
+			function initDatepicker() {
+				$(".datepicker").datepicker({
+					changeMonth : true,
+					changeYear : true
+				});
+			}
+			/**清除筛选条件*/
+			function clearFilters() {
+				$(".datepicker").val('');
+				$("#dataTable\\:typeInfoFilter").val('');
+			}
+			$(function() {
+				initDatepicker();
+			});
+		</script>
+		
+		<div class="center_right">
+				<ui:include src="userCenterTop.xhtml"></ui:include>
+				  <div class="clear" ></div>
+				     <div class="centerDown">
+					<div class="slideBox">
+						<div class="hd">
+							<ul class="slidings">
+								<li class="hover" id="two1"><a href="javascript:void(0)">好友钱</a></li>
+								<li id="two2"><a href="javascript:void(0)">我的账户</a></li>
+							</ul>
+							<div class="bd">
+								<div id="con_two_1" class="slidnr">
+										<h:form id="form1">
+																	<div class="date">
+																		<span>类型</span>
+											<h:selectOneMenu styleClass="date_select" id="typeInfoFilter"
+												value="#{userWealthList.example.typeInfo}">
+												<f:selectItem itemLabel="全部" itemValue="" noSelectionOption="true" />
+												<f:selectItems var="bo"
+													value="#{dictUtil.getDictByParentKey('bill_operator')}"
+													itemValue="#{bo.key}" itemLabel="#{bo.value}" />
+											</h:selectOneMenu>
+						
+											<span>时间 </span>
+											<h:inputText value="#{userWealthList.startTime}" label="起止日期"
+												styleClass="date_txt datepicker" id="startDate">
+												<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8"
+													locale="zh_CN" />
+											</h:inputText>
+											<span class="date_span">-</span>
+											<h:inputText value="#{userWealthList.endTime}" label="起止日期"
+												styleClass="date_txt datepicker" id="endDate">
+												<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8"
+													locale="zh_CN" />
+											</h:inputText>
+											<div class="grzx_r02">
+												<h:commandLink styleClass="cx" value="查询">
+													<p:ajax process="@form" update="dataTable"
+														oncomplete="initDatepicker()"></p:ajax>
+													<f:setPropertyActionListener value="1"
+														target="#{userWealthList.currentPage}" />
+												</h:commandLink>
+												<a href="javascript:void(0)" onclick="location.reload();"
+													class="cx cx02">重置</a>
+										</div>
+										</div>	
+										<h:panelGroup id="dataTable">
+				<table width="786px" border="0" cellspacing="0" cellpadding="0"
+					class="tab tab_01">
+					<tr>
+						<td width="137" align="center" class="tab01">时间</td>
+						<td width="132" align="center" class="tab01">类型|明细</td>
+						<td width="92" align="center" class="tab01">金额</td>
+						<td width="81" align="center" class="tab01">可用余额</td>
+						<td width="90" align="center" class="tab01">冻结金额</td>
+						<td width="210" align="center" class="tab01">备注</td>
+					</tr>
+					<f:event type="preRenderComponent"
+						listener="#{userWealthList.setPageSize(10)}"></f:event>
+					<f:event type="preRenderComponent"
+						listener="#{userWealthList.example.user.setId(loginUserInfo.loginUserId)}"></f:event>
+					<f:event type="preRenderComponent"
+						listener="#{userWealthList.addOrder('userWealth.seqNum','desc')}"></f:event>
+					<ui:repeat var="ib" value="#{userWealthList.lazyModelData}"
+						varStatus="status">
+						<tr class="#{status.index%2==0?'tab02':''} bg">
+							<td align="center" class="tab02"><h:outputText
+									value="#{ib.time}">
+									<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"
+										timeZone="GMT+8" locale="zh_CN" />
+								</h:outputText></td>
+							<td class="tab02" align="center">#{dictUtil.getValue('bill_operator',ib.typeInfo)}
+								<!-- <span class="tab_green"><a href="#">（明细）</a></span> -->
+							</td>
+							<td class="tab02" align="center"><ui:fragment
+									rendered="#{ib.type=='ti_balance'}">
+									<span class="tab_blue">+<h:outputText
+											value="#{ib.money}">
+											<f:convertNumber maxFractionDigits="2" />
+										</h:outputText>元
+									</span>
+								</ui:fragment> <ui:fragment
+									rendered="#{ib.type=='to_balance' or ib.type=='to_frozen'}">
+									<span class="tab_red">-<h:outputText value="#{ib.money}">
+											<f:convertNumber maxFractionDigits="2" />
+										</h:outputText>元
+									</span>
+								</ui:fragment> <ui:fragment
+									rendered="#{ib.type=='unfreeze' or ib.type=='freeze'}">
+									<span><h:outputText value="#{ib.money}">
+											<f:convertNumber maxFractionDigits="2" />
+										</h:outputText>元 </span>
+								</ui:fragment></td>
+							<td class="tab02" align="center"><h:outputText
+									value="#{ib.balance}">
+									<f:convertNumber type="currency" currencySymbol="￥"
+										maxFractionDigits="2" />
+								</h:outputText></td>
+							<td class="tab02" align="center"><h:outputText
+									value="#{ib.frozenMoney}">
+									<f:convertNumber type="currency" currencySymbol="￥"
+										maxFractionDigits="2" />
+								</h:outputText></td>
+							<td class="tab02 tab05" align="left"><LABEL
+								title="#{ib.detail}">#{stringHome.ellipsis(ib.detail,40)}</LABEL></td>
+						</tr>
+					</ui:repeat>
+				</table>
+				<div class="page_box">
+					<div class="page_l">
+						<h:commandLink value="导出查询结果" action="#{userWealthList.export}">
+						</h:commandLink>
+					</div>
+					<div class="page_r">
+						<ui:include
+							src="#{tplVars.componentsPath}/myPoolCashFlow_paging_include.xhtml"></ui:include>
+					</div>
+				</div>
+				</h:panelGroup>
+									
+									</h:form>
+								</div>
+								<div id="con_two_2" class="slidnr sliding_yc">
+									<h:form id="form">
+																	<div class="date">
+																		<span>类型</span>
+											<h:selectOneMenu styleClass="date_select" id="typeInfoFilter"
+												value="#{userBillList.example.typeInfo}">
+												<f:selectItem itemLabel="全部" itemValue="" noSelectionOption="true" />
+												<f:selectItems var="bo"
+													value="#{dictUtil.getDictByParentKey('bill_operator')}"
+													itemValue="#{bo.key}" itemLabel="#{bo.value}" />
+											</h:selectOneMenu>
+						
+											<span>时间 </span>
+											<h:inputText value="#{userBillList.startTime}" label="起止日期"
+												styleClass="date_txt datepicker" id="startDate">
+												<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8"
+													locale="zh_CN" />
+											</h:inputText>
+											<span class="date_span">-</span>
+											<h:inputText value="#{userBillList.endTime}" label="起止日期"
+												styleClass="date_txt datepicker" id="endDate">
+												<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8"
+													locale="zh_CN" />
+											</h:inputText>
+											<div class="grzx_r02">
+												<h:commandLink styleClass="cx" value="查询">
+													<p:ajax process="@form" update="dataTable"
+														oncomplete="initDatepicker()"></p:ajax>
+													<f:setPropertyActionListener value="1"
+														target="#{userBillList.currentPage}" />
+												</h:commandLink>
+												<a href="javascript:void(0)" onclick="location.reload();"
+													class="cx cx02">重置</a>
+										</div>
+										</div>	
+										<h:panelGroup id="dataTable">
+				<table width="786" border="0" cellspacing="0" cellpadding="0"
+					class="tab tab_01">
+					<tr>
+						<td width="137" align="center" class="tab01">时间</td>
+						<td width="132" align="center" class="tab01">类型|明细</td>
+						<td width="92" align="center" class="tab01">金额</td>
+						<td width="81" align="center" class="tab01">可用余额</td>
+						<td width="90" align="center" class="tab01">冻结金额</td>
+						<td width="210" align="center" class="tab01">备注</td>
+					</tr>
+					<f:event type="preRenderComponent"
+						listener="#{userBillList.setPageSize(10)}"></f:event>
+					<f:event type="preRenderComponent"
+						listener="#{userBillList.example.user.setId(loginUserInfo.loginUserId)}"></f:event>
+					<f:event type="preRenderComponent"
+						listener="#{userBillList.addOrder('userBill.seqNum','desc')}"></f:event>
+					<ui:repeat var="ib" value="#{userBillList.lazyModelData}"
+						varStatus="status">
+						<tr class="#{status.index%2==0?'tab02':''} bg">
+							<td align="center" class="tab02"><h:outputText
+									value="#{ib.time}">
+									<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"
+										timeZone="GMT+8" locale="zh_CN" />
+								</h:outputText></td>
+							<td class="tab02" align="center">#{dictUtil.getValue('bill_operator',ib.typeInfo)}
+								<!-- <span class="tab_green"><a href="#">（明细）</a></span> -->
+							</td>
+							<td class="tab02" align="center"><ui:fragment
+									rendered="#{ib.type=='ti_balance'}">
+									<span class="tab_blue">+<h:outputText
+											value="#{ib.money}">
+											<f:convertNumber maxFractionDigits="2" />
+										</h:outputText>元
+									</span>
+								</ui:fragment> <ui:fragment
+									rendered="#{ib.type=='to_balance' or ib.type=='to_frozen'}">
+									<span class="tab_red">-<h:outputText value="#{ib.money}">
+											<f:convertNumber maxFractionDigits="2" />
+										</h:outputText>元
+									</span>
+								</ui:fragment> <ui:fragment
+									rendered="#{ib.type=='unfreeze' or ib.type=='freeze'}">
+									<span><h:outputText value="#{ib.money}">
+											<f:convertNumber maxFractionDigits="2" />
+										</h:outputText>元 </span>
+								</ui:fragment></td>
+							<td class="tab02" align="center"><h:outputText
+									value="#{ib.balance}">
+									<f:convertNumber type="currency" currencySymbol="￥"
+										maxFractionDigits="2" />
+								</h:outputText></td>
+							<td class="tab02" align="center"><h:outputText
+									value="#{ib.frozenMoney}">
+									<f:convertNumber type="currency" currencySymbol="￥"
+										maxFractionDigits="2" />
+								</h:outputText></td>
+							<td class="tab02 tab05" align="left"><LABEL
+								title="#{ib.detail}">#{stringHome.ellipsis(ib.detail,40)}</LABEL></td>
+						</tr>
+					</ui:repeat>
+				</table>
+				<div class="page_box">
+					<div class="page_l">
+						<h:commandLink value="导出查询结果" action="#{userBillList.export}">
+						</h:commandLink>
+					</div>
+					<div class="page_r">
+						<ui:include
+							src="#{tplVars.componentsPath}/myCashFlow_paging_include.xhtml"></ui:include>
+					</div>
+				</div>
+				</h:panelGroup>
+									
+									</h:form>
+								</div>
+						
+							</div>
+						</div>
+					</div>
+					</div>
+
+		</div>
+		<div class="clear"></div>
+	</ui:define>
+
+</ui:composition>

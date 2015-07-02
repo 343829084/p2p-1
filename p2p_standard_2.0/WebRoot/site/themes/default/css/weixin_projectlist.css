@@ -1,0 +1,62 @@
+/* CSS Document */
+/* reset */
+*|*:link {color: rgb(0, 0, 0);}
+*|*:visited { color: rgb(0, 0, 0);}
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
+ol,ul{list-style:none;margin:0px;padding:0px;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+table{border-collapse:collapse;border-spacing:0;}
+/* start editing from here */
+a{text-decoration:none;}
+img{max-width:100%;}
+/* reset */
+body{padding:0;margin:0;font-size: 100%;background:#ececec;
+font-family:"Microsoft YaHei","Lucida Sans Unicode","Myriad Pro","Hiragino Sans GB","Heiti SC","Verdana","simsun";}
+/*-------椤圭洰鍒楄〃--------*/
+.XMLB-top-nav{ 
+font-size:1.4em;font-weight:bold; color:#fff; height:2.4em; line-height:2.4em; text-align:center;
+background:#496278;box-shadow:2px 2px 2px #666; position:relative; }
+/*--------neirong-------*/
+.all-body{width:94%;height:240px;border:1px solid #cbcbcb;margin-left:3%;margin-top:5%;}
+.all-body-left{width:16%;height:240px;background:#acbf88;}
+.left-tx dl dt{padding-top:15%;}
+.left-tx dl dt img{height:55px;width:55px;border-radius:100px;border:4px solid #fff;margin-left:45%;;}
+.img-xmlb{width:16px;height:16px;margin-top:85%;margin-left:49%;}
+.img-xmlb img{padding: 2px;}
+.all-body-right{width:84%;height:240px;}
+.list-all{width:100%;height:100%;background:#fff;margin-left:19%;margin-top: -240px;}
+.list-1-up{height:83px;}
+.list-1-up dl dd{float: left;}
+.list-1-up dl dd p{padding-top:15%;padding-left:65px;font-size: 22px; font-weight:bold;}
+.list-1-up dl dt{float: left;margin-top:5%;}
+.list-1-1{width:100%;float:left;height: 20px;font-size:14px;}
+.list-1-1 dl dd{width: 34%;height: 20px;}
+.list-1-1 dl dd p{font-size:14px;margin-top:-29%;font-weight: 100;width: 50%;margin-left: -5%;}
+.list-1-1 dl dd img{margin-left:47%;height: 12px;width:9px;padding-top:10%;}
+.list-1-1 dl dt{width: 64%;margin-top:3%;float:left;height: 20px;}
+.list-1-1 dl dt p{width:80%;height: 20px;font-size:14px;margin-left:7%}
+.list-1-1 dl dt img{margin-left:50%;height: 40px;width: 40px;margin-top:-28%;}
+.list-1-middle{height:110px;}
+.list-1-middle p{font-weight:bold;margin-top: 5px;margin-left: 15px;font-size:20px;}
+.list-1-middle ul{float: left; font-size:14px;width:100%;display:block;margin-top:3px;margin-left: -5%;}
+.list-1-middle ul li{display:block;line-height:16px;}
+.list-1-middle ul li p{font-weight:100;margin-top:3px;padding-left:18px;font-size:14px;}
+.list-1-middle ul li img{}
+.list-1-middle ul li span{padding-left:8px;}
+
+.list-1-down{height:43px;width: 80%;margin-left: 10%;}
+.list-1-down img{height:9px;margin-left:25px;margin-top:10px;width:80%;}
+.list-1-down p{font-size:10px;color:#222920;margin-left:62%;margin-top:7px;}
+.XMLB-down-nav{width:100%;height:50px; font-size:16px;font-weight:bold;list-style:none;background:#496278;line-height:50px;text-align:center;border-top:1px solid #000;}
+.XMLB-down-nav li{float:left;width:33%;display:block;background:#496278;color:#fff;text-align:center;border-right:1px solid #000;}
+.XMLB-down-nav li a{ text-decoration:none; display:block;color:#fff;}
+.down-nav{width:100%;height:50px; font-size:14px;font-weight:bold;list-style:none;background:#496278;line-height:50px;text-align:center;border-top:1px solid #000;}
+.down-nav li{float:left;width:24%;display:block;background:#496278;color:#fff;text-align:center;border-right:1px solid #000;font-size:14px;}
+.down-nav li a{ text-decoration:none; display:block;color:#fff;}
+.footer{width:100%;height:45px; font-size:14px;font-weight:bold;list-style:none;background:#496278;line-height:45px;text-align:center;border-top:1px solid #000;position: fixed;bottom: 0;}
+/* 进度条*/
+.list-jindu .jindu{ margin-left:20%;margin-top:10px; top:20px; right:60px; width:80%; height:26px; background:url(../images/index/weixin_a20.jpg) repeat-x; border-radius:10px; }
+.list-jindu.jindu p{ display:block; background:url(../images/index/weixin_b5.png) no-repeat; width:80%; position:absolute; width:40px; height:40px; color:#fff; text-align:center;line-height:40px; top:-8px; right:-28px; font-size:7px;}
+.span1234{ display:block; background:url(../images/index/weixin_b5.png) no-repeat; position:absolute; width:40px; height:40px; color:#fff; text-align:center;line-height:40px; top:-8px; right:-26px; font-size:10px;}

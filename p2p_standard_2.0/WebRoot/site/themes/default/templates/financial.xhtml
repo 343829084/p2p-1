@@ -1,0 +1,376 @@
+<ui:component 
+xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	
+<link type="text/css" rel="stylesheet" href="#{tplVars.themeStylePath}/jrjc.css"/>
+
+<title>理财产品_贷款_外汇_信托_股票_债券_期货_基金_好友来投</title>
+<meta name="keywords"  content="理财产品 贷款 外汇 信托 股票 债券 期货 基金" />
+<meta name="description"  content="金融基础栏目为大家提供理财产品、贷款、外汇、信托、股票、债券、期货、基金等相关金融知识" />
+<body>
+   <div id="Header">
+   	<style>
+			.nav-right li:cur {
+				color: #6699FF
+			}
+		</style>
+      <div class="logo_box">
+         <div class="logo">
+            <a href="#{request.contextPath}/"><img src="#{tplVars.themeImagePath}/index/logo.jpg"/></a>
+         </div>
+         
+        <dl class="logo_right">
+			<dt>
+			<ui:fragment rendered="#{empty loginUserInfo.loginUserId}">
+	            <a href="#{request.contextPath}/memberLoginPage" rel="nofollow">登录</a>|
+	        	<a href="#{request.contextPath}/register" class="mf" rel="nofollow">注册</a>
+        	</ui:fragment>
+        	<ui:fragment rendered="#{not empty loginUserInfo.loginUserId}">
+        		<a href="#{path}/user/center" rel="nofollow">欢迎您，#{loginUserInfo.loginUserId}</a>|
+	            <a href="#{request.contextPath}/user/logout" class="mf">注销 </a>
+        	</ui:fragment>
+			</dt>
+			<dd>#{configHome.getConfigValue("site_phone")}</dd>
+		</dl>
+         
+         <ul class="nav-right">
+           <li><a href="#{request.contextPath}/term/ptjs" title="新手指引" style="text-decoration: none " rel="nofollow">新手指引</a></li>
+			<li><a href="#{request.contextPath}/term/hybzjh" title="安全保障" style="text-decoration: none" rel="nofollow">安全保障</a></li>
+			<li><a href="#{request.contextPath}/term/gsjj" title="关于我们" style="text-decoration: none" rel="nofollow">关于我们</a></li>
+         </ul>
+         
+         <div class="clear"></div>
+      </div>
+      <div class="navber">
+         <div class="navber_01">
+            <p></p>
+            <ul>
+              <!--  <li class="hover"><a href="#{request.contextPath}/">首页</a></li>
+               <li><a href="#{request.contextPath}/p2p_loan-list">我要理财</a></li>
+               <li><a href="#{request.contextPath}/loanTransfer">我要借款</a></li>
+               <li><a href="#{request.contextPath}/user/center">我的账户中心</a></li> -->
+               <ui:repeat var="menu" value="#{menuList.getMainMenus()}">
+						<li class="#{servletPath eq menu.url ? 'hover':''}"><a
+							href="#{request.contextPath}#{menu.url}">#{menu.label}</a> <ui:fragment
+								rendered="#{not empty menu.children}">
+								
+									<ui:fragment rendered="#{menu.id!='jrjc'}">
+									<dl class="submenu">
+										<ui:repeat var="m2" value="#{menu.children}">
+											<dd>
+												<a href="#{path}#{m2.url}" rel="nofollow">#{m2.label}</a>
+											</dd>
+										</ui:repeat>
+									</dl>
+									</ui:fragment>
+
+								
+								
+							</ui:fragment></li>
+					</ui:repeat>
+            </ul>
+            <div class="clear"></div>
+         </div>
+      </div>
+   </div>
+   <div class="content">
+     <div class="heading">
+     
+     <c:forEach begin="1" step="1" end="5" var="var1">
+     	<c:if test="#{var1!=5}">
+			<dl style="border-right:1px solid #ccc;">
+	            <dd>
+	               <img src="#{tplVars.themeImagePath}/l#{var1}.png"/>
+	            </dd>
+	            <dt>
+	            <ui:repeat var="termItem"	value="#{categoryTermList.getTerms('jrjc',(var1-1)*4,4).data}"  	varStatus="termStatus"> 
+						<ui:fragment rendered="#{termStatus.index==0 or termStatus.index==1}">
+							<!-- #{categoryTermList.getTerms(term.id,0,10).data} -->
+							<ui:fragment rendered="#{categoryTermList.getTerms(termItem.id,0,10).data.size()gt 0}">
+								<p><a href="#{request.contextPath}/nav_jrjc/#{termItem.id}">#{stringHome.ellipsis(termItem.name,5)}</a></p>
+							</ui:fragment>
+							<ui:fragment rendered="#{categoryTermList.getTerms(termItem.id,0,10).data.size()le 0}">
+								<p><a href="#{request.contextPath}/jrjc/list/#{termItem.id}">#{stringHome.ellipsis(termItem.name,5)}</a></p>
+							</ui:fragment>
+							
+						</ui:fragment>
+						<ui:fragment rendered="#{termStatus.index==2 or termStatus.index==3}">
+							<!-- #{categoryTermList.getTerms(termItem.id,0,10).data.size()} -->
+							<!--  <span><a href="#{request.contextPath}/nav_jrjc/#{termItem.id}">#{stringHome.ellipsis(termItem.name,5)}</a></span> -->
+							 <ui:fragment rendered="#{categoryTermList.getTerms(termItem.id,0,10).data.size() gt 0}">
+								<span><a href="#{request.contextPath}/nav_jrjc/#{termItem.id}">#{stringHome.ellipsis(termItem.name,5)}</a></span>
+							</ui:fragment>
+							<ui:fragment rendered="#{categoryTermList.getTerms(termItem.id,0,10).data.size() le 0}">
+								<span><a href="#{request.contextPath}/jrjc/list/#{termItem.id}">#{stringHome.ellipsis(termItem.name,5)}</a></span>
+							</ui:fragment>
+						</ui:fragment>
+				</ui:repeat>
+				</dt>
+			</dl>
+		</c:if>	
+		<c:if test="#{var1==5}">
+			<dl>
+	            <dd>
+	               <img src="#{tplVars.themeImagePath}/l#{var1}.png"/>
+	            </dd>
+	            <dt>
+	            <ui:repeat var="termItem"
+						value="#{categoryTermList.getTerms('jrjc',(var1-1)*4,4).data}"
+						varStatus="termStatus"> 
+						<ui:fragment rendered="#{termStatus.index==0 or termStatus.index==1}">
+							<p><a href="#{request.contextPath}/nav_jrjc/#{termItem.id}">#{stringHome.ellipsis(termItem.name,5)}</a></p>
+							</ui:fragment>
+						<ui:fragment rendered="#{termStatus.index==2 or termStatus.index==3}">
+							 <span><a href="#{request.contextPath}/nav_jrjc/#{termItem.id}">#{stringHome.ellipsis(termItem.name,5)}</a></span>
+						</ui:fragment>
+				</ui:repeat>
+				</dt>
+			</dl>
+			</c:if>
+	</c:forEach>
+       <!-- 
+          <dl style="border-right:1px solid #ccc;">
+            <dd>
+               <img src="#{tplVars.themeImagePath}/l1.png"/>
+            </dd>
+            <dt>
+               <p><a href="#">理财产品</a></p>
+               <p><a href="#">理财产品</a></p>
+               <span><a href="#">理财产品</a></span>
+               <span><a href="#">理财产品</a></span>
+            </dt>
+         </dl>
+     
+         <dl style="border-right:1px solid #ccc;">
+            <dd>
+               <img src="#{tplVars.themeImagePath}/l2.png"/>
+            </dd>
+            <dt>
+               <p><a href="#">理财产品</a></p>
+               <p><a href="#">理财产品</a></p>
+               <span><a href="#">理财产品</a></span>
+               <span><a href="#">理财产品</a></span>
+            </dt>
+         </dl>
+         <dl style="border-right:1px solid #ccc;">
+            <dd>
+               <img src="#{tplVars.themeImagePath}/l3.png"/>
+            </dd>
+            <dt>
+               <p><a href="#">理财产品</a></p>
+               <p><a href="#">理财产品</a></p>
+               <span><a href="#">理财产品</a></span>
+               <span><a href="#">理财产品</a></span>
+            </dt>
+         </dl>
+         <dl style="border-right:1px solid #ccc;">
+            <dd >
+               <img src="#{tplVars.themeImagePath}/l4.png"/>
+            </dd>
+            <dt>
+               <p><a href="#">理财产品</a></p>
+               <p><a href="#">理财产品</a></p>
+               <span><a href="#">理财产品</a></span>
+               <span><a href="#">理财产品</a></span>
+            </dt>
+         </dl>
+         <dl>
+            <dd>
+               <img src="#{tplVars.themeImagePath}/l5.png"/>
+            </dd>
+            <dt>
+               <p><a href="#">理财产品</a></p>
+               <p><a href="#">理财产品</a></p>
+               <span><a href="#">理财产品</a></span>
+               <span><a href="#">理财产品</a></span> 
+            </dt>
+         </dl>
+        -->
+    
+    
+     </div>
+     
+      <div class="picture">
+         <a href="#{request.contextPath}/register"><img style="width:613px;float:left;" src="#{tplVars.themeImagePath}/pic1.png"/></a>
+         <img style="width:400px;padding-left:12px;float:left;" src="#{tplVars.themeImagePath}/pic2.jpg"/>
+         <div class="clear"></div>
+      </div>
+      
+      <div class="matter">
+      <div class="matter-left">
+      <div class="title">
+      <p>理财产品</p>
+      </div>
+      
+      
+      
+       <dl>
+      <ui:repeat var="nodeItem"
+						value="#{nodeList.getNodes('lccpwz',2).data}"
+						varStatus="termStatus"> 
+		<dd>
+           <h2><a href="#{request.contextPath}/node/lccpwz/#{nodeItem.id}">#{nodeItem.title}</a></h2>
+           <em><h:outputText value="#{nodeItem.createTime}">
+								<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" locale="cn"
+									timeZone="GMT+8"></f:convertDateTime>
+							</h:outputText></em>
+           <p>#{stringHome.ellipsis(nodeItem.description,36)}</p>
+         </dd>
+	  </ui:repeat>
+	  <span><a href="#{request.contextPath}/jrjc/list/lccpwz">more>></a></span>
+      </dl>
+
+     <!--  <dl>
+         <dd>
+           <h2><a href="#">题目飘过题目飘过题目飘过</a></h2>
+           <em>2014/4/5 09:00</em>
+           <p>好多内容好多内容好多内容好多内容好多内容好多内容好多内容好多内容好多内容</p>
+         </dd>
+         <dd>
+           <h2><a href="#">题目飘过题目飘过题目飘过</a></h2>
+           <em>2014/4/5 09:00</em>
+           <p>好多内容好多内容好多内容好多内容好多内容好多内容好多内容好多内容好多内容</p>
+         </dd>
+        
+         </dl> -->
+         
+         
+           <div class="substance">
+         <ui:repeat var="nodeItem"
+						value="#{nodeList.getNodes('lccpzs',12).data}"
+						varStatus="termStatus">
+						
+				 <p><a href="#{request.contextPath}/node/lccpzs/#{nodeItem.id}">#{nodeItem.title}</a></p>
+						 
+         </ui:repeat>
+         <span><a href="#{request.contextPath}/jrjc/list/lccpzs">more</a></span> 
+         </div>
+         
+         
+         
+         
+         <!-- <div class="substance">
+            <p><a href="#">理财产品</a></p>
+            <p><a href="#">理财产品</a></p>
+            <p><a href="#">理财产品</a></p>
+            <p><a href="#">理财产品</a></p>
+            <p><a href="#">理财产品</a></p>
+            <p><a href="#">理财产品</a></p>
+            <p><a href="#">理财产品</a></p>
+            <p><a href="#">理财产品</a></p>
+            <p><a href="#">理财产品</a></p>
+            <p><a href="#">理财产品</a></p>
+            <p><a href="#">理财产品</a></p>
+            <p><a href="#">理财产品</a></p>
+            <span><a href="#">more</a></span>         
+          </div> -->
+      
+      </div>
+      <a href="#{request.contextPath}/register"><img style="padding-left: 21px;" src="#{tplVars.themeImagePath}/pic3.png"/></a>
+      <div class="clear"></div>
+      </div>
+      
+      <div class="matter">
+      <div class="matter-down">
+      <div class="title-d">
+      <p>股票</p>
+      </div>
+      <dl>
+      <ui:repeat var="nodeItem"
+						value="#{nodeList.getNodes('gpwz',2).data}"
+						varStatus="termStatus"> 
+		<dd>
+           <h2><a href="#{request.contextPath}/node/gpwz/#{nodeItem.id}">#{nodeItem.title}</a></h2>
+           <em><h:outputText value="#{nodeItem.createTime}">
+								<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" locale="cn"
+									timeZone="GMT+8"></f:convertDateTime>
+							</h:outputText></em>
+           <p>#{stringHome.ellipsis(nodeItem.description,36)}</p>
+         </dd>
+	  </ui:repeat>
+	  <span><a href="#{request.contextPath}/jrjc/list/gpwz">more>></a></span>
+        </dl>
+         <div class="substance-d">
+             <ui:repeat var="nodeItem"
+						value="#{nodeList.getNodes('gpzs',0,12).data}"
+						varStatus="termStatus">
+						
+				 <p><a href="#{request.contextPath}/node/gpzs/#{nodeItem.id}">#{nodeItem.title}</a></p>
+						 
+         	</ui:repeat>
+            <!-- <span><a href="#{request.contextPath}/nav_jrjc/gpcp">more</a></span>     -->     
+          </div>
+          <div class="substance-d">
+            <ui:repeat var="nodeItem"
+						value="#{nodeList.getNodes('gpzs',12,12).data}"
+						varStatus="termStatus">
+						
+				 <p><a href="#{request.contextPath}/node/gpzs/#{nodeItem.id}">#{nodeItem.title}</a></p>
+						 
+         	</ui:repeat>
+            <span><a href="#{request.contextPath}/jrjc/list/gpzs">more</a></span>         
+          </div>
+      
+      </div>
+      
+      <div class="clear"></div>
+      </div>
+      
+      
+      
+      <div class="matter">
+      <div class="matter-down">
+      <div class="title-d">
+      <p>基金</p>
+      </div>
+      <dl>
+      <ui:repeat var="nodeItem"
+						value="#{nodeList.getNodes('jjwz',2).data}"
+						varStatus="termStatus"> 
+		<dd>
+           <h2><a href="#{request.contextPath}/node/jjwz/#{nodeItem.id}">#{nodeItem.title}</a></h2>
+           <em><h:outputText value="#{nodeItem.createTime}">
+								<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" locale="cn"
+									timeZone="GMT+8"></f:convertDateTime>
+							</h:outputText></em>
+           <p>#{stringHome.ellipsis(nodeItem.description,36)}</p>
+         </dd>
+	  </ui:repeat>
+	   <span><a href="#{request.contextPath}/jrjc/list/jjwz">more>></a></span>
+       </dl> 
+         <div class="substance-d">
+             <ui:repeat var="nodeItem"
+						value="#{nodeList.getNodes('jjzs',0,12).data}"
+						varStatus="termStatus">
+						
+				 <p><a href="#{request.contextPath}/node/jjzs/#{nodeItem.id}">#{nodeItem.title}</a></p>
+						 
+         	</ui:repeat>
+           <!--  <span><a href="#{request.contextPath}/nav_jrjc/jjcp">more</a></span>          -->
+          </div>
+          <div class="substance-d">
+            <ui:repeat var="nodeItem"
+						value="#{nodeList.getNodes('jjzs',12,12).data}"
+						varStatus="termStatus">
+						
+				 <p><a href="#{request.contextPath}/node/jjzs/#{nodeItem.id}">#{nodeItem.title}</a></p>
+						 
+         	</ui:repeat>
+            <span><a href="#{request.contextPath}/jrjc/list/jjzs">more</a></span>         
+          </div>
+      
+      </div>
+      
+      <div class="clear"></div>
+      </div>
+    
+   </div>
+   <ui:include src="footer.xhtml"></ui:include>
+</body>
+
+</ui:component>

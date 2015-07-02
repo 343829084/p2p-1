@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<head>
+
+<ui:insert name="header">
+	<ui:include src="template/header.xhtml"></ui:include>
+</ui:insert>
+</head>
+<body>
+	<div data-role="page" id="index1" data-add-back-btn="true">
+		<div data-role="header" data-position="fixed" data-theme="b">
+		<a href="#" data-role="button" data-rel="back" data-mini="true" class="fhbtn">返回</a>
+			<h1>我的兑换</h1>
+		</div>
+		<div role="main" class="ui-content">
+			<div class="histroy-h3">
+				<h3>兑换历史</h3>
+			</div>
+			<div class="ui-grid-c">
+				<div class="ui-block-a">
+					<div class="ui-bar ui-bar-e" id="border-bottom"
+						style="height:40px;">变动原因</div>
+				</div>
+				<div class="ui-block-b">
+					<div class="ui-bar ui-bar-e" id="border-bottom"
+						style="height:40px;">数额</div>
+				</div>
+				<div class="ui-block-c">
+					<div class="ui-bar ui-bar-e" id="border-bottom"
+						style="height:40px;">记录时间</div>
+				</div>
+				<div class="ui-block-d">
+					<div class="ui-bar ui-bar-e" id="border-bottom"
+						style="height:40px;">详情</div>
+				</div>
+			</div>
+			<div class="ui-grid-c">
+				<div class="ui-block-a">
+					<div class="ui-bar ui-bar-e" id="border-bottom">买手机</div>
+				</div>
+				<div class="ui-block-b">
+					<div class="ui-bar ui-bar-e" id="border-bottom">2/1元</div>
+				</div>
+				<div class="ui-block-c">
+					<div class="ui-bar ui-bar-e" id="border-bottom">0.13%</div>
+				</div>
+				<div class="ui-block-d">
+					<div class="ui-bar ui-bar-e" id="border-bottom">进度</div>
+				</div>
+			</div>
+		</div>
+	<ui:insert name="footcontent">
+		<ui:include src="template/footer.xhtml"></ui:include>
+	</ui:insert>
+	</div>
+</body>
+</html>

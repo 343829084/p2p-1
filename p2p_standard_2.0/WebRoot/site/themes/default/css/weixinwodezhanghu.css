@@ -1,0 +1,91 @@
+/* The document's old name is weixinXMLB.css */
+/* CSS Document */
+/* reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
+ol,ul{list-style:none;margin:0px;padding:0px;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+table{border-collapse:collapse;border-spacing:0;}
+/* start editing from here */
+a{text-decoration:none;}
+img{max-width:100%;}
+/* reset */
+body{padding:0;margin:0;font-family:Microsoft YaHei',Arial, Helvetica, sans-serif;font-size: 100%;background:#fff;
+}
+/*-------touzi--------*/
+.top-nav{ 
+font-size:1.2em; color:#fff; height:2.4em; line-height:2.4em; text-align:center; background:#063f5c; position:relative; }
+/*---------middle-nav-------*/
+.middle-nav{height:100%; width:100%;margin-top: 5%;}
+.title{width:100%;height:50px; font-size:16px;font-weight:bold;list-style:none;background:#496278;line-height:50px;text-align:center;}
+.title li{float:left;width:24%;height:40px;margin-top:5px;display:block;color:#fff;text-align:center;border-right:1px solid #000;line-height:40px;}
+.content{line-height:40px;}
+.content p{margin-left: 1%;width:24%;display:block;float:left;}
+
+#touzi-name{font-size:14px; width:25%;text-align:center;}
+#touzi-money{font-size:14px;width:25%;text-align:center;}
+#touzi-status{font-size:14px;width:25%;text-align:center;}
+#touzi-jindu{font-size:14px;width:25%;text-align:center;}
+#xiangmu5{font-size:14px;width:25%;height:30px;overflow:hidden;line-height:30px;text-align:center;}
+#xiangmu6{font-size:14px;width:25%;height:30px;overflow:hidden;line-height:30px;text-align:center;}
+#xiangmu7{font-size:14px;width:25%;height:30px;overflow:hidden;line-height:30px;text-align:center;}
+#xiangmu8{font-size:14px;width:25%;height:30px;overflow:hidden;line-height:30px;text-align:center;}
+
+/*导航栏*/
+.down-nav{width:100%;height:45px; font-size:16px;font-weight:bold;list-style:none;background:#496278;line-height:45px;text-align:center;border-top:1px solid #000;}
+.down-nav li{float:left;width:24%;display:block;background:#496278;color:#fff;text-align:center;border-right:1px solid #000;font-size:16px;}
+.down-nav li a{ text-decoration:none; display:block;color:#fff;}
+
+/*-------rongzi--------*/
+.rongzi-top-nav{ 
+font-size:1.2em; color:#fff; height:2.4em; line-height:2.4em; text-align:center; background:#063f5c; position:relative; }
+/*----------------*/
+.rongzi-middle-nav{height:100%; width:100%;}
+.rongzi-title{width:100%;height:50px; font-size:16px;font-weight:bold;list-style:none;background:#496278;line-height:50px;text-align:center;}
+.rongzi-title li{float:left;width:24%;height:40px;margin-top:5px;display:block;color:#fff;text-align:center;border-right:1px solid #000;line-height:40px;}
+.rongzi-content{line-height:40px;}
+.rongzi-content p{margin-left: 1%;width:24%;display:block;float:left;}
+/*导航栏*/
+.rongzi-down-nav{width:100%;height:50px; font-size:16px;font-weight:bold;list-style:none;background:#496278;line-height:50px;text-align:center;border-top:1px solid #000;}
+.rongzi-down-nav li{float:left;width:24%;display:block;background:#496278;color:#fff;text-align:center;border-right:1px solid #000;}
+.rongzi-down-nav li a{ text-decoration:none; display:block;color:#fff;}
+
+#rongzi-name{font-size:14px; width:25%;text-align:center;}
+#rongzi-money{font-size:14px;text-align:center;width:25%;}
+#rongzi-status{font-size:14px;text-align:center;width:25%;}
+#rongzi-jindu{font-size:14px;text-align:center;width:25%;}
+#xiangmu1{font-size:14px;width:25%;height:30px;overflow:hidden;line-height:30px;text-align:center;}
+#xiangmu2{font-size:14px;width:25%;height:30px;overflow:hidden;line-height:30px;text-align:center;}
+#xiangmu3{font-size:14px;width:25%;height:30px;overflow:hidden;line-height:30px;text-align:center;}
+#xiangmu4{font-size:14px;width:25%;height:30px;overflow:hidden;line-height:30px;text-align:center;}
+
+/*-------jifen--------*/
+.jifen-top-nav{ 
+font-size:1.2em; color:#fff; height:2.4em; line-height:2.4em; text-align:center; background:#063f5c; position:relative;}
+/*----------------*/
+.jifen-middle-nav{height:100%; width:90%;margin-top:5%;margin-left:5%;box-shadow:2px 2px 2px #e0e0e0;border:1px solid #ccc;
+padding-bottom:4%;}
+.jifen-middle-up{height:100%; width:90%;margin-top:4%;margin-left:5%;}
+.jifen-middle-up p{line-height:40px;border-bottom:1px solid #e0e0e0;font-weight:bold;font-size:14px;}
+.biaoti{font-size:1.2em;font-weight:bold;color:#42bbfa;border-bottom:1px solid #e0e0e0;height:35px;}
+.jifen-middle-down{height:100%; width:90%;margin-top:4%;margin-left:5%;}
+.wenzikuang{ height:100%;line-height:40px;border-bottom:1px solid #e0e0e0;width:100%;font-weight:bold;font-size:14px; }
+.wenzikuang td{width:30%;}
+.wenzikuang1{ height:100%;line-height:40px;border-bottom:1px solid #e0e0e0;width:100%;font-size:12px;}
+.wenzikuang1 td{width:24%;text-align: center;}
+/*导航栏*/
+.rongzi-down-nav{width:100%;height:50px; font-size:16px;font-weight:bold;list-style:none;background:#496278;line-height:50px;text-align:center;border-top:1px solid #000;}
+.rongzi-down-nav li{float:left;width:24%;display:block;background:#496278;color:#fff;text-align:center;border-right:1px solid #000;}
+.rongzi-down-nav li a{ text-decoration:none; display:block;color:#fff;}
+.footer{width:100%;height:45px; font-size:18px;font-weight:bold;list-style:none;background:#496278;line-height:45px;text-align:center;border-top:1px solid #000;position: fixed;bottom: 0;}
+
+/* 进度条*/
+ #xiangmu3 .jindu{ margin-left:20%;margin-top:10px; top:20px; right:50px; width:280px; height:26px; background:url(../images/index/a20.jpg) repeat-x; border-radius:10px; }
+ #xiangmu3 .jindu p{ display:block; height:23px; background:url(../images/index/a21.jpg) repeat-x; border-radius:10px; position:relative}
+ #xiangmu3 .jindu p span{ display:block; background:url(../images/index/b5.png) no-repeat; position:absolute; width:40px; height:40px; color:#fff; text-align:center;line-height:40px; top:-8px; right:-28px; font-size:10px;}
+
+
+
+
+

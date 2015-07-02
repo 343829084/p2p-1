@@ -1,0 +1,18 @@
+@charset "utf-8";
+/* CSS Document */
+
+.slideBox{ width:100%; margin:0 auto;height:427px; overflow:hidden; position:relative;}
+.slideBox .hd{ height:14px; overflow:hidden; position:absolute; left:50%;bottom:20px; z-index:1; }
+.slideBox .hd ul{ overflow:hidden; zoom:1; float:left;  }
+.slideBox .hd ul li{ float:left; margin-left:10px;width:13px; height:13px; background:#fff; cursor:pointer; }
+.slideBox .hd ul li.on{ background:#63a1ff; border:1px solid #fff;width:12px; height:12px;}
+.slideBox .bd{ position:relative; height:427px; width:1930px; z-index:0;  margin:0 auto;  }
+.slideBox .bd li{ zoom:1; vertical-align:middle; }
+.slideBox .bd img{ width:1600px; height:427px; margin:0 auto;}
+
+.layer02{width:276px; height:274px;background:url(../images/index/layer-bg.png) repeat; position:absolute; left:50%; margin-left:215px; top:50px;border-radius:6px; border:1px solid #fff;}
+.layer02 p{ padding-top:15px; text-align:center; color:#000;}
+.layer02 p label{ font-size:22px; color:#65bcdd; font-weight:bold;}
+.lhb-btn{ width:232px; height:36px; display:block; color:#fff; text-align:center; line-height:36px; border-radius:6px; background:#65bcdd; font-size:16px; margin:15px 22px 10px;}
+.lhb-btn:hover{ background:#50A7C8;}
+.login-btn{ text-decoration:underline;}

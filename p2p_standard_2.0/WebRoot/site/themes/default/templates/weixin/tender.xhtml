@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:archer="http://java.sun.com/jsf/archer"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
+	<f:metadata>
+		<f:viewParam name="loanId" value="#{investList.example.loan.id}"></f:viewParam>
+		<f:viewParam name="referee" value="#{investList.referee}"></f:viewParam>
+		<f:viewParam name="investStatus" value="#{investList.example.status}"></f:viewParam>
+	</f:metadata>
+	<h:head>
+		<ui:insert name="footcontent">
+			<ui:include src="template/header.xhtml"></ui:include>
+		</ui:insert>
+	</h:head>
+
+	<body>
+		<div data-role="page" id="index1">
+			<div data-role="header" data-position="fixed" data-theme="b">
+			<a href="#pagetwo" data-icon="arrow-l" data-rel="back" data-iconpos="notext"
+				data-direction="reverse"></a>
+				<h1>贷款详情</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<div data-role="content">
+					<f:event type="preRenderComponent"
+						listener="#{investList.example.loan.setId(loan.id)}"></f:event>
+					<ul data-role="listview" data-inset="true">
+						<li data-role="list-divider">投资详情</li>
+						<li><ui:repeat var="invest"
+								value="#{investList.lazyModelData}" varStatus="status">
+
+								<p>
+									#{invest.user.username}于
+									<h:outputText value="#{invest.time}">
+										<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"
+											timeZone="GMT+8" />
+									</h:outputText>
+									投资了
+									<h:outputText value="#{invest.money}">
+										<f:convertNumber minIntegerDigits="1" minFractionDigits="2"></f:convertNumber>
+									</h:outputText>
+									元
+								</p>
+
+							</ui:repeat></li>
+					</ul>
+				</div>
+			</div>
+			<ui:insert name="footcontent">
+				<ui:include src="template/footer.xhtml"></ui:include>
+			</ui:insert>
+		</div>
+	</body>
+</ui:composition>
+

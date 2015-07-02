@@ -1,0 +1,199 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:composite="http://java.sun.com/jsf/composite/primefaces"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:o="http://omnifaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:sec="http://www.springframework.org/security/facelets/tags">
+     <f:metadata>
+	    <ui:param name="servletPath" value="#{requestScope['javax.servlet.forward.servlet_path']}"></ui:param>
+		<ui:param name="path" value="#{request.contextPath}"></ui:param>
+    </f:metadata> 
+<h:head>
+    <link type="text/css" rel="stylesheet" href="#{request.contextPath}/include/css/cpa.css"/>
+	<link href="#{request.contextPath}/include/css/bootstrap.min.css" rel="stylesheet" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/include/css/default.css" />
+    <link type="text/css" rel="stylesheet" href="#{request.contextPath}/include/css/admin.css"/>
+     <link rel="stylesheet" type="text/css"
+                href="#{appInfo.contextPath}/include/css/fileupload.ori.css" />
+      <script type="text/javascript" charset="utf-8">
+                window.CONTEXT_PATH = "#{request.contextPath}";
+            </script>
+       <script type="text/javascript" charset="utf-8"
+                src="#{appInfo.contextPath}/include/js/ueditor1_3_6-utf8-jsp/ueditor.config.js"></script>
+       <script type="text/javascript" charset="utf-8"
+                src="#{appInfo.contextPath}/include/js/ueditor1_3_6-utf8-jsp/ueditor.all.min.js"></script>
+       <script src="#{appInfo.contextPath}/include/js/datepicker-primefaces.js"></script>
+        <script type="text/javascript" charset="utf-8"
+                src="#{appInfo.contextPath}/include/js/fileupload.ori.js"></script>          
+       <!-- <script type="text/javascript" charset="utf-8"
+                src="#{appInfo.contextPath}/include/js/jquery-1.7.2.min.js"></script> -->
+		<script type="text/javascript" charset="utf-8"
+                src="#{appInfo.contextPath}/include/js/bootstrap.js"></script>
+         <script type="text/javascript" src="#{appInfo.contextPath}/include/js/datepicker.js"></script>
+         <script type="text/javascript">
+        
+			$(function(){
+				
+				var currentUrl = window.location.pathname + window.location.search;
+				$("#sidebar li a[href='"+currentUrl+"']").addClass("ui-state-highlight");
+				//.addClass("ui-state-highlight"); li a [href=/jdp2p4/admin/loan/loanList.htm?loanStatus=WAITING_VERIFY]
+				//alert($("#sidebar li a[href='"+currentUrl+"']").size());
+				// 增加表格行鼠标经过样式
+				$(".ui-datatable-data tr").mouseover(function(){
+					$(this).addClass("ui-state-hover");
+				});
+				$(".ui-datatable-data tr").mouseout(function(){
+					$(this).removeClass("ui-state-hover");
+				});
+				//ui-state-hover  border-left: solid 5px #c0c0c0;
+			});
+   
+			
+				/**初始化时间选择控件*/
+			function initDatepicker() {
+				$(".datepicker").datepicker({
+					changeMonth : true,
+					changeYear : true
+				});
+			}
+			/**清除筛选条件*/
+			function clearFilters() {
+				$(".datepicker").val('');
+				$("#dataTable\\:typeInfoFilter").val('');
+			}
+			$(function() {
+				initDatepicker();
+			});
+				
+			</script>
+ 		<style>
+            #sidebar li{
+                height: 20px;font-weight: bold;border-bottom: solid 1px #c0c0c0;color: #878787;font-family: "微软雅黑";
+            }
+            .ui-panelmenu .ui-menuitem{
+            	width:99%;
+            }
+        </style> 
+        
+</h:head>      
+ <h:body>
+     <div id="Header">
+      <div class="logo_box">
+         <div class="logo">
+            <a href="#"><img src="#{request.contextPath}/include/images/admin/logo.png"/></a>
+         </div>
+      </div>
+ 
+   	</div>
+<div class="cpa">
+  <div class="cpaz">
+	<div class="cpaza">
+	
+	<p>
+						<ui:fragment rendered="#{empty loginUserInfo.loginUserId}">
+							<a href="#{request.contextPath}/memberLoginPage" rel="nofollow">登录</a>|
+		        	<a href="#{request.contextPath}/register" class="mf"
+								rel="nofollow">注册</a>
+						</ui:fragment>
+						<ui:fragment rendered="#{not empty loginUserInfo.loginUserId}">
+							<a href="#">欢迎您，#{loginUserInfo.loginUserId}</a>|
+		           
+						</ui:fragment>
+	</p>
+	<span><a href="#{request.contextPath}/user/logout" class="mf">【退出】</a></span>
+	</div>
+
+<div class="cpazb">
+<span id="MB"><img src="#{request.contextPath}/include/images/admin/CPA_03.png" /><a href="#">信息管理</a></span>
+</div>
+<div class="cpazb">
+<p><img src="#{request.contextPath}/include/images/admin/CPA_06.png"/><a href="#">客户管理</a></p>
+</div>
+<div class="cpazb">
+<p><img src="#{request.contextPath}/include/images/admin/CPA_09.png"/><a  href="#{request.contextPath}/admin/cpaList.htm">CPA查询</a></p>
+</div>
+<div class="cpazb">
+<p><img src="#{request.contextPath}/include/images/admin/CPA_09.png"/><a href="#">CPS查询</a></p>
+</div>
+<div class="cpazb">
+<p><img src="#{request.contextPath}/include/images/admin/CPA_09.png"/><a href="#">论坛分享</a></p>
+</div>
+
+</div> 
+<div class="cpay">
+ <div class="cpayt">
+ 	<p>CPA查询</p>
+ </div>
+<h:form id="form">
+ <div class="zcrq">
+    <dl>
+    <dd>
+ 	<label for="name" class="form-conT">注册日期</label>
+        <h:inputText value="#{adverHome.regStartDate}" label="起止日期"
+						styleClass="date_txt datepicker" id="startDate">
+						 <f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8"
+							locale="zh_CN" /> 
+		</h:inputText>
+		</dd>
+		<dt>
+		 <label for="name" class="form-conT">至</label>
+		<h:inputText value="#{adverHome.regEndDate}" label="结束日期"
+						styleClass="date_txt datepicker" id="endDate">
+						 <f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8"
+							locale="zh_CN" /> 
+		</h:inputText> 
+		</dt>
+		</dl>
+		<h:commandLink value="查询" style="outline-style:none; float: left; margin-top: 28px; width: 70px; margin-left:100px;"
+				action="#{adverHome.getCountGroupByMid()}"  type="button" styleClass="btn btn-success" ></h:commandLink> 
+</div>
+			
+     
+        
+    
+        	
+            <p:dataTable lazy="true" id="dataTable" value="#{adverHome.getCountGroupByMid()}"   
+				var="adver" paginator="true" paginatorPosition="bottom"
+				rows="15" emptyMessage="#{commonMsg.noResultMsg}"
+				currentPageReportTemplate="#{commonMsg.pageReportTemplate}"
+				paginatorTemplate="#{commonMsg.paginatorTemplate}" >
+				<p:column headerText="注册日期">
+					<h:outputText value="#{adver.regDate}">
+						<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN" timeZone="GMT+8"></f:convertDateTime>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="来源">
+					<h:outputText value="#{adver.fromWhere}"></h:outputText>
+				</p:column>
+				<p:column headerText="注册数" >
+					<h:outputText value="#{adver.regCount}"></h:outputText>
+				</p:column>
+				<p:column headerText="实名认证数" >
+					<h:outputText value="#{adver.authCount}"></h:outputText>
+				</p:column>
+
+            </p:dataTable>
+     
+            <script type="text/javascript">  
+       		   //<![CDATA[.......
+			    function handleLoginRequest(xhr, status, args) {  
+			        if(!args.validationFailed && args.sendSuccess) {  
+			        	sendMessageDialog.hide();
+			        } else {  
+			          	jQuery('#form\\:sendMessageDlg').effect("shake", { times:3 }, 100);  
+			        }
+			    }
+			    //]]> 
+			</script>  
+       
+            </h:form>
+    </div>
+	</div>
+</h:body>   
+    
+</ui:composition>

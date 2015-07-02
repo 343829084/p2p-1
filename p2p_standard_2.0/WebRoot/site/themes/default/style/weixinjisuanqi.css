@@ -1,0 +1,90 @@
+/* CSS Document */
+/* reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
+ol,ul{list-style:none;margin:0px;padding:0px;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+table{border-collapse:collapse;border-spacing:0;}
+/* start editing from here */
+a{text-decoration:none;}
+img{max-width:100%;}
+/* reset */
+body{padding:0;margin:0;font-family: Arial, Helvetica, sans-serif;font-size: 100%;background:#fff;
+}
+/* 通用 */
+.btn{ font:1em bold 'Microsoft YaHei',Arial, Helvetica, sans-serif; width:100%; height:3em; line-height:3em; border-radius:0.3em; cursor:pointer; color:#fff; text-align:center; font-weight:bold;background:#42BBFA; display:block; margin:2em 0; }
+.btnGray{ font:1em bold 'Microsoft YaHei',Arial, Helvetica, sans-serif; width:100%; height:3em; line-height:3em; border-radius:0.3em; cursor:pointer; color:#333; text-align:center; background:#ccc; display:block; margin:1em 0; }
+.errorTip{ color:#ea5252; line-height:3em; background:#fff6f6; border:1px solid #ea5252; padding:0 0.6em; }
+/*-------top-nav--------*/
+.top-nav{ 
+font-size:1.4em;font-weight:bold; color:#fff; height:2.4em; line-height:2.4em; text-align:center;
+background:#063F5C;box-shadow:2px 2px 2px #666; position:relative; }
+
+ 
+ /* 表单 */
+.register{ height:100%; overflow:hidden; padding:1em 0.6em; }
+.register div{ font-size:1.2em; height:3em; background:#fff; margin-bottom:0.6em; box-shadow:2px 2px 2px #e0e0e0;
+border-bottom: 1px solid #e0e0e0;width:100%; }
+.register div input{ font:1em normal 'Microsoft YaHei',Arial, Helvetica, sans-serif; width:60%; height:80%; border:1px solid #A1D2FD;
+ padding:0;margin-top: 5px;margin-left:1%;}
+ select{ font:1em normal 'Microsoft YaHei',Arial, Helvetica, sans-serif; width:70%; height:80%; border:1px solid #A1D2FD;
+ padding:0;margin-top: 5px;margin-left:1%;}
+.register1{height:80%;width:70%;margin-top: 5px;margin-left:1%;border:1px solid #A1D2FD;}
+ /*计算结果*/
+.biaoti{font-size:1.4em;font-weight:bold;color:#237abf;border-bottom:2px solid #237abf;height:35px;}
+.downnav{ height:80%;color:#42bbfa;font-size:18px;font-weight:bold;margin-top:15px;line-height:30px;
+border-bottom:2px solid #237abf;padding-bottom:10px;} 
+.downnav p span{color:#000;font-weight:100;margin-left:2%;}
+ 
+ /*zqw*/
+ /*通用标题样式*/
+.ui-title{ margin: 0 auto ; height: 48px; width: 1000px; line-height: 48px; border-bottom: 2px solid #DDD;}
+.ui-title h2{ font-weight: bold; font-size: 18px; color: #666; font-weight: bold; }
+
+/*通用输入框样式*/
+.ui-text{ width: 227px; padding: 11px 10px; height: 18px; line-height: 18px; border:1px solid #237ABF; font-size: 16px;
+color: #333;transition-property: border;transition-duration: 0.2s;transition-timing-function: ease;
+}
+.ui-text:hover{ border:1px solid #237ABF;transition-property: border;transition-duration: 0.2s;
+transition-timing-function: ease;
+}
+.ui-text:focus{ border:1px solid #237ABF;
+transition-property: border;
+transition-duration: 0.2s;
+transition-timing-function: ease;
+}
+
+/*利息计算器页面*/
+.calculator-form{ width: 100px; margin: 0 auto; padding-top: 50px; margin-bottom: 25px; font-size: 16px;}
+.calculator-form ul{width: 780px;}
+.calculator-form li{ float: left; margin-right: 50px; height: 62px; line-height: 40px; width: 358px;}
+.calculator-form label,.calculator-form input,.calculator-form span,.calculator-form select{ float: left;}
+.calculator-form select{ *margin-top: 10px;}
+.calculator-form li .error{ line-height: 16px; text-indent: 80px; font-size: 12px; line-height: 19px;}
+.calculator-form li .calculator-form-item{ line-height: 40px; }
+.calculator-form .fr{width: 180px;}
+
+.calculator-form .ui-btn-1{ margin-bottom: 18px;}
+.c-interest-list-1{ width: 350px; margin:0 auto; text-align: leftborder:1px solid #E0E0E0; border-right: #fff;
+border-left:  #fff; font-size: 14px;}
+.c-interest-list-1 th{ height: 40px; line-height: 50px;border:1px solid #E0E0E0; border-bottom: none;
+text-align: left; font-weight: bold; font-size: 14px;}
+.c-interest-list-1 td{ height: 40px; font-family: 'Arial'; line-height: 50px;border:1px solid #E0E0E0;
+text-align:left;   }
+.c-interest-list-1 .icon-triangle-hui{ line-height: 15px;}
+.c-interest-list-1 thead th{ border:none; border-top: 1px solid #E0E0E0; font-size: 16px;}
+ 
+/*导航栏*/
+/*导航栏*/
+.down-nav{width:100%;height:50px; font-size:16px;font-weight:bold;list-style:none;background:#496278;line-height:50px;text-align:center;border-top:1px solid #000;}
+.down-nav li{float:left;width:24%;display:block;background:#496278;color:#fff;text-align:center;border-right:1px solid #000;}
+.down-nav li a{ text-decoration:none; display:block;color:#fff;}
+.footer{width:100%;height:45px; font-size:18px;font-weight:bold;list-style:none;background:#496278;line-height:45px;text-align:center;border-top:1px solid #000;position: fixed;bottom: 0;}
+
+
+ 
+ 
+ 
+ 
+ 
